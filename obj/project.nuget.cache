@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "7/ZfF6F3PeQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\crcow\\.gemini\\antigravity\\scratch\\DoubleDeckCancellationHearts\\GameEngine.Api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.3\\microsoft.aspnetcore.openapi.10.0.3.nupkg.sha512",
+    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
