@@ -49,8 +49,26 @@ namespace GameEngine.Api.Services
             Card chosenCard;
             string reasoning;
             
-            if (aiPlayer.DifficultyLevel >= 4) // Expert / Grandmaster
+            if (aiPlayer.DifficultyLevel >= 3) // Intermediate and above
             {
+                // STRATEGY 1: ACTIVE CANCELLATION (Double Deck Specific)
+                // If a dangerous card (High rank or Penalty points) has been played, and we hold the exact duplicate, play it immediately to cancel it out!
+                if (state.CurrentTrick.Count > 0)
+                {
+                    var dangerousCards = state.CurrentTrick.Where(c => c.PointValue > 0 || (int)c.Rank >= (int)Rank.Jack).ToList();
+                    foreach (var threat in dangerousCards)
+                    {
+                        var duplicate = validCards.FirstOrDefault(c => c.Suit == threat.Suit && c.Rank == threat.Rank);
+                        if (duplicate != null)
+                        {
+                            chosenCard = duplicate;
+                            reasoning = $"I see a dangerous {threat} in the trick. Since this is Double Deck, I am playing my identical {duplicate} to instantly CANCEL it out and protect myself from taking the trick/points!";
+                            return (chosenCard, reasoning);
+                        }
+                    }
+                }
+
+                // STRATEGY 2: DUMPING POINTS
                 // Simple heuristic simulating a good AI: Dump highest point card if not leading and void in suit
                 if (state.CurrentTrick.Count > 0 && !validCards.Any(c => c.Suit == state.CurrentTrick.First().Suit))
                 {
@@ -60,6 +78,24 @@ namespace GameEngine.Api.Services
                         chosenCard = pointCard;
                         reasoning = $"The human player {pastHistoryDbSummary}. I am void in the led suit, so I am safely dumping my {chosenCard} to avoid points.";
                         return (chosenCard, reasoning);
+                    }
+                }
+                
+                // STRATEGY 3: DUCKING
+                // If following suit, try to play the highest card we have that is still LOWER than the current highest card in the trick, to duck under it safely.
+                if (state.CurrentTrick.Count > 0)
+                {
+                    var ledSuit = state.CurrentTrick.First().Suit;
+                    var highestLed = state.CurrentTrick.Where(c => c.Suit == ledSuit).OrderByDescending(c => c.Rank).FirstOrDefault();
+                    if (highestLed != null)
+                    {
+                        var duckCard = validCards.Where(c => c.Suit == ledSuit && c.Rank < highestLed.Rank).OrderByDescending(c => c.Rank).FirstOrDefault();
+                        if (duckCard != null)
+                        {
+                            chosenCard = duckCard;
+                            reasoning = $"I am deliberately playing my {duckCard} to safely duck under the {highestLed} currently winning the trick.";
+                            return (chosenCard, reasoning);
+                        }
                     }
                 }
             }
@@ -152,6 +188,11 @@ namespace GameEngine.Api.Services
 You are playing Double Deck Cancellation Hearts.
 Difficulty: {aiPlayer.DifficultyLevel}/5.
 Human Player History: {historySummary}
+
+CRITICAL STRATEGY RULES:
+1. DOUBLE DECK CANCELLATION: There are two of every card. If an opponent plays an Ace (or a high card/penalty card) and you have the IDENTICAL duplicate, YOU MUST PLAY IT to cancel their card out! This is the most crucial defensive strategy.
+2. If you are void in the led suit, aggressively dump your Queen of Spades or highest Hearts.
+3. If you must follow suit, try to play a card just underneath the current highest card to 'duck' the trick.
 
 Your Hand: {string.Join(", ", aiPlayer.Hand.Select(c => c.ToString()))}
 Valid Moves: {string.Join(", ", validCards.Select(c => c.ToString()))}
