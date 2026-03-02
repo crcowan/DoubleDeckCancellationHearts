@@ -298,6 +298,7 @@ namespace GameEngine.Api.Services
                     // Special Double Deck Moon: usually score goes down or others go up massively.
                     // For now, reverse the 52 points and subtract 52 instead.
                     p.Score -= 104; 
+                    _state.ShooterOfMoonId = p.Id;
                 }
             }
         }

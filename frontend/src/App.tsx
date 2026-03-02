@@ -605,21 +605,73 @@ function App() {
                   ))}
                 </div>
 
-                <button
-                  onClick={leaveMatch}
-                  className="bg-yellow-500 hover:bg-yellow-400 text-black font-extrabold py-4 px-12 rounded-full text-xl transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,215,0,0.6)] uppercase tracking-wider mx-auto block"
-                >
-                  Play Again
-                </button>
+                {gameState.shooterOfMoonId && (
+                  <div className="mt-8 text-center p-4 bg-yellow-900 border-2 border-yellow-400 rounded-xl animate-pulse">
+                    <h4 className="text-xl font-black text-yellow-300">🌕 MOON SHOT! 🌕</h4>
+                    <p className="text-white text-sm mt-2">{gameState.players.find(p => p.id === gameState.shooterOfMoonId)?.name} collected all 26 Hearts and all 4 Queens!</p>
+                  </div>
+                )}
+
+                <div className="flex justify-center gap-4">
+                  <button
+                    className="bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 px-8 rounded-full shadow-[0_0_15px_rgba(147,51,234,0.5)] transition-all hover:scale-105"
+                    onClick={leaveMatch}
+                  >
+                    Return to Lobby
+                  </button>
+                  {!gameState.players.some(p => p.id === "P1") && (
+                    <button
+                      className="bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-8 rounded-full transition-all"
+                      onClick={quitApplication}
+                    >
+                      Quit
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           ) : gameState.phase === GamePhase.GameOver ? (
-            <button
-              onClick={startNextHand}
-              className="bg-indigo-500 hover:bg-indigo-400 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-indigo-500/50 animate-pulse text-lg tracking-widest uppercase border-2 border-white/20"
-            >
-              Start Next Hand
-            </button>
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+              <div className="bg-gradient-to-br from-indigo-900 to-purple-900 border-2 border-indigo-400 p-12 rounded-3xl text-center shadow-2xl shadow-indigo-500/50 transform scale-110">
+
+                {gameState.shooterOfMoonId ? (
+                  <div className="mb-8">
+                    <h2 className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-200 to-yellow-600 drop-shadow-[0_0_20px_rgba(255,215,0,1)] animate-bounce tracking-widest uppercase">
+                      🌕 THE MOON HAS BEEN SHOT! 🌕
+                    </h2>
+                    <div className="text-3xl text-yellow-100 mt-6 font-bold uppercase tracking-widest bg-black/30 py-4 px-8 rounded-full inline-block">
+                      <span className="text-white font-black">{gameState.players.find(p => p.id === gameState.shooterOfMoonId)?.name}</span> has collected all 52 Penalty Points!
+                    </div>
+                  </div>
+                ) : (
+                  <h2 className="text-5xl font-black text-white mb-6 tracking-widest uppercase">
+                    Hand Over!
+                  </h2>
+                )}
+
+                <div className="bg-black/40 rounded-xl p-6 mb-8 text-left max-h-64 overflow-y-auto w-full min-w-96">
+                  <h3 className="text-indigo-300 font-bold uppercase tracking-widest text-sm mb-4 border-b border-indigo-500/50 pb-2">Current Standings</h3>
+                  {[...gameState.players].sort((a, b) => a.score - b.score).map((p, idx) => (
+                    <div key={p.id} className="flex justify-between items-center py-2 text-gray-300 border-b border-white/5 last:border-0">
+                      <div className="flex items-center gap-3">
+                        <span className="w-6 text-center text-sm opacity-50">#{idx + 1}</span>
+                        <span className="font-medium">{p.name} {p.id === "P1" ? "(You)" : ""}</span>
+                      </div>
+                      <span className="font-mono bg-black/50 px-3 py-1 rounded">{p.score}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex justify-center flex-col gap-4">
+                  <button
+                    className="bg-green-600 hover:bg-green-500 text-white font-bold py-4 px-12 rounded-full shadow-[0_0_15px_rgba(34,197,94,0.5)] transition-all hover:scale-105 text-xl tracking-wider"
+                    onClick={startNextHand}
+                  >
+                    CONTINUE TO NEXT HAND
+                  </button>
+                </div>
+              </div>
+            </div>
           ) : gameState.phase === GamePhase.Passing ? (
             <>
               <div className={`px-6 py-2 rounded-full font-bold transition-opacity bg-purple-900 text-purple-200 shadow-lg shadow-purple-900/50`}>
@@ -767,7 +819,7 @@ function App() {
           })}
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

@@ -54,6 +54,7 @@ namespace GameEngine.Api.Models
         // Passing Phase Tracking
         public int RoundNumber { get; set; } = 1;
         public Dictionary<string, List<Card>> PendingPasses { get; set; } = new();
+        public string? ShooterOfMoonId { get; set; }
 
         public enum GamePhase { Lobby, Passing, TrickPending, Playing, GameOver, MatchOver }
         public GamePhase Phase { get; set; } = GamePhase.Lobby;

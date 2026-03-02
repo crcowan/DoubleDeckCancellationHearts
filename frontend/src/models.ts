@@ -68,4 +68,5 @@ export interface GameState {
     rules?: { targetScore: number };
     roundNumber: number;
     pendingPasses?: Record<string, Card[]>;
+    shooterOfMoonId?: string | null;
 }
