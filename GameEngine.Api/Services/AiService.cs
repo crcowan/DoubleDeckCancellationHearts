@@ -193,14 +193,33 @@ namespace GameEngine.Api.Services
 
             // At higher difficulties, AI is smarter about passing Hearts vs High Spades
             int passCount = 3;
-            if (ai.DifficultyLevel > 3 && state.Rules.PassingStyle != "None")
+            if (ai.DifficultyLevel >= 3 && state.Rules.PassingStyle != "None")
             {
-                // Expert AI passes Queen of Spades always, then highest Hearts, then highest other cards
-                cardsToPass.AddRange(ai.Hand.Where(c => c.Suit == Suit.Spades && c.Rank == Rank.Queen));
+                // STRATEGY 6: VOIDING SUITS (Double Deck Specific)
+                // If we only have 1 or 2 cards in a non-dangerous suit (Clubs/Diamonds), pass them to create a Void. A void allows us to dump penalty cards later.
+                var safeSuits = new[] { Suit.Clubs, Suit.Diamonds };
+                foreach (var s in safeSuits)
+                {
+                    var suitCards = ai.Hand.Where(c => c.Suit == s).ToList();
+                    if (suitCards.Count > 0 && suitCards.Count <= 2 && cardsToPass.Count + suitCards.Count <= passCount)
+                    {
+                        cardsToPass.AddRange(suitCards);
+                    }
+                }
+
+                // If still need passes, dump the Queens of Spades
                 if (cardsToPass.Count < passCount)
                 {
-                    cardsToPass.AddRange(ai.Hand.Where(c => c.IsHeart).OrderByDescending(c => (int)c.Rank).Take(passCount - cardsToPass.Count));
+                    cardsToPass.AddRange(ai.Hand.Where(c => c.Suit == Suit.Spades && c.Rank == Rank.Queen).Except(cardsToPass).Take(passCount - cardsToPass.Count));
                 }
+
+                // Then dump highest Hearts
+                if (cardsToPass.Count < passCount)
+                {
+                    cardsToPass.AddRange(ai.Hand.Where(c => c.IsHeart).Except(cardsToPass).OrderByDescending(c => (int)c.Rank).Take(passCount - cardsToPass.Count));
+                }
+
+                // Then just highest regular cards
                 if (cardsToPass.Count < passCount)
                 {
                     cardsToPass.AddRange(ai.Hand.Except(cardsToPass).OrderByDescending(c => (int)c.Rank).Take(passCount - cardsToPass.Count));
