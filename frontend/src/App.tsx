@@ -9,7 +9,7 @@ const API_URL = "http://localhost:5243/api/game";
 
 function App() {
   const [gameState, setGameState] = useState<GameState | null>(null);
-  const [numPlayers, setNumPlayers] = useState(5);
+  const [numPlayers, setNumPlayers] = useState(8);
   const [aiDifficulty, setAiDifficulty] = useState(3);
   const [botNames, setBotNames] = useState<string[]>(['Bot 1', 'Bot 2', 'Bot 3', 'Bot 4', 'Bot 5', 'Bot 6', 'Bot 7', 'Bot 8', 'Bot 9', 'Bot 10']);
 
@@ -21,12 +21,23 @@ function App() {
   const [targetScore, setTargetScore] = useState(100); // 50, 100, 150
   const [trickPauseMs, setTrickPauseMs] = useState(2500); // Configurable trick review timer
 
-  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
-  const [selectedPassCards, setSelectedPassCards] = useState<Card[]>([]);
+  const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
+  const [selectedPassIndices, setSelectedPassIndices] = useState<number[]>([]);
   const [newlyPassedCards, setNewlyPassedCards] = useState<Card[]>([]);
+  const [isShuttingDown, setIsShuttingDown] = useState(false);
+  const [showQuitConfirm, setShowQuitConfirm] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  // Manual Hand Rearrangement State
+  const [localHand, setLocalHand] = useState<Card[]>([]);
+  const [draggedItemIndex, setDraggedItemIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   // Ref to track the human hand right before the pass resolves
   const previousHandRef = useRef<Card[]>([]);
+
+  // Ref to prevent click events from firing immediately after a drag & drop operation completes
+  const dragActiveRef = useRef(false);
 
   const fetchState = async () => {
     try {
@@ -42,10 +53,11 @@ function App() {
 
   useEffect(() => {
     // Attempt to load settings from LocalStorage
-    const savedPlayers = localStorage.getItem('dc-hearts-players');
-    const savedDiff = localStorage.getItem('dc-hearts-diff');
-    const savedBotNames = localStorage.getItem('dc-hearts-bot-names');
-    const savedRules = localStorage.getItem('dc-hearts-rules');
+    // Appended -v2 to force the new default player count (8) for existing users who previously played with 5
+    const savedPlayers = localStorage.getItem('dc-hearts-players-v2');
+    const savedDiff = localStorage.getItem('dc-hearts-diff-v2');
+    const savedBotNames = localStorage.getItem('dc-hearts-bot-names-v2');
+    const savedRules = localStorage.getItem('dc-hearts-rules-v2');
 
     if (savedPlayers) setNumPlayers(parseInt(savedPlayers));
     if (savedDiff) setAiDifficulty(parseInt(savedDiff));
@@ -66,10 +78,10 @@ function App() {
 
   const startGame = async () => {
     // Save choices
-    localStorage.setItem('dc-hearts-players', numPlayers.toString());
-    localStorage.setItem('dc-hearts-diff', aiDifficulty.toString());
-    localStorage.setItem('dc-hearts-bot-names', JSON.stringify(botNames));
-    localStorage.setItem('dc-hearts-rules', JSON.stringify({
+    localStorage.setItem('dc-hearts-players-v2', numPlayers.toString());
+    localStorage.setItem('dc-hearts-diff-v2', aiDifficulty.toString());
+    localStorage.setItem('dc-hearts-bot-names-v2', JSON.stringify(botNames));
+    localStorage.setItem('dc-hearts-rules-v2', JSON.stringify({
       passingStyle, firstLead, breakingHearts, cancellationWinner, trickPauseMs, targetScore
     }));
 
@@ -86,16 +98,19 @@ function App() {
       });
       if (resp.ok) setGameState(await resp.json());
     } catch (e) {
-      alert("Ensure the C# backend is running.");
+      setErrorMsg("Failed to start game. Ensure the C# backend is running.");
     }
   };
 
   const playSelectedCard = async () => {
-    if (!selectedCard || !gameState) return;
+    if (selectedCardIndex === null || !gameState) return;
+
+    const me = gameState.players.find(p => p.id === "P1");
+    if (!me || selectedCardIndex < 0 || selectedCardIndex >= localHand.length) return;
 
     // Optimistically deselect
-    const cardToPlay = selectedCard;
-    setSelectedCard(null);
+    const cardToPlay = localHand[selectedCardIndex];
+    setSelectedCardIndex(null);
 
     try {
       const resp = await fetch(`${API_URL}/play`, {
@@ -110,10 +125,11 @@ function App() {
       if (resp.ok) {
         setGameState(await resp.json());
       } else {
-        alert(await resp.text()); // Shows validation errors
+        setErrorMsg(await resp.text()); // Shows validation errors
       }
     } catch (e) {
       console.error(e);
+      setErrorMsg("Failed to connect to the backend.");
     }
   };
 
@@ -130,6 +146,33 @@ function App() {
 
   useEffect(() => {
     if (!gameState) return;
+
+    // Synchronize localHand to allow manual sorting gracefully
+    const currentServerHand = gameState.players.find(p => p.id === "P1")?.hand;
+    if (!currentServerHand) {
+      setLocalHand([]);
+    } else {
+      setLocalHand(prevLocalHand => {
+        if (prevLocalHand.length === 0) return currentServerHand;
+
+        const serverHandCopy = [...currentServerHand];
+        const newLocalHand: Card[] = [];
+
+        for (const c of prevLocalHand) {
+          const matchIdx = serverHandCopy.findIndex(sc => sc.suit === c.suit && sc.rank === c.rank);
+          if (matchIdx !== -1) {
+            newLocalHand.push(serverHandCopy[matchIdx]);
+            serverHandCopy.splice(matchIdx, 1);
+          }
+        }
+        for (const sc of serverHandCopy) {
+          newLocalHand.push(sc);
+        }
+
+        const isSame = newLocalHand.length === prevLocalHand.length && newLocalHand.every((c, i) => c.suit === prevLocalHand[i].suit && c.rank === prevLocalHand[i].rank);
+        return isSame ? prevLocalHand : newLocalHand;
+      });
+    }
 
     if (gameState.phase === GamePhase.Playing) {
       const isMyTurn = gameState.players[gameState.currentTurnPlayerIndex].id === "P1";
@@ -193,7 +236,7 @@ function App() {
       const resp = await fetch(`${API_URL}/reset-hand`, { method: 'POST' });
       if (resp.ok) {
         setGameState(await resp.json());
-        setSelectedPassCards([]);
+        setSelectedPassIndices([]);
       }
     } catch (e) {
       console.error(e);
@@ -201,14 +244,16 @@ function App() {
   };
 
   const passSelectedCards = async () => {
-    if (selectedPassCards.length !== 3 || !gameState) return;
+    if (selectedPassIndices.length !== 3 || !gameState) return;
+
+    const me = gameState.players.find(p => p.id === "P1");
+    if (!me) return;
+
+    // Resolve the indices back to Card objects using localHand mapping
+    const cardsToPass = selectedPassIndices.map(index => localHand[index]);
 
     // Snapshot hand before we send to API (so we know what's new when state updates)
-    const me = gameState.players.find(p => p.id === "P1");
-    if (me) {
-      // We know we are losing the 3 selected cards. The rest stay.
-      previousHandRef.current = me.hand.filter(c => !selectedPassCards.some(sc => sc.suit === c.suit && sc.rank === c.rank));
-    }
+    previousHandRef.current = localHand.filter((_, idx) => !selectedPassIndices.includes(idx));
 
     try {
       const resp = await fetch(`${API_URL}/pass`, {
@@ -216,127 +261,229 @@ function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           playerId: "P1", // Hardcoded human ID
-          cardsToPass: selectedPassCards
+          cardsToPass: cardsToPass
         })
       });
       if (resp.ok) setGameState(await resp.json());
-      else alert(await resp.text());
+      else setErrorMsg(await resp.text());
     } catch (e) {
       console.error(e);
+      setErrorMsg("Failed to connect to the backend during passing.");
     }
+  };
+
+  const quitApplication = () => {
+    setShowQuitConfirm(true);
+  };
+
+  const confirmQuit = async () => {
+    setShowQuitConfirm(false);
+    setIsShuttingDown(true);
+    try {
+      await fetch(`${API_URL}/system/shutdown`, { method: 'POST' });
+    } catch {
+      // Fetch might fail instantly if the server shuts down fast enough, which is expected.
+    }
+
+    // Send a message to the native Photino C# wrapper to command a self-termination.
+    setTimeout(() => {
+      if ((window as any).external && typeof (window as any).external.sendMessage === 'function') {
+        (window as any).external.sendMessage("quit");
+      } else {
+        window.close(); // Fallback for standard browsers if we decoupled
+      }
+    }, 1500);
+  };
+
+  if (isShuttingDown) {
+    return (
+      <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black transition-opacity duration-1000">
+        <h1 className="text-4xl text-white font-black mb-4 animate-pulse uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">Shutting Down</h1>
+        <p className="text-gray-400 text-lg font-medium">Closing game engine natively...</p>
+      </div>
+    );
+  }
+
+  const renderErrorModal = () => {
+    if (!errorMsg) return null;
+    return (
+      <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in">
+        <div className="bg-gradient-to-br from-red-900 to-gray-900 border-2 border-red-500 rounded-3xl p-8 max-w-md w-full shadow-2xl shadow-red-500/50 transform animate-pop-in">
+          <h2 className="text-2xl font-black text-red-400 mb-4 uppercase tracking-widest flex items-center gap-2">
+            <span>⚠️</span> Error
+          </h2>
+          <p className="text-gray-200 text-lg mb-8 leading-relaxed font-medium">
+            {errorMsg}
+          </p>
+          <button
+            onClick={() => setErrorMsg(null)}
+            className="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-xl transition-all transform hover:scale-105 shadow-lg shadow-red-900/50"
+          >
+            DISMISS
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  const renderQuitModal = () => {
+    if (!showQuitConfirm) return null;
+    return (
+      <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-md animate-fade-in">
+        <div className="bg-gradient-to-br from-gray-900 to-black border-2 border-red-500/50 rounded-3xl p-8 max-w-md w-full shadow-2xl shadow-red-900/50 transform animate-pop-in text-center">
+          <h2 className="text-3xl font-black text-white mb-2 uppercase tracking-widest">
+            Quit Game?
+          </h2>
+          <p className="text-gray-400 text-md mb-8">
+            Are you sure you want to quit the application and completely shut down the background game engine?
+          </p>
+          <div className="flex gap-4">
+            <button
+              onClick={() => setShowQuitConfirm(false)}
+              className="flex-1 bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-xl transition-colors border border-gray-600"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={confirmQuit}
+              className="flex-1 bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-xl transition-all transform hover:scale-105 shadow-lg shadow-red-900/50"
+            >
+              Confirm Quit
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   if (!gameState || gameState.phase === GamePhase.Lobby) {
     return (
-      <div className="flex flex-col items-center justify-center w-full min-h-screen text-center p-8">
-        <h1 className="text-6xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-green-600 drop-shadow-lg">
-          Double Deck Cancellation Hearts
-        </h1>
+      <div className="flex flex-col items-center justify-center w-full min-h-screen p-4">
+        {renderErrorModal()}
+        {renderQuitModal()}
+        <div className="max-w-5xl mx-auto backdrop-blur-md bg-black/30 p-8 rounded-3xl border border-white/10 shadow-2xl relative w-full flex flex-col items-center">
+          <button
+            onClick={quitApplication}
+            className="absolute top-4 right-4 bg-red-600/50 hover:bg-red-500 text-white text-xs font-bold py-1 px-3 rounded"
+          >
+            Quit Game
+          </button>
+          <h1 className="text-4xl font-black text-center mb-6 mt-2 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600 drop-shadow-sm">
+            Double Deck Cancellation Hearts
+          </h1>
 
-        <div className="glass-panel p-8 rounded-2xl w-full max-w-md mt-8 space-y-6">
-          <div>
-            <label className="block text-sm font-medium mb-2 opacity-80">Total Players</label>
-            <input
-              type="range" min="5" max="11"
-              value={numPlayers} onChange={e => setNumPlayers(parseInt(e.target.value))}
-              className="w-full accent-green-500"
-            />
-            <div className="text-2xl font-bold mt-2 text-green-400">{numPlayers}</div>
-          </div>
+          <div className="w-full flex-1">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl mx-auto items-stretch">
 
-          <div className="text-left space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
-            <label className="block text-sm font-medium opacity-80 mb-1">Name Your Bot Opponents:</label>
-            {Array.from({ length: numPlayers - 1 }).map((_, i) => (
-              <input
-                key={i}
-                type="text"
-                value={botNames[i]}
-                onChange={e => {
-                  const newNames = [...botNames];
-                  newNames[i] = e.target.value;
-                  setBotNames(newNames);
-                }}
-                className="w-full bg-black/30 border border-white/10 rounded px-3 py-2 text-white text-sm"
-                placeholder={`Bot ${i + 1} Name`}
-              />
-            ))}
-          </div>
+              {/* Left Column: Players & Bots */}
+              <div className="glass-panel p-6 rounded-2xl space-y-6 flex flex-col text-center">
+                <div>
+                  <label className="block text-sm font-medium mb-2 opacity-80">Total Players</label>
+                  <input
+                    type="range" min="5" max="11"
+                    value={numPlayers} onChange={e => setNumPlayers(parseInt(e.target.value))}
+                    className="w-full accent-green-500"
+                  />
+                  <div className="text-3xl font-bold mt-2 text-green-400">{numPlayers}</div>
+                </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2 opacity-80">AI Skill Level</label>
-            <select
-              className="w-full bg-black/30 border border-white/10 rounded pt-2 pb-2 pl-4 pr-4 text-white"
-              value={aiDifficulty}
-              onChange={e => setAiDifficulty(parseInt(e.target.value))}
-            >
-              <option value={1}>Beginner (Random)</option>
-              <option value={2}>Amateur</option>
-              <option value={3}>Intermediate</option>
-              <option value={4}>Expert</option>
-              <option value={5}>Grand Master</option>
-            </select>
-          </div>
+                <div className="text-left space-y-2 flex-1 overflow-y-auto max-h-48 pr-2 custom-scrollbar">
+                  <label className="block text-sm font-medium opacity-80 mb-1">Name Your Bot Opponents:</label>
+                  {Array.from({ length: numPlayers - 1 }).map((_, i) => (
+                    <input
+                      key={i}
+                      type="text"
+                      value={botNames[i]}
+                      onChange={e => {
+                        const newNames = [...botNames];
+                        newNames[i] = e.target.value;
+                        setBotNames(newNames);
+                      }}
+                      className="w-full bg-black/30 border border-white/10 rounded px-3 py-2 text-white text-sm"
+                      placeholder={`Bot ${i + 1} Name`}
+                    />
+                  ))}
+                </div>
 
-          <div className="bg-black/20 p-4 rounded-xl space-y-4 text-left border border-white/5">
-            <h3 className="font-bold text-green-300 text-sm tracking-wider uppercase">Rule Variations</h3>
+                <div className="text-left mt-auto pt-4 border-t border-white/5">
+                  <label className="block text-sm font-medium mb-2 opacity-80">AI Skill Level</label>
+                  <select
+                    className="w-full bg-black/40 border border-white/10 rounded pt-2 pb-2 pl-4 pr-4 text-white"
+                    value={aiDifficulty}
+                    onChange={e => setAiDifficulty(parseInt(e.target.value))}
+                  >
+                    <option value={1}>Beginner (Random)</option>
+                    <option value={2}>Amateur</option>
+                    <option value={3}>Intermediate</option>
+                    <option value={4}>Expert</option>
+                    <option value={5}>Grand Master</option>
+                  </select>
+                </div>
+              </div>
 
-            <div className="flex justify-between items-center">
-              <label className="text-xs opacity-80">Passing Phase</label>
-              <select className="bg-black/50 border border-white/10 rounded text-xs p-1" value={passingStyle} onChange={e => setPassingStyle(e.target.value)}>
-                <option value="Standard">Standard (L, R, A, Hold)</option>
-                <option value="None">No Passing</option>
-              </select>
-            </div>
+              {/* Right Column: Rule Variations */}
+              <div className="glass-panel p-6 rounded-2xl flex flex-col justify-center bg-black/20 border border-white/5">
+                <h3 className="font-bold text-green-300 text-sm tracking-wider uppercase mb-4 text-center">Rule Variations</h3>
 
-            <div className="flex justify-between items-center">
-              <label className="text-xs opacity-80">First Lead</label>
-              <select className="bg-black/50 border border-white/10 rounded text-xs p-1" value={firstLead} onChange={e => setFirstLead(e.target.value)}>
-                <option value="DealersLeft">Dealer's Left</option>
-                <option value="2OfClubs">2 of Clubs</option>
-              </select>
-            </div>
+                <div className="flex justify-between items-center">
+                  <label className="text-xs opacity-80">Passing Phase</label>
+                  <select className="bg-black/50 border border-white/10 rounded text-xs p-1" value={passingStyle} onChange={e => setPassingStyle(e.target.value)}>
+                    <option value="Standard">Standard (L, R, A, Hold)</option>
+                    <option value="None">No Passing</option>
+                  </select>
+                </div>
 
-            <div className="flex justify-between items-center">
-              <label className="text-xs opacity-80">Breaking Hearts</label>
-              <select className="bg-black/50 border border-white/10 rounded text-xs p-1" value={breakingHearts} onChange={e => setBreakingHearts(e.target.value)}>
-                <option value="Standard">Must Break</option>
-                <option value="Guts">Guts (Lead anytime)</option>
-              </select>
-            </div>
+                <div className="flex justify-between items-center">
+                  <label className="text-xs opacity-80">First Lead</label>
+                  <select className="bg-black/50 border border-white/10 rounded text-xs p-1" value={firstLead} onChange={e => setFirstLead(e.target.value)}>
+                    <option value="DealersLeft">Dealer's Left</option>
+                    <option value="2OfClubs">2 of Clubs</option>
+                  </select>
+                </div>
 
-            <div className="flex justify-between items-center">
-              <label className="text-xs opacity-80">Cancellation Win</label>
-              <select className="bg-black/50 border border-white/10 rounded text-xs p-1" value={cancellationWinner} onChange={e => setCancellationWinner(e.target.value)}>
-                <option value="PreviousWinner">Previous Winner</option>
-                <option value="TrickLeader">Trick Leader</option>
-              </select>
-            </div>
+                <div className="flex justify-between items-center">
+                  <label className="text-xs opacity-80">Breaking Hearts</label>
+                  <select className="bg-black/50 border border-white/10 rounded text-xs p-1" value={breakingHearts} onChange={e => setBreakingHearts(e.target.value)}>
+                    <option value="Standard">Must Break</option>
+                    <option value="Guts">Guts (Lead anytime)</option>
+                  </select>
+                </div>
 
-            <div className="flex justify-between items-center">
-              <label className="text-xs opacity-80">Match Winning Score</label>
-              <select className="bg-black/50 border border-white/10 rounded text-xs p-1" value={targetScore} onChange={e => setTargetScore(parseInt(e.target.value))}>
-                <option value={50}>50 Points (Fast Match)</option>
-                <option value={100}>100 Points (Standard)</option>
-                <option value={150}>150 Points (Long Match)</option>
-                <option value={200}>200 Points (Marathon)</option>
-              </select>
-            </div>
+                <div className="flex justify-between items-center">
+                  <label className="text-xs opacity-80">Cancellation Win</label>
+                  <select className="bg-black/50 border border-white/10 rounded text-xs p-1" value={cancellationWinner} onChange={e => setCancellationWinner(e.target.value)}>
+                    <option value="PreviousWinner">Previous Winner</option>
+                    <option value="TrickLeader">Trick Leader</option>
+                  </select>
+                </div>
 
-            <div className="flex justify-between items-center">
-              <label className="text-xs opacity-80">Trick Review Pause</label>
-              <select className="bg-black/50 border border-white/10 rounded text-xs p-1" value={trickPauseMs} onChange={e => setTrickPauseMs(parseInt(e.target.value))}>
-                <option value={1000}>Fast (1 second)</option>
-                <option value={2500}>Normal (2.5 seconds)</option>
-                <option value={5000}>Slow (5 seconds)</option>
-              </select>
+                <div className="flex justify-between items-center">
+                  <label className="text-xs opacity-80">Match Winning Score</label>
+                  <select className="bg-black/50 border border-white/10 rounded text-xs p-1" value={targetScore} onChange={e => setTargetScore(parseInt(e.target.value))}>
+                    <option value={50}>50 Points (Fast Match)</option>
+                    <option value={100}>100 Points (Standard)</option>
+                    <option value={150}>150 Points (Long Match)</option>
+                    <option value={200}>200 Points (Marathon)</option>
+                  </select>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <label className="text-xs opacity-80">Trick Review Pause</label>
+                  <select className="bg-black/50 border border-white/10 rounded text-xs p-1" value={trickPauseMs} onChange={e => setTrickPauseMs(parseInt(e.target.value))}>
+                    <option value={1000}>Fast (1 second)</option>
+                    <option value={2500}>Normal (2.5 seconds)</option>
+                    <option value={5000}>Slow (5 seconds)</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
 
           <button
             onClick={startGame}
-            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold py-3 px-6 rounded-xl transition-all transform hover:scale-105 shadow-xl shadow-green-900/50"
+            className="w-full max-w-2xl mx-auto block bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-black text-xl py-4 px-8 rounded-full transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(52,211,153,0.4)] hover:shadow-[0_0_30px_rgba(52,211,153,0.6)] mt-8"
           >
-            Start Game
+            START GAME
           </button>
         </div>
       </div>
@@ -344,11 +491,19 @@ function App() {
   }
 
   // --- GAME VIEW ---
-  const humanPlayer = gameState.players.find(p => p.id === "P1");
   const isMyTurn = gameState.players[gameState.currentTurnPlayerIndex].id === "P1";
 
   return (
-    <div className="relative w-full h-screen flex flex-col justify-between p-4 overflow-hidden">
+    <div className="relative w-full h-screen flex flex-col items-center justify-between p-4 overflow-hidden">
+      {renderErrorModal()}
+      {renderQuitModal()}
+
+      <button
+        onClick={quitApplication}
+        className="absolute top-4 right-4 z-50 bg-red-600/30 hover:bg-red-500 text-white text-xs font-bold py-1 px-3 rounded backdrop-blur transition-colors duration-200 border border-red-500/30"
+      >
+        Quit App
+      </button>
 
       {/* HUD (Scores & Actions) */}
       <div className="absolute top-4 left-4 flex gap-4">
@@ -422,7 +577,7 @@ function App() {
       </div>
 
       {/* Human Hand */}
-      <div className="h-64 flex flex-col items-center justify-end pb-8">
+      <div className="min-h-64 flex flex-col items-center justify-end pb-4 mt-auto z-10 w-full max-w-7xl">
 
         {/* Play Action Bar */}
         <div className="h-16 mb-4 flex items-center justify-center gap-4">
@@ -470,7 +625,7 @@ function App() {
               <div className={`px-6 py-2 rounded-full font-bold transition-opacity bg-purple-900 text-purple-200 shadow-lg shadow-purple-900/50`}>
                 {gameState.pendingPasses?.hasOwnProperty("P1") ? "Waiting for AI swaps..." : "Select 3 cards to pass"}
               </div>
-              {selectedPassCards.length === 3 && !gameState.pendingPasses?.hasOwnProperty("P1") && (
+              {selectedPassIndices.length === 3 && !gameState.pendingPasses?.hasOwnProperty("P1") && (
                 <button
                   onClick={passSelectedCards}
                   className="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-8 rounded-full shadow-lg shadow-green-500/50 animate-bounce"
@@ -486,7 +641,7 @@ function App() {
                   {isMyTurn ? "YOUR TURN" : "Waiting for AI..."}
                 </div>
               )}
-              {isMyTurn && selectedCard && gameState.phase === GamePhase.Playing && (
+              {isMyTurn && selectedCardIndex !== null && gameState.phase === GamePhase.Playing && (
                 <button
                   onClick={playSelectedCard}
                   className="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-8 rounded-full shadow-lg shadow-green-500/50 animate-bounce"
@@ -500,28 +655,110 @@ function App() {
         </div>
 
         {/* The Fanned Hand */}
-        <div className="flex justify-center w-full px-12 -space-x-12 hover:space-x-1 transition-all duration-300">
-          {humanPlayer?.hand.map((card, i) => {
+        <div className="flex flex-wrap justify-center items-end w-full px-4 gap-y-4 -space-x-8 sm:-space-x-10 hover:space-x-1 transition-all duration-300 pb-4">
+          {localHand.map((card, i) => {
             const isPassingMode = gameState.phase === GamePhase.Passing;
             const isSelected = isPassingMode
-              ? selectedPassCards.some(c => c.suit === card.suit && c.rank === card.rank)
-              : selectedCard === card;
+              ? selectedPassIndices.includes(i)
+              : selectedCardIndex === i;
+
+            // Still comparing newly passed cards by identity since that's all the API returns during Trick update. It's fine for simple FX.
             const isNewlyPassed = newlyPassedCards.some(c => c.suit === card.suit && c.rank === card.rank);
 
+            const isBeingDragged = draggedItemIndex === i;
+            const isDragOver = dragOverIndex === i;
+
             return (
-              <div key={i} className={isNewlyPassed ? "animate-slide-down-card" : ""}>
+              <div
+                key={i}
+                className={`${isNewlyPassed ? "animate-slide-down-card" : ""} ${isBeingDragged ? 'opacity-30 scale-95' : 'opacity-100'} ${isDragOver ? 'border-l-4 border-yellow-400 pl-2 -ml-2 translate-x-1' : ''} cursor-grab active:cursor-grabbing transition-all duration-200`}
+                draggable={true}
+                onDragStart={(e) => {
+                  setDraggedItemIndex(i);
+                  dragActiveRef.current = true;
+                  e.dataTransfer.effectAllowed = 'move';
+                }}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  e.dataTransfer.dropEffect = 'move';
+                  if (dragOverIndex !== i) setDragOverIndex(i);
+                }}
+                onDragLeave={() => {
+                  if (dragOverIndex === i) setDragOverIndex(null);
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  if (draggedItemIndex === null) return;
+
+                  if (draggedItemIndex === i) {
+                    // Sloppy click detected (user dragged and dropped on the same spot)
+                    // Treat as a legitimate click interaction since drag hijacked it.
+                    if (isPassingMode) {
+                      if (isSelected) {
+                        setSelectedPassIndices(prev => prev.filter(idx => idx !== i));
+                      } else if (selectedPassIndices.length < 3) {
+                        setSelectedPassIndices(prev => [...prev, i]);
+                      }
+                    } else {
+                      setSelectedCardIndex(i);
+                    }
+                    setDraggedItemIndex(null);
+                    setDragOverIndex(null);
+                    return;
+                  }
+
+                  // Reorder
+                  setLocalHand(prev => {
+                    const updated = [...prev];
+                    const [movedCard] = updated.splice(draggedItemIndex, 1);
+                    updated.splice(i, 0, movedCard);
+                    return updated;
+                  });
+
+                  // Safely remap selected indices if we just shuffled the array
+                  if (selectedCardIndex === draggedItemIndex) {
+                    setSelectedCardIndex(i);
+                  } else if (selectedCardIndex !== null) {
+                    if (draggedItemIndex < selectedCardIndex && i >= selectedCardIndex) {
+                      setSelectedCardIndex(selectedCardIndex - 1);
+                    } else if (draggedItemIndex > selectedCardIndex && i <= selectedCardIndex) {
+                      setSelectedCardIndex(selectedCardIndex + 1);
+                    }
+                  }
+
+                  if (isPassingMode) {
+                    setSelectedPassIndices(prev => prev.map(idx => {
+                      if (idx === draggedItemIndex) return i;
+                      if (draggedItemIndex < idx && i >= idx) return idx - 1;
+                      if (draggedItemIndex > idx && i <= idx) return idx + 1;
+                      return idx;
+                    }));
+                  }
+
+                  setDraggedItemIndex(null);
+                  setDragOverIndex(null);
+                }}
+                onDragEnd={() => {
+                  setDraggedItemIndex(null);
+                  setDragOverIndex(null);
+                  // Add a tiny delay before re-enabling clicks so the trailing mouseUp doesn't trigger the selection toggle
+                  setTimeout(() => { dragActiveRef.current = false; }, 50);
+                }}
+              >
                 <PlayingCard
                   card={card}
                   selected={isSelected}
-                  onClick={(c) => {
+                  onClick={() => {
+                    if (dragActiveRef.current) return; // Ignore click if we were just dragging
+
                     if (isPassingMode) {
                       if (isSelected) {
-                        setSelectedPassCards(prev => prev.filter(pc => !(pc.suit === c.suit && pc.rank === c.rank)));
-                      } else if (selectedPassCards.length < 3) {
-                        setSelectedPassCards(prev => [...prev, c]);
+                        setSelectedPassIndices(prev => prev.filter(idx => idx !== i));
+                      } else if (selectedPassIndices.length < 3) {
+                        setSelectedPassIndices(prev => [...prev, i]);
                       }
                     } else {
-                      setSelectedCard(c);
+                      setSelectedCardIndex(i);
                     }
                   }}
                 />

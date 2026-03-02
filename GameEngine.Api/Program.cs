@@ -1,4 +1,17 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
+namespace GameEngine.Api
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+// Explicitly bind to the port React expects, bypassing launchSettings when run as an exe
+builder.WebHost.UseUrls("http://localhost:5243");
 
 builder.Services.AddCors(options =>
 {
@@ -27,8 +40,12 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
 app.UseCors("AllowAll");
+
+// Serve React static files from wwwroot
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.MapControllers();
 
 var summaries = new[]
@@ -36,23 +53,22 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/weatherforecast", () =>
+// API to gracefully shutdown the server from the React UI
+app.MapPost("/api/system/shutdown", (IHostApplicationLifetime lifetime) =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+    // Run shutdown on background thread to let HTTP response complete
+    _ = Task.Run(async () =>
+    {
+        await Task.Delay(500);
+        lifetime.StopApplication();
+    });
+    return Results.Ok(new { message = "Shutting down..." });
+});
 
-app.Run();
+// Fallback all unknown non-API routes to index.html to support React Router natively (if added later)
+app.MapFallbackToFile("/index.html");
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+            app.Run();
+        }
+    }
 }

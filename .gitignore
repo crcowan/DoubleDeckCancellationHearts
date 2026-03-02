@@ -1,0 +1,21 @@
+# .NET Core
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+
+# Node.js
+node_modules/
+dist/
+
+# Game Packaging
+DoubleDeckCancellationHearts_Release/
+DoubleDeckCancellationHearts_Release.zip
+api_output.txt
+crash_log.txt
+build_output.txt
+
+# OS Files
+.DS_Store
+Thumbs.db

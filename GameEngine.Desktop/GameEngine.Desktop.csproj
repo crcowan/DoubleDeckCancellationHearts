@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Platforms>AnyCPU</Platforms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>DoubleDeckHearts</AssemblyName>
+    <ApplicationIcon>app_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\**" />
+    <None Update="wwwroot\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Photino.NET" Version="3.2.3" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /y /s /e /i /d &quot;$(ProjectDir)..\GameEngine.Api\bin\Debug\net10.0\*&quot; &quot;$(TargetDir)Api\&quot;" />
+    <Exec Command="xcopy /y /s /e /i /d &quot;$(ProjectDir)..\GameEngine.Api\wwwroot\*&quot; &quot;$(TargetDir)Api\wwwroot\&quot;" />
+  </Target>
+
+</Project>

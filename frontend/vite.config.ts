@@ -8,4 +8,8 @@ export default defineConfig({
     tailwindcss(),
     react()
   ],
+  build: {
+    outDir: '../GameEngine.Api/wwwroot',
+    emptyOutDir: true
+  }
 })
