@@ -98,6 +98,40 @@ namespace GameEngine.Api.Services
                         }
                     }
                 }
+
+                // If we are LEADING the trick
+                if (state.CurrentTrick.Count == 0)
+                {
+                    // STRATEGY 4: LEADING DOUBLES (Double Deck Specific)
+                    // If we have a pair of identical safe cards (low/mid), lead one. If it gets canceled by the other identical card someone else holds, we take no points. If we hold both, we guarantee they cancel each other if played back to back.
+                    var duplicates = validCards.GroupBy(c => new { c.Suit, c.Rank }).Where(g => g.Count() > 1).Select(g => g.First()).ToList();
+                    var safeDuplicateLead = duplicates.OrderBy(c => c.Rank).FirstOrDefault(c => c.Suit != Suit.Hearts && c.Rank < Rank.King);
+                    if (safeDuplicateLead != null)
+                    {
+                        chosenCard = safeDuplicateLead;
+                        reasoning = $"I am leading the trick and I have two {chosenCard}s. Leading a duplicate is a strong Double Deck strategy to flush out cards or guarantee a cancellation later.";
+                        return (chosenCard, reasoning);
+                    }
+
+                    // STRATEGY 5: FLUSHING SPADES
+                    // Lead low/medium spades to force opponents to play their Spades, hoping to flush out the Queens early when I don't have them.
+                    var safeSpade = validCards.Where(c => c.Suit == Suit.Spades && c.Rank < Rank.Queen).OrderBy(c => c.Rank).FirstOrDefault();
+                    if (safeSpade != null)
+                    {
+                        chosenCard = safeSpade;
+                        reasoning = $"I am leading the {chosenCard} to safely flush out Spades and hopefully draw out the Queens before points accumulate.";
+                        return (chosenCard, reasoning);
+                    }
+                    
+                    // Default Lead: Just play the lowest card in a non-dangerous suit.
+                    var safeLead = validCards.Where(c => c.Suit != Suit.Hearts && c.Suit != Suit.Spades).OrderBy(c => c.Rank).FirstOrDefault();
+                    if (safeLead != null)
+                    {
+                        chosenCard = safeLead;
+                        reasoning = $"I am leading my lowest safe card, the {chosenCard}.";
+                        return (chosenCard, reasoning);
+                    }
+                }
             }
 
             // Fallback / Default AI: Pick lowest valid card
@@ -193,6 +227,7 @@ CRITICAL STRATEGY RULES:
 1. DOUBLE DECK CANCELLATION: There are two of every card. If an opponent plays an Ace (or a high card/penalty card) and you have the IDENTICAL duplicate, YOU MUST PLAY IT to cancel their card out! This is the most crucial defensive strategy.
 2. If you are void in the led suit, aggressively dump your Queen of Spades or highest Hearts.
 3. If you must follow suit, try to play a card just underneath the current highest card to 'duck' the trick.
+4. If you are LEADING the trick, lead a low/mid card that you have TWO of (a duplicate). Or, lead low Spades to flush out the Queens.
 
 Your Hand: {string.Join(", ", aiPlayer.Hand.Select(c => c.ToString()))}
 Valid Moves: {string.Join(", ", validCards.Select(c => c.ToString()))}
