@@ -70,6 +70,7 @@ namespace GameEngine.Api.Services
         {
             if (_state == null) return;
 
+            var rnd = new Random();
             var deck = new Deck();
             var dealResult = deck.Deal(_state.Players.Count);
 
@@ -77,6 +78,10 @@ namespace GameEngine.Api.Services
             {
                 _state.Players[i].Hand = dealResult.Hands[i];
                 _state.Players[i].CapturedCards.Clear();
+                if (_state.Players[i].IsAi) 
+                {
+                    _state.Players[i].SkillOffset = rnd.NextDouble() - 0.5;
+                }
             }
 
             _state.SetupKitty = dealResult.Kitty;
@@ -84,6 +89,7 @@ namespace GameEngine.Api.Services
             _state.CurrentTrick.Clear();
             _state.HeartsBroken = false;
             _state.IsFirstTrickOfHand = true;
+            _state.MemoryTracker = new AiMemoryTracker(); // Reset memory every new hand
 
             // Simple first lead logic: The player to the left of the dealer (Player 0) starts for now.
             // Move Dealer Left:
@@ -192,7 +198,29 @@ namespace GameEngine.Api.Services
             activePlayer.Hand.Remove(card);
             _state.CurrentTrick.Add(card);
 
-            if (card.IsHeart) _state.HeartsBroken = true;
+            if (card.IsHeart) 
+            {
+                _state.HeartsBroken = true;
+                _state.MemoryTracker.PenaltyHeartsPlayed++;
+            }
+            if (card.IsQueenOfSpades) 
+            {
+                _state.MemoryTracker.QueensOfSpadesPlayed++;
+            }
+
+            // Check for Suit Voids (If this is not the led card, and suit doesn't match led suit)
+            if (_state.CurrentTrick.Count > 1) 
+            {
+                var ledSuit = _state.CurrentTrick.First().Suit;
+                if (card.Suit != ledSuit) 
+                {
+                    if (!_state.MemoryTracker.PlayerVoids.ContainsKey(playerId)) 
+                    {
+                        _state.MemoryTracker.PlayerVoids[playerId] = new HashSet<Suit>();
+                    }
+                    _state.MemoryTracker.PlayerVoids[playerId].Add(ledSuit);
+                }
+            }
 
             // Check if trick is complete
             if (_state.CurrentTrick.Count == _state.Players.Count)

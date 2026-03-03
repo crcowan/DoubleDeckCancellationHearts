@@ -8,9 +8,19 @@ namespace GameEngine.Api.Models
         public string Name { get; set; } = string.Empty;
         public bool IsAi { get; set; }
         public int DifficultyLevel { get; set; } // 1 (Beginner) to 5 (Grand Master)
+        public double SkillOffset { get; set; } // -0.5 to +0.5 random variance
         public List<Card> Hand { get; set; } = new();
         public List<Card> CapturedCards { get; set; } = new();
         public int Score { get; set; }
+    }
+
+    public class AiMemoryTracker
+    {
+        public int QueensOfSpadesPlayed { get; set; } = 0;
+        public int PenaltyHeartsPlayed { get; set; } = 0;
+        
+        // Dictionary mapping PlayerId -> List of Suits they are void in
+        public Dictionary<string, HashSet<Suit>> PlayerVoids { get; set; } = new();
     }
 
     public class GameRules
@@ -55,6 +65,8 @@ namespace GameEngine.Api.Models
         public int RoundNumber { get; set; } = 1;
         public Dictionary<string, List<Card>> PendingPasses { get; set; } = new();
         public string? ShooterOfMoonId { get; set; }
+
+        public AiMemoryTracker MemoryTracker { get; set; } = new();
 
         public enum GamePhase { Lobby, Passing, TrickPending, Playing, GameOver, MatchOver }
         public GamePhase Phase { get; set; } = GamePhase.Lobby;

@@ -49,8 +49,35 @@ namespace GameEngine.Api.Services
             Card chosenCard;
             string reasoning;
             
-            if (aiPlayer.DifficultyLevel >= 3) // Intermediate and above
+            double effectiveSkill = aiPlayer.DifficultyLevel + aiPlayer.SkillOffset;
+            
+            if (effectiveSkill >= 2.5) // Intermediate and above
             {
+                // STRATEGY 0: MOONSHOT PROBABILITY MATRIX
+                // If someone else already took points, Moonshot is dead. Keep `state` checks safe.
+                bool moonshotDead = state.Players.Any(p => p.Id != aiPlayer.Id && p.Score > 0) || 
+                    (state.MemoryTracker.PenaltyHeartsPlayed > 0 && aiPlayer.CapturedCards.Count(c => c.IsHeart) < state.MemoryTracker.PenaltyHeartsPlayed) ||
+                    (state.MemoryTracker.QueensOfSpadesPlayed > 0 && aiPlayer.CapturedCards.Count(c => c.IsQueenOfSpades) < state.MemoryTracker.QueensOfSpadesPlayed);
+
+                if (effectiveSkill >= 3.5 && !moonshotDead && state.RoundNumber > 1) 
+                {
+                    // Calculate God Hand Probability
+                    int highHearts = aiPlayer.Hand.Count(c => c.IsHeart && c.Rank >= Rank.Jack);
+                    int queens = aiPlayer.Hand.Count(c => c.IsQueenOfSpades);
+                    int highestDiamondRun = aiPlayer.Hand.Count(c => c.Suit == Suit.Diamonds && c.Rank >= Rank.Ten);
+                    int highestClubRun = aiPlayer.Hand.Count(c => c.Suit == Suit.Clubs && c.Rank >= Rank.Ten);
+
+                    // If holding 1+ Queens, 4+ high Hearts, and a strong side run
+                    if (queens >= 1 && highHearts >= 4 && (highestDiamondRun >= 3 || highestClubRun >= 3))
+                    {
+                        var bestMoonCard = validCards.OrderByDescending(c => c.PointValue).ThenByDescending(c => c.Rank).FirstOrDefault();
+                        if (bestMoonCard != null)
+                        {
+                            return (bestMoonCard, "MOONSHOT PROTOCOL ENGAGED: My hand is an absolute God Hand. I am aggressively playing my highest penalty cards and leading top winners to capture all 52 points!");
+                        }
+                    }
+                }
+
                 // STRATEGY 1: ACTIVE CANCELLATION (Double Deck Specific)
                 // If a dangerous card (High rank or Penalty points) has been played, and we hold the exact duplicate, play it immediately to cancel it out!
                 if (state.CurrentTrick.Count > 0)
@@ -123,12 +150,34 @@ namespace GameEngine.Api.Services
                         return (chosenCard, reasoning);
                     }
                     
+                    
                     // Default Lead: Just play the lowest card in a non-dangerous suit.
-                    var safeLead = validCards.Where(c => c.Suit != Suit.Hearts && c.Suit != Suit.Spades).OrderBy(c => c.Rank).FirstOrDefault();
+                    var safeLeads = validCards.Where(c => c.Suit != Suit.Hearts && c.Suit != Suit.Spades).ToList();
+                    
+                    // STRATEGY 7: AVOID KNOWN VOIDS (using MemoryTracker) & TARGET LEADER
+                    var leader = state.Players.OrderBy(p => p.Score).First();
+                    bool targetLeader = effectiveSkill >= 3.5 && leader.Id != aiPlayer.Id && (aiPlayer.Score - leader.Score > 20);
+
+                    if (safeLeads.Count > 1 && effectiveSkill >= 3.0) 
+                    {
+                        // Filter out suits where an opponent is void (so they don't dump points on us)
+                        // EXCEPTION: If we are targeting the leader, and the leader is void, LEAD that suit intentionally!
+                        var suitsToAvoid = state.MemoryTracker.PlayerVoids
+                                .Where(kvp => !targetLeader || kvp.Key != leader.Id)
+                                .SelectMany(kvp => kvp.Value)
+                                .ToHashSet();
+                        
+                        var filteredSafeLeads = safeLeads.Where(c => !suitsToAvoid.Contains(c.Suit)).ToList();
+                        if (filteredSafeLeads.Count > 0) safeLeads = filteredSafeLeads;
+                    }
+
+                    var safeLead = safeLeads.OrderBy(c => c.Rank).FirstOrDefault();
                     if (safeLead != null)
                     {
                         chosenCard = safeLead;
-                        reasoning = $"I am leading my lowest safe card, the {chosenCard}.";
+                        reasoning = targetLeader 
+                            ? $"I am leading the {chosenCard}. {leader.Name} is winning, so I am trying to stick them with points."
+                            : $"I am leading my lowest safe card, the {chosenCard}, explicitly avoiding any suits I remember opponents being void in.";
                         return (chosenCard, reasoning);
                     }
                 }
