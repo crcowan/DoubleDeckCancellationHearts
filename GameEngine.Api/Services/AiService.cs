@@ -274,13 +274,24 @@ namespace GameEngine.Api.Services
                     cardsToPass.AddRange(ai.Hand.Except(cardsToPass).OrderByDescending(c => (int)c.Rank).Take(passCount - cardsToPass.Count));
                 }
             }
+            }
             else
             {
                 // Beginner/Intermediate just passes the three highest value cards
                 cardsToPass = sortedHand.Take(3).ToList();
             }
 
-            gameManager.PassCards(ai.Id, cardsToPass.Take(3).ToList());
+            // Save reasoning for the UI
+            cardsToPass = cardsToPass.Take(3).ToList();
+            string reasoning = "I am passing ";
+            if (ai.DifficultyLevel >= 3) {
+                 reasoning += "cards strategically: trying to create voids by playing my shortest suits, or dumping my most dangerous penalty cards (Queens and high Hearts).";
+            } else {
+                 reasoning += "my absolute highest cards to get them out of my hand.";
+            }
+            state.LastMoveReasoning[ai.Id] = reasoning;
+
+            gameManager.PassCards(ai.Id, cardsToPass);
         }
 
         private string ConstructPrompt(GameState state, Player aiPlayer, List<Card> validCards, string historySummary)
