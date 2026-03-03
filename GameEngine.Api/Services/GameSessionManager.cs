@@ -160,6 +160,7 @@ namespace GameEngine.Api.Services
                     p.Hand.AddRange(_state.PendingPasses[p.Id]);
                 }
                 _state.PendingPasses.Clear();
+                _state.LastMoveReasoning.Clear(); // Clear passing reasoning before trick 1 starts
                 _state.Phase = GameState.GamePhase.Playing;
                 return;
             }
@@ -174,6 +175,7 @@ namespace GameEngine.Api.Services
             }
 
             _state.PendingPasses.Clear();
+            _state.LastMoveReasoning.Clear(); // Clear passing reasoning before trick 1 starts
             _state.Phase = GameState.GamePhase.Playing;
         }
 
@@ -293,6 +295,7 @@ namespace GameEngine.Api.Services
 
             _state.CurrentTrick.Clear();
             _state.IsFirstTrickOfHand = false;
+            _state.LastMoveReasoning.Clear(); // Clear reasoning for the next trick
 
             // Check Hand End
             if (_state.Players[0].Hand.Count == 0)
