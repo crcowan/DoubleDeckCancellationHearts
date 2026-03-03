@@ -20,6 +20,7 @@ function App() {
   const [cancellationWinner, setCancellationWinner] = useState("PreviousWinner"); // "PreviousWinner", "TrickLeader"
   const [targetScore, setTargetScore] = useState(100); // 50, 100, 150
   const [trickPauseMs, setTrickPauseMs] = useState(2500); // Configurable trick review timer
+  const [autoAdvanceTrick, setAutoAdvanceTrick] = useState(true); // Toggle for manual trick review
 
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
   const [selectedPassIndices, setSelectedPassIndices] = useState<number[]>([]);
@@ -71,6 +72,7 @@ function App() {
       if (parsed.cancellationWinner) setCancellationWinner(parsed.cancellationWinner);
       if (parsed.targetScore) setTargetScore(parsed.targetScore);
       if (parsed.trickPauseMs) setTrickPauseMs(parsed.trickPauseMs);
+      if (parsed.autoAdvanceTrick !== undefined) setAutoAdvanceTrick(parsed.autoAdvanceTrick);
     }
 
     fetchState();
@@ -82,7 +84,7 @@ function App() {
     localStorage.setItem('dc-hearts-diff-v2', aiDifficulty.toString());
     localStorage.setItem('dc-hearts-bot-names-v2', JSON.stringify(botNames));
     localStorage.setItem('dc-hearts-rules-v2', JSON.stringify({
-      passingStyle, firstLead, breakingHearts, cancellationWinner, trickPauseMs, targetScore
+      passingStyle, firstLead, breakingHearts, cancellationWinner, trickPauseMs, targetScore, autoAdvanceTrick
     }));
 
     try {
@@ -144,6 +146,17 @@ function App() {
     }
   };
 
+  const manuallyResolveTrick = async () => {
+    try {
+      const resp = await fetch(`${API_URL}/resolve-trick`, { method: 'POST' });
+      if (resp.ok) {
+        setGameState(await resp.json());
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     if (!gameState) return;
 
@@ -194,16 +207,18 @@ function App() {
           .catch(console.error);
       }
     } else if (gameState.phase === GamePhase.TrickPending) {
-      // Automatically start the next trick after the selected pause duration
-      const timer = setTimeout(() => {
-        fetch(`${API_URL}/resolve-trick`, { method: 'POST' })
-          .then(r => r.json())
-          .then(setGameState)
-          .catch(console.error);
-      }, trickPauseMs);
-      return () => clearTimeout(timer);
+      if (autoAdvanceTrick) {
+        // Automatically start the next trick after the selected pause duration
+        const timer = setTimeout(() => {
+          fetch(`${API_URL}/resolve-trick`, { method: 'POST' })
+            .then(r => r.json())
+            .then(setGameState)
+            .catch(console.error);
+        }, trickPauseMs);
+        return () => clearTimeout(timer);
+      }
     }
-  }, [gameState, trickPauseMs]);
+  }, [gameState, trickPauseMs, autoAdvanceTrick]);
 
   // Detect new cards arriving after a pass
   useEffect(() => {
@@ -534,6 +549,30 @@ function App() {
         >
           Leave Match
         </button>
+        <div className="glass-panel px-4 py-2 rounded-xl text-sm text-gray-300 flex items-center gap-2 h-fit self-center border border-white/5 bg-black/40 backdrop-blur-md">
+          <label className="flex items-center cursor-pointer gap-2 group">
+            <span className="font-bold opacity-80 group-hover:opacity-100 transition-opacity">Auto-Advance Tricks:</span>
+            <div className={`relative inline-flex items-center h-5 w-9 rounded-full transition-colors ${autoAdvanceTrick ? 'bg-green-500' : 'bg-gray-600'}`}>
+              <span className={`inline-block w-3 h-3 transform bg-white rounded-full transition-transform ${autoAdvanceTrick ? 'translate-x-5' : 'translate-x-1'}`} />
+            </div>
+            <input
+              type="checkbox"
+              checked={autoAdvanceTrick}
+              onChange={() => {
+                const newVal = !autoAdvanceTrick;
+                setAutoAdvanceTrick(newVal);
+                // Dynamically update rules in localstorage so it persists between games
+                const savedRules = localStorage.getItem('dc-hearts-rules-v2');
+                if (savedRules) {
+                  const parsed = JSON.parse(savedRules);
+                  parsed.autoAdvanceTrick = newVal;
+                  localStorage.setItem('dc-hearts-rules-v2', JSON.stringify(parsed));
+                }
+              }}
+              className="sr-only"
+            />
+          </label>
+        </div>
       </div>
 
       {/* Opponents (Top / Sides representation placeholder) */}
@@ -585,6 +624,18 @@ function App() {
             <span className="text-white/30 font-bold uppercase tracking-widest">
               {gameState.phase === GamePhase.Playing ? "Waiting for Lead" : "Trick Completed"}
             </span>
+          )}
+
+          {gameState.phase === GamePhase.TrickPending && !autoAdvanceTrick && (
+            <div className="absolute z-50 flex flex-col items-center justify-center bg-black/60 rounded-full w-full h-full backdrop-blur-sm shadow-inner overflow-hidden animate-fade-in group pointer-events-auto">
+              <button
+                onClick={manuallyResolveTrick}
+                className="bg-green-500 hover:bg-green-400 text-white font-black uppercase tracking-widest py-3 px-8 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.6)] animate-pulse hover:animate-none transform hover:scale-105 transition-all outline-white/50 z-50 pointer-events-auto"
+              >
+                Next Trick &#10140;
+              </button>
+              <span className="text-white/50 text-xs mt-4 uppercase tracking-widest font-bold">Review AI Reasoning...</span>
+            </div>
           )}
         </div>
       </div>
