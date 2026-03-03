@@ -111,9 +111,9 @@ namespace GameEngine.Api.Services
         }
         
         // Optional logic for "Shooting the Moon" (getting all 52 points from two decks)
-        public bool DidShootTheMoon(int playerScore)
+        public bool DidShootTheMoon(List<Card> capturedCards)
         {
-            return playerScore == 52; 
+            return CalculateTricksPoints(capturedCards) == 52; 
         }
     }
 }

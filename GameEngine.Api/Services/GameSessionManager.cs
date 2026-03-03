@@ -325,7 +325,7 @@ namespace GameEngine.Api.Services
         {
             foreach (var p in _state.Players)
             {
-                if (_logic.DidShootTheMoon(p.Score))
+                if (_logic.DidShootTheMoon(p.CapturedCards))
                 {
                     // Special Double Deck Moon: usually score goes down or others go up massively.
                     // For now, reverse the 52 points and subtract 52 instead.

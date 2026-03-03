@@ -54,8 +54,8 @@ namespace GameEngine.Api.Services
             if (effectiveSkill >= 2.5) // Intermediate and above
             {
                 // STRATEGY 0: MOONSHOT PROBABILITY MATRIX
-                // If someone else already took points, Moonshot is dead. Keep `state` checks safe.
-                bool moonshotDead = state.Players.Any(p => p.Id != aiPlayer.Id && p.Score > 0) || 
+                // If someone else already took points in this hand, Moonshot is dead. Keep `state` checks safe.
+                bool moonshotDead = state.Players.Any(p => p.Id != aiPlayer.Id && _logic.CalculateTricksPoints(p.CapturedCards) > 0) || 
                     (state.MemoryTracker.PenaltyHeartsPlayed > 0 && aiPlayer.CapturedCards.Count(c => c.IsHeart) < state.MemoryTracker.PenaltyHeartsPlayed) ||
                     (state.MemoryTracker.QueensOfSpadesPlayed > 0 && aiPlayer.CapturedCards.Count(c => c.IsQueenOfSpades) < state.MemoryTracker.QueensOfSpadesPlayed);
 
