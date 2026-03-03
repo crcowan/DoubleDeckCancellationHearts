@@ -274,7 +274,6 @@ namespace GameEngine.Api.Services
                     cardsToPass.AddRange(ai.Hand.Except(cardsToPass).OrderByDescending(c => (int)c.Rank).Take(passCount - cardsToPass.Count));
                 }
             }
-            }
             else
             {
                 // Beginner/Intermediate just passes the three highest value cards

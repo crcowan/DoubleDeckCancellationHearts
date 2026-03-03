@@ -124,9 +124,6 @@ C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngi
 C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\bin\Debug\net10.0\GameEngine.Api.staticwebassets.runtime.json
 C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\obj\Debug\net10.0\compressed\r6s0eupq0o-{0}-69kjnsiwqx-69kjnsiwqx.gz
 C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\obj\Debug\net10.0\GameEngine.Api.sourcelink.json
-C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\obj\Debug\net10.0\compressed\jvw6l0szf4-{0}-d0niisj84f-d0niisj84f.gz
-C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\obj\Debug\net10.0\compressed\g2nncvztra-{0}-ptw65918jq-ptw65918jq.gz
-C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\obj\Debug\net10.0\compressed\juuw6e9lx7-{0}-werhtqkduh-werhtqkduh.gz
 C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\bin\Debug\net10.0\Photino.NET.dll
 C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\bin\Debug\net10.0\runtimes\linux-arm64\native\Photino.Native.so
 C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\bin\Debug\net10.0\runtimes\linux-x64\native\Photino.Native.so
@@ -136,3 +133,6 @@ C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngi
 C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\bin\Debug\net10.0\runtimes\win-arm64\native\WebView2Loader.dll
 C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\bin\Debug\net10.0\runtimes\win-x64\native\Photino.Native.dll
 C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\bin\Debug\net10.0\runtimes\win-x64\native\WebView2Loader.dll
+C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\obj\Debug\net10.0\compressed\juuw6e9lx7-{0}-ca3tihwqw1-ca3tihwqw1.gz
+C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\obj\Debug\net10.0\compressed\0zxiwi31hr-{0}-j2a76plc2w-j2a76plc2w.gz
+C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\obj\Debug\net10.0\compressed\ote2olu2lz-{0}-ov3885ayzk-ov3885ayzk.gz
