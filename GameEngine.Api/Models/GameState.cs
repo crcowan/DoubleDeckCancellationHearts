@@ -67,6 +67,7 @@ namespace GameEngine.Api.Models
         public string? ShooterOfMoonId { get; set; }
 
         public AiMemoryTracker MemoryTracker { get; set; } = new();
+        public Dictionary<string, string> LastMoveReasoning { get; set; } = new();
 
         public enum GamePhase { Lobby, Passing, TrickPending, Playing, GameOver, MatchOver }
         public GamePhase Phase { get; set; } = GamePhase.Lobby;

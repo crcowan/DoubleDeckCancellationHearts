@@ -285,22 +285,33 @@ namespace GameEngine.Api.Services
 
         private string ConstructPrompt(GameState state, Player aiPlayer, List<Card> validCards, string historySummary)
         {
+            var scoreboard = string.Join(", ", state.Players.OrderBy(p => p.Score).Select(p => $"{p.Name}: {p.Score}pts"));
+            var voids = string.Join("; ", state.MemoryTracker.PlayerVoids.Select(kvp => $"{state.Players.FirstOrDefault(p => p.Id == kvp.Key)?.Name} is void in {string.Join(",", kvp.Value)}"));
+            if (string.IsNullOrEmpty(voids)) voids = "None identified";
+
             // The magic happens here: We dynamically build a prompt teaching the AI Double Deck Cancellation Hearts
             string prompt = $@"
 You are playing Double Deck Cancellation Hearts.
 Difficulty: {aiPlayer.DifficultyLevel}/5.
 Human Player History: {historySummary}
 
+CURRENT GAME STATE:
+Scoreboard: {scoreboard}
+Known Opponent Voids: {voids}
+Hearts Broken: {state.HeartsBroken}
+Queens of Spades Played: {state.MemoryTracker.QueensOfSpadesPlayed}/4
+Penalty Hearts Played: {state.MemoryTracker.PenaltyHeartsPlayed}/26
+
 CRITICAL STRATEGY RULES:
 1. DOUBLE DECK CANCELLATION: There are two of every card. If an opponent plays an Ace (or a high card/penalty card) and you have the IDENTICAL duplicate, YOU MUST PLAY IT to cancel their card out! This is the most crucial defensive strategy.
-2. If you are void in the led suit, aggressively dump your Queen of Spades or highest Hearts.
-3. If you must follow suit, try to play a card just underneath the current highest card to 'duck' the trick.
-4. If you are LEADING the trick, lead a low/mid card that you have TWO of (a duplicate). Or, lead low Spades to flush out the Queens.
+2. OVERALL GOAL: Do not take penalty points unless you are attempting a Moonshot (taking all 52 points). Target the score leader if possible.
+3. EXPLOIT VOIDS: Avoid leading suits that opponents are known to be void in, unless they are the score leader and you want to stick them with points!
+4. DUCKING: If you must follow suit, try to play a card just underneath the current highest card to 'duck' the trick.
+5. LEADING: If you are LEADING the trick, lead a low/mid card that you have TWO of (a duplicate). Or, lead low Spades to flush out the Queens.
 
 Your Hand: {string.Join(", ", aiPlayer.Hand.Select(c => c.ToString()))}
 Valid Moves: {string.Join(", ", validCards.Select(c => c.ToString()))}
 Current Trick: {string.Join(", ", state.CurrentTrick.Select(c => c.ToString()))}
-Hearts Broken: {state.HeartsBroken}
 
 Output JSON with 'Reasoning' (your internal monologue) and 'SelectedCard' (must be exactly from Valid Moves).
 ";

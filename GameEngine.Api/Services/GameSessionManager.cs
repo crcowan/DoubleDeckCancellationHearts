@@ -90,6 +90,7 @@ namespace GameEngine.Api.Services
             _state.HeartsBroken = false;
             _state.IsFirstTrickOfHand = true;
             _state.MemoryTracker = new AiMemoryTracker(); // Reset memory every new hand
+            _state.LastMoveReasoning.Clear();
 
             // Simple first lead logic: The player to the left of the dealer (Player 0) starts for now.
             // Move Dealer Left:

@@ -69,4 +69,5 @@ export interface GameState {
     roundNumber: number;
     pendingPasses?: Record<string, Card[]>;
     shooterOfMoonId?: string | null;
+    lastMoveReasoning?: Record<string, string>;
 }

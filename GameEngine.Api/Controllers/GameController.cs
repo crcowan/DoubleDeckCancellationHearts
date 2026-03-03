@@ -110,6 +110,7 @@ namespace GameEngine.Api.Controllers
 
             var (aiCard, aiReasoning) = await _aiService.GenerateMoveAsync(state, currentPlayer, DummyHumanHistory);
             
+            state.LastMoveReasoning[currentPlayer.Id] = aiReasoning;
             _gameManager.PlayCard(currentPlayer.Id, aiCard);
 
             return Ok(_gameManager.GetState());

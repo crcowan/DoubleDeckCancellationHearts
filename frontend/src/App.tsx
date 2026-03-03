@@ -509,9 +509,22 @@ function App() {
       <div className="absolute top-4 left-4 flex gap-4">
         <div className="glass-panel p-4 rounded-xl text-sm flex gap-4 items-center">
           {gameState.players.map(p => (
-            <div key={p.id} className={`flex flex-col items-center p-2 rounded ${p.id === "P1" ? "bg-green-900/50" : ""}`}>
-              <span className="font-bold">{p.name} {p.id === gameState.players[gameState.currentTurnPlayerIndex].id ? '🎯' : ''}</span>
-              <span className="text-xl font-mono text-green-300">{p.score}</span>
+            <div key={p.id} className={`flex flex-col items-center p-2 rounded relative group ${p.id === "P1" ? "bg-green-900/50 text-white" : "text-gray-300"}`}>
+              <div className="flex items-center gap-1">
+                <span className="font-bold">{p.name} {p.id === gameState.players[gameState.currentTurnPlayerIndex].id ? '🎯' : ''}</span>
+                {gameState.lastMoveReasoning?.[p.id] && (
+                  <span className="text-lg cursor-help filter drop-shadow hover:scale-125 transition-transform" title="Hover to read AI Reasoning">🧠</span>
+                )}
+              </div>
+              <span className="text-xl font-mono text-green-400 font-bold">{p.score}</span>
+
+              {/* Custom Tooltip on hover */}
+              {gameState.lastMoveReasoning?.[p.id] && (
+                <div className="absolute top-full mt-3 w-72 p-4 bg-indigo-950/95 border border-indigo-500/50 rounded-xl text-sm text-indigo-100 opacity-0 group-hover:opacity-100 transition-opacity z-[100] pointer-events-none shadow-2xl shadow-indigo-900/50 left-[50%] transform -translate-x-1/2 tracking-wide backdrop-blur-md">
+                  <span className="font-black text-indigo-300 block mb-2 uppercase text-xs tracking-widest border-b border-indigo-500/30 pb-1">AI internal monologue:</span>
+                  <span className="italic">"{gameState.lastMoveReasoning[p.id]}"</span>
+                </div>
+              )}
             </div>
           ))}
         </div>
