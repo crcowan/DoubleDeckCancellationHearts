@@ -627,14 +627,13 @@ function App() {
           )}
 
           {gameState.phase === GamePhase.TrickPending && !autoAdvanceTrick && (
-            <div className="absolute z-50 flex flex-col items-center justify-center bg-black/60 rounded-full w-full h-full backdrop-blur-sm shadow-inner overflow-hidden animate-fade-in group pointer-events-auto">
+            <div className="absolute -bottom-16 z-50 flex flex-col items-center justify-center animate-fade-in group pointer-events-auto">
               <button
                 onClick={manuallyResolveTrick}
-                className="bg-green-500 hover:bg-green-400 text-white font-black uppercase tracking-widest py-3 px-8 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.6)] animate-pulse hover:animate-none transform hover:scale-105 transition-all outline-white/50 z-50 pointer-events-auto"
+                className="bg-green-500 hover:bg-green-400 text-white font-black uppercase tracking-widest py-3 px-8 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.6)] hover:shadow-[0_0_30px_rgba(34,197,94,0.8)] transform hover:scale-105 transition-all outline-white/50 z-50 pointer-events-auto flex items-center gap-2"
               >
-                Next Trick &#10140;
+                Next Trick <span className="text-xl leading-none">&#10140;</span>
               </button>
-              <span className="text-white/50 text-xs mt-4 uppercase tracking-widest font-bold">Review AI Reasoning...</span>
             </div>
           )}
         </div>
