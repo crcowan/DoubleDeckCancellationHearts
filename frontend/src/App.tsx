@@ -179,7 +179,16 @@ function App() {
           }
         }
         for (const sc of serverHandCopy) {
-          newLocalHand.push(sc);
+          // Rather than appending to the very end of the hand, gracefully slide the new card 
+          // into the correct existing suit grouping to maintain the player's arrangement
+          let insertIdx = newLocalHand.length;
+          for (let i = newLocalHand.length - 1; i >= 0; i--) {
+            if (newLocalHand[i].suit === sc.suit) {
+              insertIdx = i + 1; // Insert right after the last card of the same suit
+              break;
+            }
+          }
+          newLocalHand.splice(insertIdx, 0, sc);
         }
 
         const isSame = newLocalHand.length === prevLocalHand.length && newLocalHand.every((c, i) => c.suit === prevLocalHand[i].suit && c.rank === prevLocalHand[i].rank);
