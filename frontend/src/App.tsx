@@ -179,15 +179,21 @@ function App() {
           }
         }
         for (const sc of serverHandCopy) {
-          // Rather than appending to the very end of the hand, gracefully slide the new card 
-          // into the correct existing suit grouping to maintain the player's arrangement
+          // Gracefully slide the new card into the correct existing suit grouping, sorted by value (ascending)
           let insertIdx = newLocalHand.length;
-          for (let i = newLocalHand.length - 1; i >= 0; i--) {
-            if (newLocalHand[i].suit === sc.suit) {
-              insertIdx = i + 1; // Insert right after the last card of the same suit
-              break;
+
+          const firstSuitIdx = newLocalHand.findIndex(c => c.suit === sc.suit);
+
+          if (firstSuitIdx !== -1) {
+            // Found the suit block. Walk forward to find the correct sorted position
+            insertIdx = firstSuitIdx;
+            while (insertIdx < newLocalHand.length &&
+              newLocalHand[insertIdx].suit === sc.suit &&
+              newLocalHand[insertIdx].rank <= sc.rank) {
+              insertIdx++;
             }
           }
+
           newLocalHand.splice(insertIdx, 0, sc);
         }
 
