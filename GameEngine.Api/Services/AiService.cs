@@ -236,6 +236,14 @@ namespace GameEngine.Api.Services
         {
             // Simple logic: sort hand and pass highest cards, prioritizing points depending on difficulty
             var cardsToPass = new List<Card>();
+
+            if (state.RoundNumber % 4 == 0) // Hold/Keep Round
+            {
+                state.LastMoveReasoning[ai.Id] = "This is a hold round, so I am not passing any cards.";
+                gameManager.PassCards(ai.Id, cardsToPass);
+                return;
+            }
+
             var sortedHand = ai.Hand
                 .OrderByDescending(c => c.Rank == Rank.Queen && c.Suit == Suit.Spades ? 100 : (int)c.Rank)
                 .ToList();

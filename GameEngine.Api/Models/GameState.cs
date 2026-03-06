@@ -47,6 +47,7 @@ namespace GameEngine.Api.Models
         public List<Player> Players { get; set; } = new();
         public int CurrentTurnPlayerIndex { get; set; }
         public int LeadingPlayerIndex { get; set; }
+        public int DealerPlayerIndex { get; set; }
         
         public List<Card> CurrentTrick { get; set; } = new();
         
@@ -55,6 +56,7 @@ namespace GameEngine.Api.Models
         
         // The leftover cards from the deal in a 5, 7, etc. player game
         public List<Card> SetupKitty { get; set; } = new(); 
+        public string? KittyTakenByName { get; set; } 
         
         public bool HeartsBroken { get; set; }
         public bool IsFirstTrickOfHand { get; set; } = true;

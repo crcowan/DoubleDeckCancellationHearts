@@ -25,6 +25,7 @@ function App() {
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
   const [selectedPassIndices, setSelectedPassIndices] = useState<number[]>([]);
   const [newlyPassedCards, setNewlyPassedCards] = useState<Card[]>([]);
+  const [kittyNotice, setKittyNotice] = useState<string | null>(null);
   const [isShuttingDown, setIsShuttingDown] = useState(false);
   const [showQuitConfirm, setShowQuitConfirm] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -202,6 +203,12 @@ function App() {
       });
     }
 
+    if (gameState.kittyTakenByName && gameState.kittyTakenByName !== kittyNotice) {
+      setKittyNotice(gameState.kittyTakenByName);
+      // Clear alert after 3 seconds
+      setTimeout(() => setKittyNotice(null), 3500);
+    }
+
     if (gameState.phase === GamePhase.Playing) {
       const isMyTurn = gameState.players[gameState.currentTurnPlayerIndex].id === "P1";
       if (!isMyTurn) {
@@ -274,16 +281,20 @@ function App() {
   };
 
   const passSelectedCards = async () => {
-    if (selectedPassIndices.length !== 3 || !gameState) return;
+    if (!gameState) return;
+
+    const isKeepRound = gameState.roundNumber % 4 === 0;
+
+    if (!isKeepRound && selectedPassIndices.length !== 3) return;
 
     const me = gameState.players.find(p => p.id === "P1");
     if (!me) return;
 
     // Resolve the indices back to Card objects using localHand mapping
-    const cardsToPass = selectedPassIndices.map(index => localHand[index]);
+    const cardsToPass = isKeepRound ? [] : selectedPassIndices.map(index => localHand[index]);
 
     // Snapshot hand before we send to API (so we know what's new when state updates)
-    previousHandRef.current = localHand.filter((_, idx) => !selectedPassIndices.includes(idx));
+    previousHandRef.current = isKeepRound ? [...localHand] : localHand.filter((_, idx) => !selectedPassIndices.includes(idx));
 
     try {
       const resp = await fetch(`${API_URL}/pass`, {
@@ -535,13 +546,24 @@ function App() {
         Quit App
       </button>
 
+      {/* Kitty Notification Toast */}
+      {kittyNotice && (
+        <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-50 animate-bounce">
+          <div className="bg-yellow-500/90 backdrop-blur-sm text-black px-6 py-3 rounded-full shadow-2xl font-black text-sm border-2 border-yellow-300 flex items-center gap-2 tracking-widest uppercase">
+            <span>🎁</span>
+            <span>{kittyNotice} took the Kitty!</span>
+            <span>🎁</span>
+          </div>
+        </div>
+      )}
+
       {/* HUD (Scores & Actions) */}
       <div className="absolute top-4 left-4 flex gap-4">
         <div className="glass-panel p-4 rounded-xl text-sm flex gap-4 items-center">
-          {gameState.players.map(p => (
+          {gameState.players.map((p, idx) => (
             <div key={p.id} className={`flex flex-col items-center p-2 rounded relative group ${p.id === "P1" ? "bg-green-900/50 text-white" : "text-gray-300"}`}>
               <div className="flex items-center gap-1">
-                <span className="font-bold">{p.name} {p.id === gameState.players[gameState.currentTurnPlayerIndex].id ? '🎯' : ''}</span>
+                <span className="font-bold">{p.name} {p.id === gameState.players[gameState.currentTurnPlayerIndex].id ? '🎯' : ''} {idx === gameState.dealerPlayerIndex ? '🃏' : ''}</span>
                 {gameState.lastMoveReasoning?.[p.id] && (
                   <span className="text-lg cursor-help filter drop-shadow hover:scale-125 transition-transform" title="Hover to read AI Reasoning">🧠</span>
                 )}
@@ -661,8 +683,8 @@ function App() {
         <div className="h-16 mb-4 flex items-center justify-center gap-4">
 
           {gameState.phase === GamePhase.MatchOver ? (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-              <div className="bg-gradient-to-br from-indigo-900 to-purple-900 border-2 border-indigo-400 p-12 rounded-3xl text-center shadow-2xl shadow-indigo-500/50 animate-bounce max-w-3xl transform scale-110">
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade-in">
+              <div className="bg-gradient-to-br from-indigo-900 to-purple-900 border-2 border-indigo-400 p-12 rounded-3xl text-center shadow-2xl shadow-indigo-500/50 animate-pop-in max-w-3xl">
                 <h2 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600 mb-6 drop-shadow-[0_0_15px_rgba(255,215,0,0.8)]">
                   MATCH OVER!
                 </h2>
@@ -709,12 +731,12 @@ function App() {
               </div>
             </div>
           ) : gameState.phase === GamePhase.GameOver ? (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-              <div className="bg-gradient-to-br from-indigo-900 to-purple-900 border-2 border-indigo-400 p-12 rounded-3xl text-center shadow-2xl shadow-indigo-500/50 transform scale-110">
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade-in">
+              <div className="bg-gradient-to-br from-indigo-900 to-purple-900 border-2 border-indigo-400 p-12 rounded-3xl text-center shadow-2xl shadow-indigo-500/50 animate-pop-in">
 
                 {gameState.shooterOfMoonId ? (
                   <div className="mb-8">
-                    <h2 className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-200 to-yellow-600 drop-shadow-[0_0_20px_rgba(255,215,0,1)] animate-bounce tracking-widest uppercase">
+                    <h2 className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-200 to-yellow-600 drop-shadow-[0_0_20px_rgba(255,215,0,1)] tracking-widest uppercase">
                       🌕 THE MOON HAS BEEN SHOT! 🌕
                     </h2>
                     <div className="text-3xl text-yellow-100 mt-6 font-bold uppercase tracking-widest bg-black/30 py-4 px-8 rounded-full inline-block">
@@ -753,15 +775,28 @@ function App() {
           ) : gameState.phase === GamePhase.Passing ? (
             <>
               <div className={`px-6 py-2 rounded-full font-bold transition-opacity bg-purple-900 text-purple-200 shadow-lg shadow-purple-900/50`}>
-                {gameState.pendingPasses?.hasOwnProperty("P1") ? "Waiting for AI swaps..." : "Select 3 cards to pass"}
+                {gameState.pendingPasses?.hasOwnProperty("P1")
+                  ? "Waiting for AI swaps..."
+                  : (gameState.roundNumber % 4 === 0 ? "Hold Round: No pass required" : "Select 3 cards to pass")}
               </div>
-              {selectedPassIndices.length === 3 && !gameState.pendingPasses?.hasOwnProperty("P1") && (
-                <button
-                  onClick={passSelectedCards}
-                  className="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-8 rounded-full shadow-lg shadow-green-500/50 animate-bounce"
-                >
-                  Pass 3 Cards
-                </button>
+              {!gameState.pendingPasses?.hasOwnProperty("P1") && (
+                (gameState.roundNumber % 4 === 0) ? (
+                  <button
+                    onClick={passSelectedCards}
+                    className="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 px-8 rounded-full shadow-lg shadow-purple-500/50 transition-all transform hover:scale-105"
+                  >
+                    Continue
+                  </button>
+                ) : (
+                  selectedPassIndices.length === 3 && (
+                    <button
+                      onClick={passSelectedCards}
+                      className="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-8 rounded-full shadow-lg shadow-green-500/50 transition-all transform hover:scale-105"
+                    >
+                      Pass 3 Cards
+                    </button>
+                  )
+                )
               )}
             </>
           ) : (
@@ -774,7 +809,7 @@ function App() {
               {isMyTurn && selectedCardIndex !== null && gameState.phase === GamePhase.Playing && (
                 <button
                   onClick={playSelectedCard}
-                  className="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-8 rounded-full shadow-lg shadow-green-500/50 animate-bounce"
+                  className="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-8 rounded-full shadow-lg shadow-green-500/50 transition-all transform hover:scale-105"
                 >
                   Play Card
                 </button>
@@ -788,7 +823,9 @@ function App() {
         <div className="flex flex-wrap justify-center items-end w-full px-4 gap-y-4 -space-x-8 sm:-space-x-10 hover:space-x-1 transition-all duration-300 pb-4">
           {localHand.map((card, i) => {
             const isPassingMode = gameState.phase === GamePhase.Passing;
-            const isSelected = isPassingMode
+            const isKeepRound = isPassingMode && (gameState.roundNumber % 4 === 0);
+
+            const isSelected = isPassingMode && !isKeepRound
               ? selectedPassIndices.includes(i)
               : selectedCardIndex === i;
 
@@ -823,6 +860,11 @@ function App() {
                   if (draggedItemIndex === i) {
                     // Sloppy click detected (user dragged and dropped on the same spot)
                     // Treat as a legitimate click interaction since drag hijacked it.
+                    if (isKeepRound) {
+                      setDraggedItemIndex(null);
+                      setDragOverIndex(null);
+                      return; // Disable clicking to select during keep round
+                    }
                     if (isPassingMode) {
                       if (isSelected) {
                         setSelectedPassIndices(prev => prev.filter(idx => idx !== i));
@@ -880,6 +922,7 @@ function App() {
                   selected={isSelected}
                   onClick={() => {
                     if (dragActiveRef.current) return; // Ignore click if we were just dragging
+                    if (isKeepRound) return; // Disable selection clicks
 
                     if (isPassingMode) {
                       if (isSelected) {

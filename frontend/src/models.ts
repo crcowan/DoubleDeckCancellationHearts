@@ -59,9 +59,11 @@ export interface GameState {
     players: Player[];
     currentTurnPlayerIndex: number;
     leadingPlayerIndex: number;
+    dealerPlayerIndex: number;
     currentTrick: Card[];
     cancelledKitty: Card[];
     setupKitty: Card[];
+    kittyTakenByName?: string | null;
     heartsBroken: boolean;
     isFirstTrickOfHand: boolean;
     phase: GamePhase;

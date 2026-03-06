@@ -42,29 +42,35 @@ namespace GameEngine.Api.Services
 
             _state.SetupKitty = dealResult.Kitty;
 
-        if (rules.FirstLead == "2OfClubs")
-        {
-            // Find the first player holding a 2 of Clubs
-            var twoOfClubsHolder = _state.Players.FindIndex(p => p.Hand.Any(c => c.Suit == Suit.Clubs && c.Rank == Rank.Two));
-            if (twoOfClubsHolder != -1)
+            // Randomly select the first dealer
+            var rnd = new Random();
+            _state.DealerPlayerIndex = rnd.Next(players.Count);
+
+            if (rules.FirstLead == "2OfClubs")
             {
-                _state.CurrentTurnPlayerIndex = twoOfClubsHolder;
-                _state.LeadingPlayerIndex = twoOfClubsHolder;
+                // Find the first player holding a 2 of Clubs
+                var twoOfClubsHolder = _state.Players.FindIndex(p => p.Hand.Any(c => c.Suit == Suit.Clubs && c.Rank == Rank.Two));
+                if (twoOfClubsHolder != -1)
+                {
+                    _state.CurrentTurnPlayerIndex = twoOfClubsHolder;
+                    _state.LeadingPlayerIndex = twoOfClubsHolder;
+                }
+                else
+                {
+                    // Fallback if no 2 of clubs somehow (e.g. in Kitty), left of dealer
+                    int nextLeader = (_state.DealerPlayerIndex + 1) % _state.Players.Count;
+                    _state.CurrentTurnPlayerIndex = nextLeader;
+                    _state.LeadingPlayerIndex = nextLeader;
+                }
             }
             else
             {
-                // Fallback if no 2 of clubs somehow (e.g. in Kitty)
-                _state.CurrentTurnPlayerIndex = 0;
-                _state.LeadingPlayerIndex = 0;
+                // Simple first lead logic: The player to the left of the dealer starts
+                int nextLeader = (_state.DealerPlayerIndex + 1) % _state.Players.Count;
+                _state.CurrentTurnPlayerIndex = nextLeader;
+                _state.LeadingPlayerIndex = nextLeader;
             }
         }
-        else
-        {
-            // Simple first lead logic: The player to the left of the dealer (Player 0) starts for now.
-            _state.CurrentTurnPlayerIndex = 0;
-            _state.LeadingPlayerIndex = 0;
-        }
-    }
 
         public void DealNewHand()
         {
@@ -86,15 +92,16 @@ namespace GameEngine.Api.Services
 
             _state.SetupKitty = dealResult.Kitty;
             _state.CancelledKitty.Clear();
+            _state.KittyTakenByName = null; // Reset kitty notification
             _state.CurrentTrick.Clear();
             _state.HeartsBroken = false;
             _state.IsFirstTrickOfHand = true;
             _state.MemoryTracker = new AiMemoryTracker(); // Reset memory every new hand
             _state.LastMoveReasoning.Clear();
 
-            // Simple first lead logic: The player to the left of the dealer (Player 0) starts for now.
-            // Move Dealer Left:
-            int nextLeader = (_state.CurrentTurnPlayerIndex + 1) % _state.Players.Count;
+            // Rotate Dealer Left:
+            _state.DealerPlayerIndex = (_state.DealerPlayerIndex + 1) % _state.Players.Count;
+            int nextLeader = (_state.DealerPlayerIndex + 1) % _state.Players.Count;
 
             if (_state.Rules.FirstLead == "2OfClubs")
             {
@@ -115,7 +122,10 @@ namespace GameEngine.Api.Services
             var player = _state.Players.FirstOrDefault(p => p.Id == playerId);
             if (player == null) return (false, "Player not found");
             if (_state.PendingPasses.ContainsKey(playerId)) return (false, "You have already passed your cards.");
-            if (cards.Count != 3) return (false, "You must pass exactly 3 cards.");
+            
+            bool isKeepRound = _state.RoundNumber % 4 == 0;
+            if (isKeepRound && cards.Count != 0) return (false, "You cannot pass cards during a Keep round.");
+            if (!isKeepRound && cards.Count != 3) return (false, "You must pass exactly 3 cards.");
             
             // Verify cards were in hand
             foreach (var c in cards)
@@ -278,10 +288,11 @@ namespace GameEngine.Api.Services
                 }
 
                 // If this is the first trick, they also get the setup kitty
-                if (_state.IsFirstTrickOfHand)
+                if (_state.IsFirstTrickOfHand && _state.SetupKitty.Count > 0)
                 {
                     winner.CapturedCards.AddRange(_state.SetupKitty);
                     pointsWon += _logic.CalculateTricksPoints(_state.SetupKitty);
+                    _state.KittyTakenByName = winner.Name; // Track who took it for UI
                     _state.SetupKitty.Clear();
                 }
 
