@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { PlayingCard } from './components/PlayingCard';
-import type { Card, GameState } from './models';
-import { GamePhase } from './models';
+import type { Card, GameState, Player } from './models';
+import { GamePhase, AiModelSize } from './models';
 import './index.css';
 
 // Using a generic URL that would point to the local ASP.NET Core server
@@ -21,6 +21,8 @@ function App() {
   const [targetScore, setTargetScore] = useState(100); // 50, 100, 150
   const [trickPauseMs, setTrickPauseMs] = useState(2500); // Configurable trick review timer
   const [autoAdvanceTrick, setAutoAdvanceTrick] = useState(true); // Toggle for manual trick review
+  const [showAiReasoning, setShowAiReasoning] = useState(true); // Performance Toggle
+  const [aiModelSize, setAiModelSize] = useState<number>(AiModelSize.Fast2B); // Default to Fast2B
 
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
   const [selectedPassIndices, setSelectedPassIndices] = useState<number[]>([]);
@@ -29,6 +31,7 @@ function App() {
   const [isShuttingDown, setIsShuttingDown] = useState(false);
   const [showQuitConfirm, setShowQuitConfirm] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [showPreviousTrick, setShowPreviousTrick] = useState(false);
 
   // Manual Hand Rearrangement State
   const [localHand, setLocalHand] = useState<Card[]>([]);
@@ -60,10 +63,12 @@ function App() {
     const savedDiff = localStorage.getItem('dc-hearts-diff-v2');
     const savedBotNames = localStorage.getItem('dc-hearts-bot-names-v2');
     const savedRules = localStorage.getItem('dc-hearts-rules-v2');
+    const savedAiModelSize = localStorage.getItem('dc-hearts-ai-model-size');
 
     if (savedPlayers) setNumPlayers(parseInt(savedPlayers));
     if (savedDiff) setAiDifficulty(parseInt(savedDiff));
     if (savedBotNames) setBotNames(JSON.parse(savedBotNames));
+    if (savedAiModelSize) setAiModelSize(parseInt(savedAiModelSize));
 
     if (savedRules) {
       const parsed = JSON.parse(savedRules);
@@ -74,6 +79,7 @@ function App() {
       if (parsed.targetScore) setTargetScore(parsed.targetScore);
       if (parsed.trickPauseMs) setTrickPauseMs(parsed.trickPauseMs);
       if (parsed.autoAdvanceTrick !== undefined) setAutoAdvanceTrick(parsed.autoAdvanceTrick);
+      if (parsed.showAiReasoning !== undefined) setShowAiReasoning(parsed.showAiReasoning);
     }
 
     fetchState();
@@ -84,8 +90,9 @@ function App() {
     localStorage.setItem('dc-hearts-players-v2', numPlayers.toString());
     localStorage.setItem('dc-hearts-diff-v2', aiDifficulty.toString());
     localStorage.setItem('dc-hearts-bot-names-v2', JSON.stringify(botNames));
+    localStorage.setItem('dc-hearts-ai-model-size', aiModelSize.toString());
     localStorage.setItem('dc-hearts-rules-v2', JSON.stringify({
-      passingStyle, firstLead, breakingHearts, cancellationWinner, trickPauseMs, targetScore, autoAdvanceTrick
+      passingStyle, firstLead, breakingHearts, cancellationWinner, trickPauseMs, targetScore, autoAdvanceTrick, showAiReasoning
     }));
 
     try {
@@ -96,7 +103,9 @@ function App() {
           numberOfPlayers: numPlayers,
           aiDifficulty,
           botNames: botNames.slice(0, numPlayers - 1),
-          rules: { passingStyle, firstLead, breakingHearts, cancellationWinner, targetScore }
+          rules: { passingStyle, firstLead, breakingHearts, cancellationWinner, targetScore },
+          showAiReasoning,
+          selectedAiModel: aiModelSize
         })
       });
       if (resp.ok) setGameState(await resp.json());
@@ -159,6 +168,16 @@ function App() {
   };
 
   useEffect(() => {
+    // If the game is downloading the LLM, poll the server constantly to get download progress
+    if (gameState?.phase === GamePhase.DownloadingModel) {
+      const interval = setInterval(() => {
+        fetchState();
+      }, 500);
+      return () => clearInterval(interval);
+    }
+  }, [gameState?.phase]);
+
+  useEffect(() => {
     if (!gameState) return;
 
     // Synchronize localHand to allow manual sorting gracefully
@@ -212,17 +231,19 @@ function App() {
     if (gameState.phase === GamePhase.Playing) {
       const isMyTurn = gameState.players[gameState.currentTurnPlayerIndex].id === "P1";
       if (!isMyTurn) {
+        const delay = gameState.showAiReasoning ? 350 : 50;
         const timer = setTimeout(() => {
           fetch(`${API_URL}/play-ai`, { method: 'POST' })
             .then(r => r.json())
             .then(setGameState)
             .catch(console.error);
-        }, 800); // 800ms between AI plays for visual animation pacing
+        }, delay);
         return () => clearTimeout(timer);
       }
     } else if (gameState.phase === GamePhase.Passing) {
-      // Trigger AI to make their pass selections
-      if (gameState.players.find(p => p.id === "P1" && !gameState.pendingPasses?.hasOwnProperty("P1"))) {
+      // Trigger AI to make their pass selections if any AI hasn't passed yet
+      const anyAiNeedsToPass = gameState.players.some(p => p.isAi && !gameState.pendingPasses?.hasOwnProperty(p.id));
+      if (anyAiNeedsToPass) {
         fetch(`${API_URL}/play-ai-pass`, { method: 'POST' })
           .then(r => r.json())
           .then(setGameState)
@@ -397,6 +418,116 @@ function App() {
     );
   };
 
+  const renderPreviousTrickModal = () => {
+    if (!showPreviousTrick || !gameState?.previousTrick) return null;
+
+    const prevTrick = gameState.previousTrick;
+
+    return (
+      <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/80 backdrop-blur-md animate-fade-in" onClick={() => setShowPreviousTrick(false)}>
+        <div className="bg-gradient-to-br from-indigo-900 to-slate-900 border-2 border-indigo-500 rounded-3xl p-8 max-w-4xl w-full shadow-2xl shadow-indigo-500/50 transform animate-pop-in relative" onClick={e => e.stopPropagation()}>
+          <button 
+            onClick={() => setShowPreviousTrick(false)}
+            className="absolute top-4 right-4 bg-red-600/50 hover:bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold"
+          >
+            ✕
+          </button>
+          
+          <h2 className="text-3xl font-black text-white text-center mb-2 tracking-widest uppercase">
+            Previous Trick Review
+          </h2>
+          <div className="text-center text-indigo-300 font-bold mb-8 uppercase tracking-widest text-sm">
+            {prevTrick.isCancelled ? (
+               <span className="text-red-400">Trick was Cancelled!</span>
+            ) : (
+               <span>
+                 <span className="text-green-400">{gameState.players[prevTrick.winningPlayerIndex]?.name}</span> took ({prevTrick.trickPoints} pts)
+               </span>
+            )}
+          </div>
+          
+          <div className="flex flex-wrap justify-center items-center gap-6 relative mb-8 min-h-64 p-6 bg-black/40 rounded-2xl border border-white/5 shadow-inner overflow-y-auto max-h-96">
+            {prevTrick.trick.map((card, i) => {
+              const playedByIndex = (prevTrick.leadingPlayerIndex + i) % gameState.players.length;
+              const playerName = gameState.players[playedByIndex]?.name;
+              const isHuman = gameState.players[playedByIndex]?.id === "P1";
+              
+              const isWinningCard = !prevTrick.isCancelled && playedByIndex === prevTrick.winningPlayerIndex;
+              const isPointCard = card.pointValue > 0;
+              const isCancelled = prevTrick.trick.filter(c => c.rank === card.rank && c.suit === card.suit).length > 1;
+
+              return (
+                <div key={`prev-trick-${i}`} className="flex flex-col items-center gap-3 animate-fade-in" style={{ animationDelay: `${i * 50}ms` }}>
+                  <div className={`relative group hover:-translate-y-4 transition-transform duration-300 shadow-2xl rounded-xl ${isWinningCard ? 'ring-4 ring-yellow-400 shadow-yellow-500/50' : 'shadow-black'} ${isCancelled ? 'opacity-40' : ''}`}>
+                    <PlayingCard card={card} />
+                    
+                    {/* Position badge */}
+                    <div className="absolute -top-3 -right-3 w-6 h-6 bg-indigo-600 rounded-full text-[10px] flex items-center justify-center font-black text-white border-2 border-slate-900 shadow-lg z-10">
+                      {i + 1}
+                    </div>
+
+                    {/* Point card badge */}
+                    {isPointCard && (
+                      <div className="absolute -bottom-3 -right-3 bg-red-600 rounded-full px-2 py-0.5 text-xs flex items-center justify-center font-black text-white border-2 border-slate-900 shadow-lg z-10 animate-bounce">
+                        +{card.pointValue}
+                      </div>
+                    )}
+
+                    {/* Cancellation Indicator */}
+                    {isCancelled && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-xl pointer-events-none">
+                        <span className="text-white font-black text-[10px] uppercase tracking-tighter bg-red-600/80 px-2 py-1 rounded shadow-lg border border-red-400/50 rotate-12">Cancelled</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="text-xs text-indigo-200 font-bold max-w-[80px] text-center leading-tight tracking-wide">
+                     {playerName}
+                     {isHuman && <span className="block text-green-400 mt-0.5">(You)</span>}
+                     {isWinningCard && <span className="block text-yellow-400 mt-1 uppercase text-[10px] font-black tracking-widest bg-yellow-900/50 rounded px-1">Winner</span>}
+                     {isCancelled && <span className="block text-red-500 mt-1 uppercase text-[8px] font-black tracking-widest">Cancelled</span>}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          
+          <div className="flex justify-center">
+             <button
+                onClick={() => setShowPreviousTrick(false)}
+                className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-12 rounded-full shadow-[0_0_15px_rgba(79,70,229,0.5)] transition-all hover:scale-105 tracking-widest uppercase text-sm"
+             >
+                Close Review
+             </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  if (gameState?.phase === GamePhase.DownloadingModel) {
+    return (
+      <div className="flex flex-col items-center justify-center w-full min-h-screen p-4 bg-black outline-none border-none">
+        <div className="max-w-2xl mx-auto backdrop-blur-md bg-black/40 p-12 rounded-3xl border border-white/10 shadow-lg relative w-full flex flex-col items-center text-center animate-fade-in">
+          <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-600 mb-6 drop-shadow-sm uppercase tracking-widest text-[#6366f1]">
+            Initializing AI Engine
+          </h2>
+          <p className="text-gray-300 mb-8 max-w-lg font-medium">
+            Downloading the expert true local AI model. This only happens once and will be cached for future offline play across all applications.
+          </p>
+          <div className="w-full bg-gray-800 rounded-full h-4 mb-4 overflow-hidden border border-white/10">
+            <div 
+              className="bg-gradient-to-r from-blue-500 to-indigo-500 h-4 rounded-full transition-all duration-300 ease-out shadow-[0_0_10px_rgba(99,102,241,0.5)]" 
+              style={{ width: `${gameState.llmDownloadProgress || 0}%` }}
+            ></div>
+          </div>
+          <p className="text-indigo-200 font-mono font-bold tracking-widest text-sm bg-black/50 py-2 px-6 rounded-lg pointer-events-none">
+            {gameState.llmDownloadStatus || "Connecting to Server..."}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   if (!gameState || gameState.phase === GamePhase.Lobby) {
     return (
       <div className="flex flex-col items-center justify-center w-full min-h-screen p-4">
@@ -516,6 +647,23 @@ function App() {
                     <option value={5000}>Slow (5 seconds)</option>
                   </select>
                 </div>
+
+                <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
+                  <label className="text-xs font-bold text-indigo-300">AI Model Quality</label>
+                  <select className="bg-black/50 border border-white/10 rounded text-xs p-1" value={aiModelSize} onChange={e => setAiModelSize(parseInt(e.target.value))}>
+                    <option value={AiModelSize.Fast2B}>Fast (Gemma 4 2B)</option>
+                    <option value={AiModelSize.Balanced4B}>Balanced (Gemma 4 4B)</option>
+                  </select>
+                </div>
+
+                <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
+                  <label className="text-xs font-bold text-blue-300">Display AI Monologues</label>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" checked={showAiReasoning} onChange={e => setShowAiReasoning(e.target.checked)} className="sr-only peer" />
+                    <div className="w-9 h-5 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-500"></div>
+                  </label>
+                </div>
+                <p className="text-[10px] text-gray-500 mt-1 italic">Disabling this makes AI turns up to 5x faster.</p>
               </div>
             </div>
           </div>
@@ -532,47 +680,73 @@ function App() {
   }
 
   // --- GAME VIEW ---
+  // Calculate Passing Info
+  const getPassingInfo = () => {
+    if (!gameState || gameState.phase !== GamePhase.Passing) return null;
+    const playerCount = gameState.players.length;
+    const passCycle = gameState.roundNumber % 4;
+    let offset = 0;
+    let direction = "";
+
+    if (passCycle === 1) { offset = 1; direction = "Left"; }
+    else if (passCycle === 2) { offset = playerCount - 1; direction = "Right"; }
+    else if (passCycle === 3) { offset = Math.floor(playerCount / 2); direction = "Across"; }
+    else return { direction: "Hold", passTo: "", receiveFrom: "" };
+
+    const myIndex = gameState.players.findIndex(p => p.id === "P1");
+    const passToIndex = (myIndex + offset) % playerCount;
+    const receiveFromIndex = (myIndex - offset + playerCount) % playerCount;
+
+    return {
+      direction,
+      passTo: gameState.players[passToIndex].name,
+      receiveFrom: gameState.players[receiveFromIndex].name
+    };
+  };
+
   const isMyTurn = gameState.players[gameState.currentTurnPlayerIndex].id === "P1";
 
+  const passingInfo = getPassingInfo();
+
+  const getPlayStyleIcon = (p: Player) => {
+    if (!gameState.showAiReasoning || !gameState.matchTricksPlayed || gameState.matchTricksPlayed < 10) return null;
+    const avgTricks = gameState.matchTricksPlayed / gameState.players.length;
+    if (p.matchTricksWon > avgTricks * 1.5) return <span className="ml-1 cursor-help filter drop-shadow hover:scale-125 transition-transform" title="Aggressive Playstyle (Wins many tricks)">⚔️</span>;
+    if (p.matchTricksWon < avgTricks * 0.5) return <span className="ml-1 cursor-help filter drop-shadow hover:scale-125 transition-transform" title="Defensive Playstyle (Ducks tricks)">🛡️</span>;
+    return <span className="ml-1 cursor-help filter drop-shadow hover:scale-125 transition-transform opacity-50" title="Balanced Playstyle">⚖️</span>;
+  };
+
   return (
-    <div className="relative w-full h-screen flex flex-col items-center justify-between p-4 overflow-hidden">
+    <div className="relative w-full h-screen flex flex-col items-center p-4 overflow-hidden">
       {renderErrorModal()}
       {renderQuitModal()}
+      {renderPreviousTrickModal()}
 
-      <button
-        onClick={quitApplication}
-        className="absolute top-4 right-4 z-50 bg-red-600/30 hover:bg-red-500 text-white text-xs font-bold py-1 px-3 rounded backdrop-blur transition-colors duration-200 border border-red-500/30"
-      >
-        Quit App
-      </button>
-
-      {/* Kitty Notification Toast */}
-      {kittyNotice && (
-        <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-50 animate-bounce">
-          <div className="bg-yellow-500/90 backdrop-blur-sm text-black px-6 py-3 rounded-full shadow-2xl font-black text-sm border-2 border-yellow-300 flex items-center gap-2 tracking-widest uppercase">
-            <span>🎁</span>
-            <span>{kittyNotice} took the Kitty!</span>
-            <span>🎁</span>
-          </div>
-        </div>
-      )}
-
-      {/* HUD (Scores & Actions) */}
-      <div className="absolute top-4 left-4 flex gap-4">
-        <div className="glass-panel p-4 rounded-xl text-sm flex gap-4 items-center">
+      {/* Header Area (Scores & System Actions) */}
+      <div className="w-full flex flex-wrap items-center justify-center gap-4 mb-4 z-50">
+        {/* HUD (Scores) */}
+        <div className="glass-panel p-4 rounded-xl text-sm flex flex-wrap justify-center gap-4 items-center flex-1 max-w-7xl relative">
+          {!gameState.showAiReasoning && (
+            <div className="absolute top-0 right-0 px-2 py-0.5 bg-blue-600/80 text-[10px] font-black text-white uppercase tracking-tighter rounded-bl-lg shadow-lg border-l border-b border-blue-400/30 animate-pulse z-10">
+              ⚡ Performance Mode
+            </div>
+          )}
           {gameState.players.map((p, idx) => (
             <div key={p.id} className={`flex flex-col items-center p-2 rounded relative group ${p.id === "P1" ? "bg-green-900/50 text-white" : "text-gray-300"}`}>
               <div className="flex items-center gap-1">
-                <span className="font-bold">{p.name} {p.id === gameState.players[gameState.currentTurnPlayerIndex].id ? '🎯' : ''} {idx === gameState.dealerPlayerIndex ? '🃏' : ''}</span>
-                {gameState.lastMoveReasoning?.[p.id] && (
+                <span className="font-bold flex items-center">{p.name} {getPlayStyleIcon(p)} {p.id === gameState.players[gameState.currentTurnPlayerIndex].id ? '🎯' : ''} {idx === gameState.dealerPlayerIndex ? '🃏' : ''}</span>
+                {gameState.showAiReasoning && gameState.lastMoveReasoning?.[p.id] && (
                   <span className="text-lg cursor-help filter drop-shadow hover:scale-125 transition-transform" title="Hover to read AI Reasoning">🧠</span>
                 )}
               </div>
-              <span className="text-xl font-mono text-green-400 font-bold">{p.score}</span>
+              <div className="flex flex-col items-center mt-1">
+                <span className="text-xl font-mono text-green-400 font-black leading-none" title="Current Hand Score">{p.handScore ?? 0}</span>
+                <span className="text-xs font-mono text-gray-400 font-semibold uppercase tracking-wider mt-1 border-t border-white/10 pt-1 w-full text-center" title="Total Match Score">Total: {p.score}</span>
+              </div>
 
               {/* Custom Tooltip on hover */}
-              {gameState.lastMoveReasoning?.[p.id] && (
-                <div className="absolute top-full mt-3 w-72 p-4 bg-indigo-950/95 border border-indigo-500/50 rounded-xl text-sm text-indigo-100 opacity-0 group-hover:opacity-100 transition-opacity z-[100] pointer-events-none shadow-2xl shadow-indigo-900/50 left-[50%] transform -translate-x-1/2 tracking-wide backdrop-blur-md">
+              {gameState.showAiReasoning && gameState.lastMoveReasoning?.[p.id] && (
+                <div className="absolute top-full mt-3 w-72 p-4 bg-indigo-950/95 border border-indigo-500/50 rounded-xl text-sm text-indigo-100 opacity-0 group-hover:opacity-100 transition-opacity z-[150] pointer-events-none shadow-2xl shadow-black/80 left-[50%] transform -translate-x-1/2 tracking-wide backdrop-blur-md">
                   <span className="font-black text-indigo-300 block mb-2 uppercase text-xs tracking-widest border-b border-indigo-500/30 pb-1">AI internal monologue:</span>
                   <span className="italic">"{gameState.lastMoveReasoning[p.id]}"</span>
                 </div>
@@ -580,37 +754,65 @@ function App() {
             </div>
           ))}
         </div>
-        <button
-          onClick={leaveMatch}
-          className="glass-panel px-4 py-2 rounded-xl text-sm text-red-300 hover:text-red-100 hover:bg-red-900/50 transition-colors h-fit self-center"
-        >
-          Leave Match
-        </button>
-        <div className="glass-panel px-4 py-2 rounded-xl text-sm text-gray-300 flex items-center gap-2 h-fit self-center border border-white/5 bg-black/40 backdrop-blur-md">
-          <label className="flex items-center cursor-pointer gap-2 group">
-            <span className="font-bold opacity-80 group-hover:opacity-100 transition-opacity">Auto-Advance Tricks:</span>
-            <div className={`relative inline-flex items-center h-5 w-9 rounded-full transition-colors ${autoAdvanceTrick ? 'bg-green-500' : 'bg-gray-600'}`}>
-              <span className={`inline-block w-3 h-3 transform bg-white rounded-full transition-transform ${autoAdvanceTrick ? 'translate-x-5' : 'translate-x-1'}`} />
-            </div>
-            <input
-              type="checkbox"
-              checked={autoAdvanceTrick}
-              onChange={() => {
-                const newVal = !autoAdvanceTrick;
-                setAutoAdvanceTrick(newVal);
-                // Dynamically update rules in localstorage so it persists between games
-                const savedRules = localStorage.getItem('dc-hearts-rules-v2');
-                if (savedRules) {
-                  const parsed = JSON.parse(savedRules);
-                  parsed.autoAdvanceTrick = newVal;
-                  localStorage.setItem('dc-hearts-rules-v2', JSON.stringify(parsed));
-                }
-              }}
-              className="sr-only"
-            />
-          </label>
+
+        {/* Global Controls */}
+        <div className="flex gap-2 h-fit">
+          {gameState.previousTrick && (
+            <button
+              onClick={() => setShowPreviousTrick(true)}
+              className="glass-panel px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest text-indigo-300 hover:text-white hover:bg-indigo-900/50 transition-colors border border-indigo-500/30"
+            >
+              Last Trick
+            </button>
+          )}
+          <div className="glass-panel px-4 py-2 rounded-xl text-sm text-gray-300 flex items-center gap-2 border border-white/5 bg-black/40 backdrop-blur-md">
+            <label className="flex items-center cursor-pointer gap-2 group">
+              <span className="font-bold opacity-80 group-hover:opacity-100 transition-opacity text-xs uppercase tracking-tighter">Auto-Next:</span>
+              <div className={`relative inline-flex items-center h-4 w-7 rounded-full transition-colors ${autoAdvanceTrick ? 'bg-green-500' : 'bg-gray-600'}`}>
+                <span className={`inline-block w-2.5 h-2.5 transform bg-white rounded-full transition-transform ${autoAdvanceTrick ? 'translate-x-3.5' : 'translate-x-1'}`} />
+              </div>
+              <input
+                type="checkbox"
+                checked={autoAdvanceTrick}
+                onChange={() => {
+                  const newVal = !autoAdvanceTrick;
+                  setAutoAdvanceTrick(newVal);
+                  const savedRules = localStorage.getItem('dc-hearts-rules-v2');
+                  if (savedRules) {
+                    const parsed = JSON.parse(savedRules);
+                    parsed.autoAdvanceTrick = newVal;
+                    localStorage.setItem('dc-hearts-rules-v2', JSON.stringify(parsed));
+                  }
+                }}
+                className="sr-only"
+              />
+            </label>
+          </div>
+          <button
+            onClick={leaveMatch}
+            className="glass-panel px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest text-red-300 hover:text-red-100 hover:bg-red-900/50 transition-colors"
+          >
+            Leave
+          </button>
+          <button
+            onClick={quitApplication}
+            className="glass-panel px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest bg-red-600/30 hover:bg-red-500 text-white transition-colors duration-200 border border-red-500/30"
+          >
+            Quit
+          </button>
         </div>
       </div>
+
+      {/* Kitty Notification Toast */}
+      {kittyNotice && (
+        <div className="absolute top-32 left-1/2 transform -translate-x-1/2 z-50 animate-bounce">
+          <div className="bg-yellow-500/90 backdrop-blur-sm text-black px-6 py-3 rounded-full shadow-2xl font-black text-sm border-2 border-yellow-300 flex items-center gap-2 tracking-widest uppercase">
+            <span>🎁</span>
+            <span>{kittyNotice} took the Kitty!</span>
+            <span>🎁</span>
+          </div>
+        </div>
+      )}
 
       {/* Opponents (Top / Sides representation placeholder) */}
       <div className="flex-1 w-full flex items-center justify-center pointer-events-none">
@@ -680,7 +882,7 @@ function App() {
       <div className="min-h-64 flex flex-col items-center justify-end pb-4 mt-auto z-10 w-full max-w-7xl">
 
         {/* Play Action Bar */}
-        <div className="h-16 mb-4 flex items-center justify-center gap-4">
+        <div className="h-16 mb-8 flex items-center justify-center gap-4 relative z-20">
 
           {gameState.phase === GamePhase.MatchOver ? (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade-in">
@@ -713,6 +915,14 @@ function App() {
                 )}
 
                 <div className="flex justify-center gap-4">
+                  {gameState.previousTrick && (
+                    <button
+                      className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-8 rounded-full shadow-[0_0_15px_rgba(79,70,229,0.5)] transition-all hover:scale-105"
+                      onClick={() => setShowPreviousTrick(true)}
+                    >
+                      Review Last Trick
+                    </button>
+                  )}
                   <button
                     className="bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 px-8 rounded-full shadow-[0_0_15px_rgba(147,51,234,0.5)] transition-all hover:scale-105"
                     onClick={leaveMatch}
@@ -763,6 +973,14 @@ function App() {
                 </div>
 
                 <div className="flex justify-center flex-col gap-4">
+                  {gameState.previousTrick && (
+                    <button
+                      className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-8 rounded-full shadow-[0_0_15px_rgba(79,70,229,0.5)] transition-all hover:scale-105 text-lg tracking-wider mx-auto w-full max-w-sm"
+                      onClick={() => setShowPreviousTrick(true)}
+                    >
+                      REVIEW LAST TRICK
+                    </button>
+                  )}
                   <button
                     className="bg-green-600 hover:bg-green-500 text-white font-bold py-4 px-12 rounded-full shadow-[0_0_15px_rgba(34,197,94,0.5)] transition-all hover:scale-105 text-xl tracking-wider"
                     onClick={startNextHand}
@@ -773,11 +991,20 @@ function App() {
               </div>
             </div>
           ) : gameState.phase === GamePhase.Passing ? (
-            <>
-              <div className={`px-6 py-2 rounded-full font-bold transition-opacity bg-purple-900 text-purple-200 shadow-lg shadow-purple-900/50`}>
-                {gameState.pendingPasses?.hasOwnProperty("P1")
-                  ? "Waiting for AI swaps..."
-                  : (gameState.roundNumber % 4 === 0 ? "Hold Round: No pass required" : "Select 3 cards to pass")}
+            <div className="flex flex-col items-center gap-2">
+              <div className="px-6 py-2 rounded-full font-bold transition-opacity bg-purple-900 text-purple-200 shadow-lg shadow-purple-900/50 flex flex-col items-center">
+                <span className="text-sm opacity-70 uppercase tracking-widest">{passingInfo?.direction ? `Round ${gameState.roundNumber}: ${passingInfo.direction}` : "Standard Round"}</span>
+                <span className="text-lg">
+                  {gameState.pendingPasses?.hasOwnProperty("P1")
+                    ? "Waiting for AI swaps..."
+                    : (gameState.roundNumber % 4 === 0 ? "Hold Round: No pass required" : "Select 3 cards to pass")}
+                </span>
+                {passingInfo?.passTo && !gameState.pendingPasses?.hasOwnProperty("P1") && (
+                  <div className="mt-2 text-xs font-medium border-t border-purple-400/30 pt-2 flex gap-4">
+                    <span className="bg-purple-800/80 px-3 py-1 rounded">Passing to: <b className="text-white">{passingInfo.passTo}</b></span>
+                    <span className="bg-purple-800/80 px-3 py-1 rounded">Receiving from: <b className="text-white">{passingInfo.receiveFrom}</b></span>
+                  </div>
+                )}
               </div>
               {!gameState.pendingPasses?.hasOwnProperty("P1") && (
                 (gameState.roundNumber % 4 === 0) ? (
@@ -798,7 +1025,7 @@ function App() {
                   )
                 )
               )}
-            </>
+            </div>
           ) : (
             <>
               {gameState.phase !== GamePhase.TrickPending && (

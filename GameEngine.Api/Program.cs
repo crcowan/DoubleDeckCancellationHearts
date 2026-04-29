@@ -12,6 +12,8 @@ namespace GameEngine.Api
 
 // Explicitly bind to the port React expects, bypassing launchSettings when run as an exe
 builder.WebHost.UseUrls("http://localhost:5243");
+// Ensure wwwroot is found regardless of how/where we are launched
+builder.Environment.ContentRootPath = AppContext.BaseDirectory;
 
 builder.Services.AddCors(options =>
 {
@@ -27,6 +29,8 @@ builder.Services.AddCors(options =>
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddSingleton<GameEngine.Api.Services.GameSessionManager>();
+builder.Services.AddSingleton<GameEngine.Api.Services.LlmModelManager>();
+builder.Services.AddSingleton<GameEngine.Api.Services.LlmInferenceService>();
 builder.Services.AddTransient<GameEngine.Api.Services.GameLogicService>();
 builder.Services.AddTransient<GameEngine.Api.Services.AiService>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

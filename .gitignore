@@ -19,3 +19,6 @@ build_output.txt
 # OS Files
 .DS_Store
 Thumbs.db
+
+# Old Backups
+DoubleDeck_Old_*

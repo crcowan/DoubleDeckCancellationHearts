@@ -24,14 +24,17 @@ namespace GameEngine.Api.Services
                     }
 
                     // Usually you cannot lead points on the first trick
-                    if (playedCard.IsHeart || playedCard.IsQueenOfSpades)
-                        return (false, "You cannot lead penalty cards (Hearts or the Queen of Spades) on the first trick.");
+                    if (playedCard.PointValue > 0)
+                    {
+                        if (hand.Any(c => c.PointValue == 0))
+                            return (false, "You cannot lead penalty cards on the first trick unless you have no other choice.");
+                    }
                 }
                 
                 if (playedCard.IsHeart && !heartsBroken && rules.BreakingHearts == "Standard")
                 {
-                    // Can only lead hearts if broken OR if they ONLY hold hearts
-                    if (!hand.All(c => c.IsHeart))
+                    // Can only lead hearts if broken OR if they hold NOTHING but hearts
+                    if (hand.Any(c => !c.IsHeart))
                         return (false, "Hearts have not been broken yet. You must lead a different suit.");
                 }
                 
@@ -50,10 +53,19 @@ namespace GameEngine.Api.Services
             // If first trick, usually cannot dump points (unless no other choice)
             if (isFirstTrickOfHand && playedCard.PointValue > 0)
             {
-                // Strictly speaking, if they have no other choice, they must play it, 
-                // but some variations prohibit dumping points on trick 1 completely.
-                // We'll allow it if they have no non-point cards.
-                if (!hand.All(c => c.PointValue > 0))
+                // Can they legally play any non-point card?
+                bool hasLegalNonPointCard = false;
+                foreach (var c in hand)
+                {
+                    if (c.PointValue == 0)
+                    {
+                        if (hasSuit && c.Suit != ledSuit) continue; // Must follow suit
+                        hasLegalNonPointCard = true;
+                        break;
+                    }
+                }
+
+                if (hasLegalNonPointCard)
                     return (false, "You cannot play penalty cards on the first trick unless you have no other choice.");
             }
 

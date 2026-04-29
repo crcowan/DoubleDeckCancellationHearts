@@ -50,6 +50,8 @@ namespace GameEngine.Api.Controllers
             public int AiDifficulty { get; set; }
             public List<string> BotNames { get; set; } = new();
             public GameRules Rules { get; set; } = new();
+            public bool ShowAiReasoning { get; set; } = true;
+            public AiModelSize SelectedAiModel { get; set; } = AiModelSize.Balanced4B;
         }
 
         [HttpPost("start")]
@@ -68,7 +70,7 @@ namespace GameEngine.Api.Controllers
                 players.Add(new Player { Id = $"AI_{i}", Name = botName, IsAi = true, DifficultyLevel = req.AiDifficulty });
             }
 
-            _gameManager.InitializeGame(players, req.Rules);
+            _gameManager.InitializeGame(players, req.Rules, req.ShowAiReasoning, req.SelectedAiModel);
             return Ok(_gameManager.GetState());
         }
 

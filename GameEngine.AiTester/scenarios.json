@@ -1,0 +1,7642 @@
+[
+  {
+    "ScenarioId": "PlaySafe_Lead_1",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "7C",
+        "AD",
+        "5C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_2",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "6D",
+        "8D",
+        "8C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_3",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "3D",
+        "JC",
+        "6C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_4",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "4C",
+        "4D",
+        "7C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_5",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "5C",
+        "5C",
+        "5D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_6",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "6D",
+        "2C",
+        "4D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_7",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "8C",
+        "9D",
+        "3D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_8",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "2C",
+        "3C",
+        "5D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_9",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "8C",
+        "AD",
+        "5D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_10",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "8D",
+        "8C",
+        "7C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_11",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "8C",
+        "7D",
+        "QD"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_12",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "7C",
+        "5D",
+        "AD"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_13",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "8C",
+        "7C",
+        "AD"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_14",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "5D",
+        "5D",
+        "6D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_15",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "3D",
+        "KC",
+        "QD"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_16",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "7D",
+        "AC",
+        "6C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_17",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "5C",
+        "3D",
+        "2C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_18",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "2D",
+        "QC",
+        "8C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_19",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "5D",
+        "4D",
+        "AD"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "PlaySafe_Lead_20",
+    "Description": "Experienced AI leading. No spades, no queen. Should play safe (lowest).",
+    "AiSkill": 3.0,
+    "ExpectedIntent": "PlaySafe",
+    "ExpectedCard": "",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "4D",
+        "2D",
+        "8D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_1",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "JS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "JS",
+        "3D",
+        "JC"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_2",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "8S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "8S",
+        "4C",
+        "9D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_3",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "8S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "8S",
+        "9D",
+        "3C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_4",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "9S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9S",
+        "4C",
+        "JC"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_5",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "8S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "8S",
+        "AD",
+        "9C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_6",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "10S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "10S",
+        "9D",
+        "5C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_7",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "JS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "JS",
+        "6C",
+        "KC"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_8",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "9S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9S",
+        "2C",
+        "5D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_9",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "8S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "8S",
+        "QD",
+        "8D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_10",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "8S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "8S",
+        "QC",
+        "7C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_11",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "8S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "8S",
+        "8D",
+        "5D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_12",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "9S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9S",
+        "6C",
+        "6C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_13",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "JS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "JS",
+        "QC",
+        "5D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_14",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "10S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "10S",
+        "2D",
+        "JD"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_15",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "JS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "JS",
+        "2C",
+        "8C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_16",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "8S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "8S",
+        "JC",
+        "KC"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_17",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "JS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "JS",
+        "9D",
+        "5C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_18",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "10S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "10S",
+        "2D",
+        "4C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_19",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "9S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9S",
+        "4D",
+        "KD"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "ClearSpades_20",
+    "Description": "AI leading. Has spades (not QS). Should clear spades.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ClearSpades",
+    "ExpectedCard": "10S",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "10S",
+        "3C",
+        "3D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_1",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "7C",
+        "AD"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_2",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "9D",
+        "10C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_3",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "3D",
+        "4C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_4",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "8C",
+        "QC"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_5",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "JD",
+        "QD"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_6",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "7C",
+        "KD"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_7",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "3C",
+        "4C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_8",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "10D",
+        "5C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_9",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "JC",
+        "4D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_10",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "QC",
+        "9D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_11",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "KD",
+        "3C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_12",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "7D",
+        "4D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_13",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "3D",
+        "KD"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_14",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "7D",
+        "JD"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_15",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "JD",
+        "QC"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_16",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "7C",
+        "5D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_17",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "AC",
+        "8D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_18",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "3D",
+        "4C"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_19",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "7D",
+        "JD"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "LeadQueen_20",
+    "Description": "AI leading. Has QS. Should lead Queen.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "LeadQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "9D",
+        "3D"
+      ],
+      "LedSuit": "",
+      "CurrentTrick": []
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_1",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "2C"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_2",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "10C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_3",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "10D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_4",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "2D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_5",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "JC"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_6",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "6D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_7",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "3C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_8",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "2D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_9",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "10C"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_10",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "8D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_11",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "3D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_12",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "9C"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_13",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "KD"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_14",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "9D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_15",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "10D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_16",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "10C"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_17",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "7C"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_18",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "QD"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_19",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "AC"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DuckingTrick_20",
+    "Description": "Safe trick. AI has K and 2. Should duck with K (highest safe).",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DuckingTrick",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "JD"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_1",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "4D",
+        "10C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_2",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "QC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QC",
+        "6D",
+        "10C"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "QC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_3",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "QD",
+        "8D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_4",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "8C",
+        "8C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_5",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "3D",
+        "5C"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_6",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "9D",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9D",
+        "3D",
+        "8D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "9D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_7",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "10D",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "10D",
+        "AC",
+        "7C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "10D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_8",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "KD",
+        "4D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_9",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "9C",
+        "5D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_10",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "JD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "JD",
+        "8D",
+        "7D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "JD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_11",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "10D",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "10D",
+        "AD",
+        "JC"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "10D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_12",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "8C",
+        "5C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_13",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "QD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QD",
+        "7C",
+        "6C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "QD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_14",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "9D",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9D",
+        "2D",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "9D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_15",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "10D",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "10D",
+        "10C",
+        "5D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "10D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_16",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "JD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "JD",
+        "KD",
+        "7C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "JD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_17",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "JC",
+        "KD"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_18",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "10C",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "10C",
+        "QD",
+        "JD"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "10C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_19",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "JC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "JC",
+        "2D",
+        "7C"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "JC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "Cancellation_20",
+    "Description": "AI following. Has identical card. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "Cancellation",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "KD",
+        "7C"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_1",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "AC"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_2",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "KC"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "3D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_3",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "7D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "5C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_4",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "9D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "5C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_5",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "7D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "7C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_6",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "3C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "2D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_7",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "10D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "8C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_8",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "9C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "6D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_9",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "3C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "5D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_10",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "3D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_11",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "3C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "3D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_12",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "KC"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "QD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_13",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "5C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "3D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_14",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "QD"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "10C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_15",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "5C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "5D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_16",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "JC"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "4D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_17",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "4C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "10D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_18",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "8C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "JD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_19",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "8D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "8C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "DumpPenalty_20",
+    "Description": "AI void in led suit. Has hearts. Should dump highest heart.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "DumpPenalty",
+    "ExpectedCard": "9H",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "9H",
+        "2H",
+        "AC"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "QD"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_1",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "9H"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_2",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "9H"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_3",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "9H"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_4",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "9H"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_5",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "9H"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_6",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "9H"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_7",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "9H"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_8",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "9H"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_9",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "9H"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_10",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "9H"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_11",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "9H"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_12",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "9H"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_13",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "9H"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_14",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KC",
+        "2C",
+        "9H"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "AC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_15",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "9H"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_16",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "9H"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_17",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "9H"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_18",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "9H"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_19",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "9H"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "AggressiveFeeding_20",
+    "Description": "Trick has points. AI has K (safe) and 9H. Should play K (AggFeeding) or 9H if void.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "AggressiveFeeding",
+    "ExpectedCard": "KD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "KD",
+        "2D",
+        "9H"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "AD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_1",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_2",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_3",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_4",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_5",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_6",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_7",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_8",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_9",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_10",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_11",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_12",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_13",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_14",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_15",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_16",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_17",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_18",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_19",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "CancelQueen_20",
+    "Description": "Spades led. QS in trick. AI has QS. Should cancel.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "CancelQueen",
+    "ExpectedCard": "QS",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "QS",
+        "5S",
+        "2S"
+      ],
+      "LedSuit": "S",
+      "CurrentTrick": [
+        "QS"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_1",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2D",
+        "9C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "2D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_2",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "2C",
+        "6C"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "2C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_3",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "5D",
+        "AC"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "2D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_4",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "10C",
+        "10D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "2C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_5",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2C",
+        "10D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "2D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_6",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "2C",
+        "4D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "2C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_7",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "JD",
+        "2C"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "2C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_8",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "KC",
+        "KC"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "2C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_9",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "7D",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "2D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_10",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "8C",
+        "9D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "2C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_11",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "6D",
+        "AC"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "2D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_12",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "6D",
+        "3C"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "2C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_13",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "QC",
+        "8C"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "2C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_14",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "JC",
+        "2C"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "2D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_15",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "AC",
+        "AD"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "2D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_16",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "AC",
+        "7C"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "2C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_17",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "KC",
+        "2D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "2C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_18",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "7C",
+        "KC"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "2C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_19",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "AC",
+        "10D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "2D"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "TakeControl_20",
+    "Description": "Safe trick. AI has Ace. Should take control.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "TakeControl",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "AD",
+        "8D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "2C"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_1",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_2",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_3",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_4",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_5",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_6",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_7",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_8",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_9",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_10",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_11",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_12",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_13",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_14",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_15",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_16",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_17",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_18",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_19",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "StopMoon_20",
+    "Description": "Moon threat. AI has Ace. Should stop moon.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "StopMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 0,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 15,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "10S",
+        "5D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_1",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_2",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_3",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_4",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_5",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_6",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_7",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_8",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_9",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_10",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_11",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_12",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_13",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_14",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_15",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_16",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_17",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_18",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AC",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AC",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "C",
+      "CurrentTrick": [
+        "KC",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_19",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  },
+  {
+    "ScenarioId": "ShootTheMoon_20",
+    "Description": "AI shooting moon. Must win trick.",
+    "AiSkill": 5.0,
+    "ExpectedIntent": "ShootTheMoon",
+    "ExpectedCard": "AD",
+    "GameState": {
+      "AiScore": 0,
+      "AiHandScore": 10,
+      "OpponentScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentHandScores": {
+        "Bot2": 0,
+        "Bot3": 0,
+        "Bot4": 0
+      },
+      "OpponentProfiles": {
+        "Bot2": "Bal",
+        "Bot3": "Bal",
+        "Bot4": "Bal"
+      },
+      "AiHand": [
+        "AD",
+        "2S",
+        "3D"
+      ],
+      "LedSuit": "D",
+      "CurrentTrick": [
+        "KD",
+        "2H"
+      ]
+    }
+  }
+]

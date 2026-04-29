@@ -1,0 +1,11 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\Program.cs(9,28): error CS0017: Program has more than one entry point defined. Compile with /main to specify the type that contains the entry point. [C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\GameEngine.Api.csproj]
+
+Build FAILED.
+
+C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\Program.cs(9,28): error CS0017: Program has more than one entry point defined. Compile with /main to specify the type that contains the entry point. [C:\Users\crcow\.gemini\antigravity\scratch\DoubleDeckCancellationHearts\GameEngine.Api\GameEngine.Api.csproj]
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:01.74

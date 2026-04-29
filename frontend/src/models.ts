@@ -41,18 +41,36 @@ export interface Player {
     hand: Card[];
     capturedCards: Card[];
     score: number;
+    handScore: number;
+    matchTricksWon: number;
 }
 
 export const GamePhase = {
     Lobby: 0,
-    Passing: 1,
-    TrickPending: 2,
-    Playing: 3,
-    GameOver: 4,
-    MatchOver: 5
+    DownloadingModel: 1,
+    Passing: 2,
+    TrickPending: 3,
+    Playing: 4,
+    GameOver: 5,
+    MatchOver: 6
 } as const;
 
 export type GamePhase = typeof GamePhase[keyof typeof GamePhase];
+
+export const AiModelSize = {
+    Fast2B: 0,
+    Balanced4B: 1
+} as const;
+
+export type AiModelSize = typeof AiModelSize[keyof typeof AiModelSize];
+
+export interface TrickSummary {
+    trick: Card[];
+    leadingPlayerIndex: number;
+    winningPlayerIndex: number;
+    isCancelled: boolean;
+    trickPoints: number;
+}
 
 export interface GameState {
     gameId: string;
@@ -66,10 +84,16 @@ export interface GameState {
     kittyTakenByName?: string | null;
     heartsBroken: boolean;
     isFirstTrickOfHand: boolean;
+    matchTricksPlayed: number;
     phase: GamePhase;
+    previousTrick?: TrickSummary;
     rules?: { targetScore: number };
     roundNumber: number;
     pendingPasses?: Record<string, Card[]>;
     shooterOfMoonId?: string | null;
     lastMoveReasoning?: Record<string, string>;
+    showAiReasoning: boolean;
+    llmDownloadProgress?: number;
+    llmDownloadStatus?: string;
+    selectedAiModel?: AiModelSize;
 }

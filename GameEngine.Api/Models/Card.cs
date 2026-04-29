@@ -57,5 +57,47 @@ namespace GameEngine.Api.Models
         }
 
         public override string ToString() => $"{Rank} of {Suit}";
+
+        public string ToShortString()
+        {
+            string r = Rank switch
+            {
+                Rank.Two => "2", Rank.Three => "3", Rank.Four => "4", Rank.Five => "5",
+                Rank.Six => "6", Rank.Seven => "7", Rank.Eight => "8", Rank.Nine => "9",
+                Rank.Ten => "10", Rank.Jack => "J", Rank.Queen => "Q", Rank.King => "K", Rank.Ace => "A",
+                _ => "?"
+            };
+            string s = Suit switch
+            {
+                Suit.Clubs => "C", Suit.Diamonds => "D", Suit.Spades => "S", Suit.Hearts => "H",
+                _ => "?"
+            };
+            return r + s;
+        }
+
+        public static Card? TryParseShortId(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id) || id.Length < 2) return null;
+            id = id.Trim().ToUpperInvariant();
+
+            string rankPart = id.Length == 3 ? id[..2] : id[..1]; // "10C" vs "KC"
+            string suitPart = id[^1..]; // last char
+
+            Rank? rank = rankPart switch
+            {
+                "2" => Rank.Two, "3" => Rank.Three, "4" => Rank.Four, "5" => Rank.Five,
+                "6" => Rank.Six, "7" => Rank.Seven, "8" => Rank.Eight, "9" => Rank.Nine,
+                "10" => Rank.Ten, "J" => Rank.Jack, "Q" => Rank.Queen, "K" => Rank.King, "A" => Rank.Ace,
+                _ => null
+            };
+            Suit? suit = suitPart switch
+            {
+                "C" => Suit.Clubs, "D" => Suit.Diamonds, "S" => Suit.Spades, "H" => Suit.Hearts,
+                _ => null
+            };
+
+            if (rank == null || suit == null) return null;
+            return new Card(suit.Value, rank.Value);
+        }
     }
 }
