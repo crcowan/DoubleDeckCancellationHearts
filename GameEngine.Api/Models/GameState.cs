@@ -2,12 +2,6 @@ using System.Collections.Generic;
 
 namespace GameEngine.Api.Models
 {
-    public enum AiModelSize 
-    { 
-        Fast2B, 
-        Balanced4B 
-    }
-
     public class Player
     {
         public string Id { get; set; } = string.Empty;
@@ -126,7 +120,7 @@ namespace GameEngine.Api.Models
         public Dictionary<string, string> LastMoveReasoning { get; set; } = new();
         public bool ShowAiReasoning { get; set; } = true;
 
-        public AiModelSize SelectedAiModel { get; set; } = AiModelSize.Fast2B;
+
 
         public enum GamePhase { Lobby, DownloadingModel, Passing, TrickPending, Playing, GameOver, MatchOver }
         public GamePhase Phase { get; set; } = GamePhase.Lobby;

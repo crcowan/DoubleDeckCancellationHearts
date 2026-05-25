@@ -28,7 +28,7 @@ namespace GameEngine.Api.Services
             lock (_stateLock) { _state = new GameState(); }
         }
 
-        public void InitializeGame(List<Player> players, GameRules rules, bool showAiReasoning = true, AiModelSize selectedAiModel = AiModelSize.Balanced4B)
+        public void InitializeGame(List<Player> players, GameRules rules, bool showAiReasoning = true)
         {
             lock (_stateLock)
             {
@@ -40,12 +40,11 @@ namespace GameEngine.Api.Services
                 Players = players,
                 Rules = rules,
                 Phase = initialPhase,
-                ShowAiReasoning = showAiReasoning,
-                SelectedAiModel = selectedAiModel
+                ShowAiReasoning = showAiReasoning
             };
 
             // Hook into LLM downloading on the very first start if it's missing
-            if (players.Any(p => p.IsAi) && !_llmModelManager.IsModelDownloaded(selectedAiModel))
+            if (players.Any(p => p.IsAi) && !_llmModelManager.IsServerDownloaded())
             {
                 _state.Phase = GameState.GamePhase.DownloadingModel;
                 _state.LlmDownloadStatus = "Initializing AI Download...";
@@ -54,7 +53,7 @@ namespace GameEngine.Api.Services
                 _ = Task.Run(async () => {
                     _llmModelManager.OnDownloadProgressChanged += HandleDownloadProgress;
                     try {
-                        await _llmModelManager.DownloadModelAsync(selectedAiModel);
+                        await _llmModelManager.DownloadServerAsync();
                         lock (_stateLock) {
                             _state.Phase = initialPhase;
                         }

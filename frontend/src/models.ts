@@ -57,12 +57,7 @@ export const GamePhase = {
 
 export type GamePhase = typeof GamePhase[keyof typeof GamePhase];
 
-export const AiModelSize = {
-    Fast2B: 0,
-    Balanced4B: 1
-} as const;
 
-export type AiModelSize = typeof AiModelSize[keyof typeof AiModelSize];
 
 export interface TrickSummary {
     trick: Card[];
@@ -95,5 +90,4 @@ export interface GameState {
     showAiReasoning: boolean;
     llmDownloadProgress?: number;
     llmDownloadStatus?: string;
-    selectedAiModel?: AiModelSize;
 }

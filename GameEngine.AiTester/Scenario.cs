@@ -28,5 +28,8 @@ namespace GameEngine.AiTester
         
         // PlayerId -> Profile ("Agg", "Def", "Bal")
         public Dictionary<string, string> OpponentProfiles { get; set; } = new();
+
+        // PlayerId -> List of Void Suits ("Clubs", "Diamonds", "Hearts", "Spades")
+        public Dictionary<string, List<string>> OpponentVoids { get; set; } = new();
     }
 }

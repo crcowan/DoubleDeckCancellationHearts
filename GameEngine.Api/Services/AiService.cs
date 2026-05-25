@@ -9,11 +9,11 @@ namespace GameEngine.Api.Services
 {
     public class AiService
     {
-        private static bool _isProcessingAiTurn = false;
-        private static readonly object _aiTurnLock = new object();
-
         private readonly GameLogicService _logic;
         private readonly LlmInferenceService _llmInference;
+        private readonly object _aiTurnLock = new object();
+        private bool _isProcessingAiTurn = false;
+        private int _lastSeenRoundNumber = -1;
 
         public AiService(GameLogicService logic, LlmInferenceService llmInference)
         {
@@ -45,6 +45,10 @@ namespace GameEngine.Api.Services
             }
 
             // --- Grandmaster Fast-Track Engine (Latency Optimization) ---
+            string engineSuggestedIntent = null;
+            Card engineSuggestedCard = null;
+            string engineReasoning = null;
+
             if (effectiveSkill >= 4.0)
             {
                 Suit? overrideLedSuit = state.CurrentTrick.FirstOrDefault()?.Suit;
@@ -52,47 +56,41 @@ namespace GameEngine.Api.Services
                 // 1. Lead Queen of Spades
                 if (state.CurrentTrick.Count == 0 && validCards.Any(c => c.IsQueenOfSpades))
                 {
-                    var card = validCards.First(c => c.IsQueenOfSpades);
-                    return (card, "[Strategic] Grandmaster lead: Forcing the Queen of Spades to smoke out opponents.");
+                    engineSuggestedCard = validCards.First(c => c.IsQueenOfSpades);
+                    engineSuggestedIntent = "LeadQueen";
+                    engineReasoning = "[Strategic] Grandmaster lead: Forcing the Queen of Spades to smoke out opponents.";
                 }
-
                 // 2. Cancellation (Identical card in trick)
-                var cancelTarget = validCards.FirstOrDefault(vc =>
-                    (vc.Rank >= Rank.Jack || vc.Suit == Suit.Hearts) &&
-                    state.CurrentTrick.Any(tc => tc.Suit == vc.Suit && tc.Rank == vc.Rank));
-                if (cancelTarget != null)
+                else if (validCards.FirstOrDefault(vc => (vc.Rank >= Rank.Jack || vc.Suit == Suit.Hearts) && state.CurrentTrick.Any(tc => tc.Suit == vc.Suit && tc.Rank == vc.Rank)) != null)
                 {
-                    return (cancelTarget, $"[Strategic] Grandmaster cancellation: Matching the {cancelTarget} in the trick.");
+                    engineSuggestedCard = validCards.FirstOrDefault(vc => (vc.Rank >= Rank.Jack || vc.Suit == Suit.Hearts) && state.CurrentTrick.Any(tc => tc.Suit == vc.Suit && tc.Rank == vc.Rank));
+                    engineSuggestedIntent = "Cancellation";
+                    engineReasoning = $"[Strategic] Grandmaster cancellation: Matching the {engineSuggestedCard} in the trick.";
                 }
-
                 // 3. Stop Moonshot
-                var moonThreat = state.Players.FirstOrDefault(p => p.Id != aiPlayer.Id && p.HandScore >= 6 && state.Players.All(other => other.Id == p.Id || other.HandScore == 0));
-                if (moonThreat != null && validCards.Any(c => c.Rank == Rank.Ace))
+                else if (state.Players.FirstOrDefault(p => p.Id != aiPlayer.Id && p.HandScore >= 6 && state.Players.All(other => other.Id == p.Id || other.HandScore == 0)) != null && validCards.Any(c => c.Rank == Rank.Ace))
                 {
-                    var ace = validCards.First(c => c.Rank == Rank.Ace);
-                    return (ace, $"[Strategic] Grandmaster defense: Forcing the {ace} to prevent {moonThreat.Name} from shooting the moon.");
+                    var moonThreat = state.Players.FirstOrDefault(p => p.Id != aiPlayer.Id && p.HandScore >= 6 && state.Players.All(other => other.Id == p.Id || other.HandScore == 0));
+                    engineSuggestedCard = validCards.First(c => c.Rank == Rank.Ace);
+                    engineSuggestedIntent = "StopMoon";
+                    engineReasoning = $"[Strategic] Grandmaster defense: Forcing the {engineSuggestedCard} to prevent {moonThreat.Name} from shooting the moon.";
                 }
-
                 // 4. Cancel Queen
-                if (state.CurrentTrick.Any(tc => tc.IsQueenOfSpades) && validCards.Any(vc => vc.IsQueenOfSpades))
+                else if (state.CurrentTrick.Any(tc => tc.IsQueenOfSpades) && validCards.Any(vc => vc.IsQueenOfSpades))
                 {
-                    var qs = validCards.First(vc => vc.IsQueenOfSpades);
-                    return (qs, "[Strategic] Grandmaster maneuver: Cancelling the Queen of Spades to nullify the point penalty.");
+                    engineSuggestedCard = validCards.First(vc => vc.IsQueenOfSpades);
+                    engineSuggestedIntent = "CancelQueen";
+                    engineReasoning = "[Strategic] Grandmaster maneuver: Cancelling the Queen of Spades to nullify the point penalty.";
                 }
-
                 // 5. Dump Penalty (Void in led suit)
-                if (overrideLedSuit.HasValue && !validCards.Any(c => c.Suit == overrideLedSuit.Value))
+                else if (overrideLedSuit.HasValue && !validCards.Any(c => c.Suit == overrideLedSuit.Value) && validCards.Any(c => c.PointValue > 0))
                 {
-                    var penaltyCards = validCards.Where(c => c.PointValue > 0).OrderByDescending(c => c.PointValue).ThenByDescending(c => c.Rank).ToList();
-                    if (penaltyCards.Any())
-                    {
-                        var dump = penaltyCards.First();
-                        return (dump, $"[Strategic] Grandmaster discard: Dumping the {dump} while void in {overrideLedSuit}.");
-                    }
+                    engineSuggestedCard = validCards.Where(c => c.PointValue > 0).OrderByDescending(c => c.PointValue).ThenByDescending(c => c.Rank).First();
+                    engineSuggestedIntent = "DumpPenalty";
+                    engineReasoning = $"[Strategic] Grandmaster discard: Dumping the {engineSuggestedCard} while void in {overrideLedSuit}.";
                 }
-
                 // 6. Aggressive Feeding
-                if (overrideLedSuit.HasValue && state.CurrentTrick.Any(c => c.PointValue > 0))
+                else if (overrideLedSuit.HasValue && state.CurrentTrick.Any(c => c.PointValue > 0))
                 {
                     var suitCards = validCards.Where(c => c.Suit == overrideLedSuit.Value).OrderBy(c => c.Rank).ToList();
                     var highestInTrick = state.CurrentTrick.Where(c => c.Suit == overrideLedSuit.Value).OrderByDescending(c => c.Rank).FirstOrDefault();
@@ -101,35 +99,60 @@ namespace GameEngine.Api.Services
                         var highestSafe = suitCards.LastOrDefault(c => c.Rank < highestInTrick.Rank);
                         if (highestSafe != null && (highestSafe.PointValue > 0 || highestSafe.Rank >= Rank.Ten))
                         {
-                            return (highestSafe, $"[Strategic] Grandmaster feeding: Dumping the {highestSafe} on a high-value trick.");
+                            engineSuggestedCard = highestSafe;
+                            engineSuggestedIntent = "AggressiveFeeding";
+                            engineReasoning = $"[Strategic] Grandmaster feeding: Dumping the {highestSafe} on a high-value trick.";
                         }
                     }
                 }
 
                 // 7. Take Control (Ace of led suit)
-                if (overrideLedSuit.HasValue && validCards.Any(c => c.Suit == overrideLedSuit.Value && c.Rank == Rank.Ace))
+                if (engineSuggestedIntent == null && overrideLedSuit.HasValue && validCards.Any(c => c.Suit == overrideLedSuit.Value && c.Rank == Rank.Ace))
                 {
-                    var ace = validCards.First(c => c.Suit == overrideLedSuit.Value && c.Rank == Rank.Ace);
-                    return (ace, $"[Strategic] Grandmaster control: Taking the lead with the {ace}.");
+                    engineSuggestedCard = validCards.First(c => c.Suit == overrideLedSuit.Value && c.Rank == Rank.Ace);
+                    engineSuggestedIntent = "TakeControl";
+                    engineReasoning = $"[Strategic] Grandmaster control: Taking the lead with the {engineSuggestedCard}.";
                 }
 
                 // 8. Shoot the Moon (If AI has all points and can win)
                 bool moonshot = state.Players.All(p => p.Id == aiPlayer.Id || p.HandScore == 0) && aiPlayer.HandScore > 0;
-                if (moonshot)
+                if (engineSuggestedIntent == null && moonshot)
                 {
-                    // Basic heuristic: play highest possible to keep the lead
-                    var highest = validCards.OrderByDescending(c => c.Rank).First();
-                    return (highest, $"[Strategic] Grandmaster moonshot: Playing the {highest} to maintain momentum.");
+                    engineSuggestedCard = validCards.OrderByDescending(c => c.Rank).First();
+                    engineSuggestedIntent = "ShootTheMoon";
+                    engineReasoning = $"[Strategic] Grandmaster moonshot: Playing the {engineSuggestedCard} to maintain momentum.";
                 }
             }
 
+            // --- Fast-Track Bypass: Skip LLM entirely for deterministic moves ---
+            // If the Grandmaster Engine already computed the optimal card, return it instantly.
+            // This saves 2-5 seconds per move on integrated GPUs.
+            if (engineSuggestedCard != null && engineSuggestedIntent != null)
+            {
+                // Persist the strategy decision even when bypassing the LLM
+                if (effectiveSkill >= 2.5)
+                {
+                    if (!state.MemoryTracker.PlayerStrategies.ContainsKey(aiPlayer.Id))
+                        state.MemoryTracker.PlayerStrategies[aiPlayer.Id] = new AiStrategyState();
+
+                    var strat = state.MemoryTracker.PlayerStrategies[aiPlayer.Id];
+                    if (strat.ActiveStrategy != engineSuggestedIntent) strat.StrategyAge = 1;
+                    else strat.StrategyAge++;
+                    
+                    strat.ActiveStrategy = engineSuggestedIntent;
+                    strat.StrategyRationale = engineReasoning?.Length > 120 ? engineReasoning.Substring(0, 117) + "..." : engineReasoning ?? "";
+                }
+
+                return (engineSuggestedCard, engineReasoning ?? $"[{engineSuggestedIntent}] Fast-track engine play.");
+            }
+
             // --- Nuanced Decision Mode (LLM Consultation) ---
-            // If no deterministic strategic override fired, consult the LLM for reasoning and move selection.
+            // No deterministic strategic override fired. Consult the LLM for reasoning and move selection.
             
             // Decide which prompt profile to use based on the Performance Toggle
             string prompt = state.ShowAiReasoning 
-                ? ConstructPromptVerbose(state, aiPlayer, validCards, effectiveSkill, fieldIntel, forcedMistakeCard)
-                : ConstructPromptNano(state, aiPlayer, validCards, effectiveSkill, fieldIntel, forcedMistakeCard);
+                ? ConstructPromptVerbose(state, aiPlayer, validCards, effectiveSkill, fieldIntel, forcedMistakeCard, engineSuggestedIntent, engineSuggestedCard)
+                : ConstructPromptNano(state, aiPlayer, validCards, effectiveSkill, fieldIntel, forcedMistakeCard, engineSuggestedIntent, engineSuggestedCard);
             
             float temperature = 0.5f;
             int maxTokens = state.ShowAiReasoning ? 60 : 25; 
@@ -138,10 +161,22 @@ namespace GameEngine.Api.Services
             else if (effectiveSkill >= 2.5) { temperature = 0.7f; if (state.ShowAiReasoning) maxTokens = 100; }
             else { temperature = 1.0f; if (state.ShowAiReasoning) maxTokens = 40; }
 
+            var (validTactics, validTacticDefs) = GetDynamicTactics(state, aiPlayer, validCards, effectiveSkill);
+
+            string responseJson = "";
+            string responseRaw = "";
+
             var grammar = state.ShowAiReasoning ? null : "JSON"; 
-            string responseRaw = await _llmInference.GenerateMoveIntentAsync(prompt, state.SelectedAiModel, temperature, maxTokens, grammar);
-            
-            string responseJson = responseRaw.Trim();
+            responseRaw = await _llmInference.GenerateMoveIntentAsync(aiPlayer.Id, prompt, temperature, maxTokens, grammar);
+            responseJson = responseRaw.Trim();
+
+            // Extract json block if surrounded by markdown
+            var matchJson = System.Text.RegularExpressions.Regex.Match(responseJson, @"\{[\s\S]*\}");
+            if (matchJson.Success)
+            {
+                responseJson = matchJson.Value;
+            }
+
             if (!responseJson.StartsWith("{"))
             {
                 responseJson = state.ShowAiReasoning 
@@ -149,17 +184,17 @@ namespace GameEngine.Api.Services
                     : "{ \"Intent\": \"" + responseRaw.Trim() + "\" }";
             }
  
-            string intentStr = "PlaySafe";
-            string suggestedCardId = "";
+            string intentStr = engineSuggestedIntent ?? "PlaySafe";
+            string suggestedCardId = engineSuggestedCard?.ToShortString() ?? "";
             string reasoning = "";
  
             try
             {
                 using var doc = JsonDocument.Parse(responseJson);
                 var root = doc.RootElement;
-                if (root.TryGetProperty("Intent", out var iProp)) intentStr = iProp.GetString() ?? "PlaySafe";
-                if (root.TryGetProperty("SuggestedCard", out var sProp)) suggestedCardId = sProp.GetString() ?? "";
-                if (root.TryGetProperty("Reasoning", out var rProp)) reasoning = rProp.GetString() ?? "";
+                if (root.TryGetProperty("Intent", out var iProp)) intentStr = iProp.GetString() ?? intentStr;
+                if (root.TryGetProperty("SuggestedCard", out var sProp)) suggestedCardId = sProp.GetString() ?? suggestedCardId;
+                if (root.TryGetProperty("Reasoning", out var rProp)) reasoning = rProp.GetString() ?? reasoning;
             }
             catch
             {
@@ -170,8 +205,6 @@ namespace GameEngine.Api.Services
                 }
             }
 
-            var (validTactics, validTacticDefs) = GetDynamicTactics(state, aiPlayer, validCards, effectiveSkill);
-            
             // --- Normal Heuristics & Map Logic ---
             if (!validTactics.Contains(intentStr))
             {
@@ -227,7 +260,7 @@ namespace GameEngine.Api.Services
             return (chosenCard, reasoning);
         }
 
-        private string ConstructPromptVerbose(GameState state, Player aiPlayer, List<Card> validCards, double effectiveSkill, string fieldIntel, Card? forcedMistake)
+        private string ConstructPromptVerbose(GameState state, Player aiPlayer, List<Card> validCards, double effectiveSkill, string fieldIntel, Card? forcedMistake, string engineSuggestedIntent, Card engineSuggestedCard)
         {
             var (scoreboard, voids, knownInfo, strategySection, historySection, mistakeNote, trickStr, fullHandStr, counts, prevTrickStr) = GetCommonPromptData(state, aiPlayer, validCards, effectiveSkill, forcedMistake);
             string persona = effectiveSkill >= 4.0 ? "Grandmaster" : (effectiveSkill >= 2.5 ? "Experienced" : "Beginner");
@@ -239,10 +272,28 @@ namespace GameEngine.Api.Services
             var (tactics, tacticDefs) = GetDynamicTactics(state, aiPlayer, validCards, effectiveSkill);
             string tacticsStr = string.Join(", ", tactics);
             string defsStr = string.Join(" | ", tacticDefs);
+            string hintNote = (engineSuggestedIntent != null) ? $"HINT: The Engine suggests [{engineSuggestedIntent}] with {engineSuggestedCard?.ToShortString()}.\n" : "";
 
-            return $@"<bos><start_of_turn>user
-{personaLine}
+            return $@"**SYSTEM RULES**
 Respond purely with valid JSON. Do not add conversational text.
+GOAL: Avoid penalty points. Giving points to others is GOOD (unless they are shooting the moon).
+{personaLine}
+
+**CONSTRAINTS**
+Reasoning: ONE short sentence. MUST MATCH your Intent. Explain why you are choosing the specific TACTIC. BANNED: 'opponent', 'player'. Use 1st person 'I' and specific names.
+TACTICS AVAILABLE: {tacticsStr}
+DEFINITIONS: {defsStr}
+JSON FORMAT:
+{{
+  ""Reasoning"": ""(One short sentence holding your plan)"",
+  ""Intent"": ""(TACTIC_NAME)"",
+  ""SuggestedCard"": ""(e.g. '9D')""
+}}
+
+**MEMORY & HISTORY**
+DEDUCTIONS: {voids}
+{knownInfo}{strategySection}{historySection}{prevTrickStr}
+{mistakeNote}
 
 **GAME STATE**
 Pos: {state.CurrentTrick.Count + 1}/{state.Players.Count}
@@ -250,33 +301,14 @@ Scores: {scoreboard}
 Cancelled Pile: {state.CancelledKitty.Sum(c => c.PointValue)}pts | You: {aiPlayer.HandScore}pts
 {counts}
 
-**MEMORY & HISTORY**
-DEDUCTIONS: {voids}
-{knownInfo}{strategySection}{historySection}{prevTrickStr}
-{mistakeNote}
-
 **CURRENT TRICK**
 LED: {ledSuit?.ToString() ?? "None"}. You MUST follow the led suit IF you have it. If void, you can discard any suit.
+{hintNote}
 Trick: {trickStr}
-HAND: {fullHandStr}
-
-**CONSTRAINTS**
-GOAL: Avoid penalty points. Giving points to others is GOOD (unless they are shooting the moon).
-Reasoning: ONE short sentence. MUST MATCH your Intent. Explain why you are choosing the specific TACTIC. BANNED: 'opponent', 'player'. Use 1st person 'I' and specific names.
-TACTICS: {tacticsStr}
-DEFS: {defsStr}
-
-JSON FORMAT:
-{{
-  ""Reasoning"": ""(One short sentence holding your plan)"",
-  ""Intent"": ""(TACTIC_NAME)"",
-  ""SuggestedCard"": ""(e.g. '9D')""
-}}<end_of_turn>
-<start_of_turn>model
-{{ ""Reasoning"": """;
+HAND: {fullHandStr}";
         }
 
-        private string ConstructPromptNano(GameState state, Player aiPlayer, List<Card> validCards, double effectiveSkill, string fieldIntel, Card? forcedMistake)
+        private string ConstructPromptNano(GameState state, Player aiPlayer, List<Card> validCards, double effectiveSkill, string fieldIntel, Card? forcedMistake, string engineSuggestedIntent, Card engineSuggestedCard)
         {
             var (_, voids, knownInfo, strategySection, historySection, _, trickStr, fullHandStr, counts, prevTrickStr) = GetCommonPromptData(state, aiPlayer, validCards, effectiveSkill, forcedMistake);
             bool moonshotPossible = state.Players.All(p => p.Id == aiPlayer.Id || p.HandScore == 0);
@@ -287,47 +319,89 @@ JSON FORMAT:
             string defsStr = string.Join(" | ", tacticDefs);
             if (effectiveSkill >= 4.0) defsStr += " | GM_RULE: Never default to PlaySafe if an advanced tactic is available";
             string prefix = effectiveSkill >= 4.0 ? "GM" : (effectiveSkill >= 2.5 ? "PRO" : "NOOB");
+            string hintNote = (engineSuggestedIntent != null) ? $"HINT:[{engineSuggestedIntent}:{engineSuggestedCard?.ToShortString()}]\n" : "";
 
-            // Hyper-compressed Nano prompt
-            // V:Voids, K:Known, S:Strategy, H:History, PT:PrevTrick, L:Led, HND:Hand, C:Counts, TR:Trick
-            return $@"<bos><start_of_turn>user
-[{prefix}:{aiPlayer.Name}]
-V:{voids}
-{knownInfo}{strategySection}{historySection}{prevTrickStr}
-L:{ledSuit?.ToString()?[0] ?? 'N'}
-HND:{fullHandStr}
-{counts}
-TR:{trickStr}
-OPTS:{tacticsStr}
+            return $@"Double Deck Hearts
+{prefix}
 DEFS:{defsStr}
-JSON:{{""Intent"":""TACTIC_NAME"",""SuggestedCard"":""CARD_ID""}}<end_of_turn>
-<start_of_turn>model
-{{ ""Intent"": """;
+OPTS:{tacticsStr}
+Output EXACTLY ONE JSON Intent and SuggestedCard:
+{{ ""Intent"": ""TACTIC_NAME"", ""SuggestedCard"": ""ID"" }}
+
+Intel: {fieldIntel}
+{knownInfo}{strategySection}{historySection}{prevTrickStr}
+{counts}
+L:{ledSuit?.ToString()?[0] ?? 'N'}
+{hintNote}
+TR:{trickStr}
+HND:{fullHandStr}";
         }
+
+
 
         private (List<string> Tactics, List<string> TacticDefs) GetDynamicTactics(GameState state, Player aiPlayer, List<Card> validCards, double effectiveSkill)
         {
             List<string> tactics = new List<string> { "PlaySafe" };
-            List<string> tacticDefs = new List<string> { "PlaySafe: Play lowest card" };
+            List<string> tacticDefs = new List<string> { "PlaySafe: Play the lowest valid card to avoid points" };
             bool moonshotPossible = state.Players.All(p => p.Id == aiPlayer.Id || p.HandScore == 0);
             Suit? ledSuit = state.CurrentTrick.FirstOrDefault()?.Suit;
 
+            // --- Endgame Safety ---
+            if (state.MemoryTracker.QueensOfSpadesPlayed == 2 && state.MemoryTracker.PenaltyHeartsPlayed == 26)
+            {
+                tactics.Add("EndgameSafety"); tacticDefs.Add("EndgameSafety: All points are gone. Win tricks safely and quickly.");
+            }
+
             if (state.CurrentTrick.Count == 0) // Leading
             {
-                if (validCards.Any(c => c.Suit == Suit.Spades)) { tactics.Add("ClearSpades"); tacticDefs.Add("ClearSpades: Lead Spades to drain them"); }
-                if (validCards.Any(c => c.IsQueenOfSpades)) { tactics.Add("LeadQueen"); tacticDefs.Add("LeadQueen: Force Queen out"); }
+                if (validCards.Any(c => c.Suit == Suit.Spades)) { tactics.Add("ClearSpades"); tacticDefs.Add("ClearSpades: Lead Spades to drain opponents of them"); }
+                if (validCards.Any(c => c.IsQueenOfSpades)) { tactics.Add("LeadQueen"); tacticDefs.Add("LeadQueen: Lead the Queen to force points on someone"); }
+                
+                // Bleed Spades
+                if (state.MemoryTracker.QueensOfSpadesPlayed < 2 && !aiPlayer.Hand.Any(c => c.IsQueenOfSpades) && validCards.Any(c => c.Suit == Suit.Spades && (c.Rank == Rank.Ace || c.Rank == Rank.King)))
+                {
+                    tactics.Add("BleedSpades"); tacticDefs.Add("BleedSpades: Lead low Spades to force opponents to play their Queens");
+                }
+
+                // Avoid Void Lead
+                var opponentVoids = state.MemoryTracker.PlayerVoids.Where(kvp => kvp.Key != aiPlayer.Id && kvp.Value.Any()).SelectMany(kvp => kvp.Value).Distinct().ToList();
+                if (opponentVoids.Any() && validCards.Any(c => !opponentVoids.Contains(c.Suit)))
+                {
+                    tactics.Add("AvoidVoidLead"); tacticDefs.Add($"AvoidVoidLead: Do not lead {string.Join(",", opponentVoids)} to avoid being dumped on");
+                }
             }
             else // Following
             {
-                tactics.Add("DuckingTrick"); tacticDefs.Add("DuckingTrick: Play under the highest card");
-                tactics.Add("Cancellation"); tacticDefs.Add("Cancellation: Play identical card to cancel");
-                if (state.CurrentTrick.Any(c => c.PointValue > 0) || validCards.Any(c => c.PointValue > 0)) { tactics.Add("AggressiveFeeding"); tacticDefs.Add("AggressiveFeeding: Dump points on winner"); }
-                if (state.CurrentTrick.Any(c => c.IsQueenOfSpades) && validCards.Any(c => c.IsQueenOfSpades)) { tactics.Add("CancelQueen"); tacticDefs.Add("CancelQueen: Cancel the Queen"); }
-                if (ledSuit.HasValue && validCards.Any(c => c.Suit != ledSuit.Value)) { tactics.Add("DumpPenalty"); tacticDefs.Add("DumpPenalty: Discard high points when void"); }
+                tactics.Add("DuckingTrick"); tacticDefs.Add("DuckingTrick: Play a card lower than the current highest to avoid winning");
+                tactics.Add("Cancellation"); tacticDefs.Add("Cancellation: Play an identical card to cancel the current highest card");
+                if (state.CurrentTrick.Any(c => c.PointValue > 0) || validCards.Any(c => c.PointValue > 0)) { tactics.Add("AggressiveFeeding"); tacticDefs.Add("AggressiveFeeding: Dump penalty points on the current winner"); }
+                if (state.CurrentTrick.Any(c => c.IsQueenOfSpades) && validCards.Any(c => c.IsQueenOfSpades)) { tactics.Add("CancelQueen"); tacticDefs.Add("CancelQueen: Play your Queen to cancel the played Queen"); }
+                if (ledSuit.HasValue && validCards.Any(c => c.Suit != ledSuit.Value)) { tactics.Add("DumpPenalty"); tacticDefs.Add("DumpPenalty: You are void, so discard your highest penalty card"); }
                 
                 // If the trick is currently completely safe, consider taking it to gain the lead
                 if (state.CurrentTrick.Sum(c => c.PointValue) == 0 && validCards.Any(c => c.PointValue == 0)) { 
-                    tactics.Add("TakeControl"); tacticDefs.Add("TakeControl: Win safe trick to gain lead"); 
+                    tactics.Add("TakeControl"); tacticDefs.Add("TakeControl: Win this safe trick with a high card to gain the lead"); 
+                }
+                
+                // Avoid Kitty on Trick 1
+                if (state.IsFirstTrickOfHand && state.SetupKitty.Count > 0)
+                {
+                    tactics.Add("AvoidKitty"); tacticDefs.Add("AvoidKitty: The winner gets the Kitty. Play lowest card to duck at all costs.");
+                    tactics.Remove("TakeControl"); tactics.Remove("PlaySafe");
+                    tacticDefs.RemoveAll(d => d.StartsWith("TakeControl:") || d.StartsWith("PlaySafe:"));
+                }
+                
+                // Guard Queen
+                if (aiPlayer.Hand.Any(c => c.IsQueenOfSpades) && ledSuit == Suit.Spades && validCards.Any(c => c.Rank >= Rank.King))
+                {
+                    tactics.Add("GuardQueen"); tacticDefs.Add("GuardQueen: Hold high spades to protect your Queen of Spades.");
+                }
+
+                // Establish Void Early Game
+                if (aiPlayer.Hand.Count > 18) // First ~8 tricks
+                {
+                    if (aiPlayer.Hand.Count(c => c.Suit == Suit.Clubs) <= 3 && validCards.Any(c => c.Suit == Suit.Clubs)) { tactics.Add("EstablishVoid"); tacticDefs.Add("EstablishVoid: Actively play high Clubs to run out of them."); }
+                    else if (aiPlayer.Hand.Count(c => c.Suit == Suit.Diamonds) <= 3 && validCards.Any(c => c.Suit == Suit.Diamonds)) { tactics.Add("EstablishVoid"); tacticDefs.Add("EstablishVoid: Actively play high Diamonds to run out of them."); }
                 }
             }
             
@@ -335,9 +409,14 @@ JSON:{{""Intent"":""TACTIC_NAME"",""SuggestedCard"":""CARD_ID""}}<end_of_turn>
             if (moonshotPossible) { tactics.Add("ShootTheMoon"); tacticDefs.Add("ShootTheMoon: Take all penalty points"); }
             
             // If an opponent has a significant number of points and no one else has any, they are a moon threat!
-            var moonThreat = state.Players.FirstOrDefault(p => p.Id != aiPlayer.Id && p.HandScore >= 6 && state.Players.All(other => other.Id == p.Id || other.HandScore == 0));
+            var moonThreat = state.Players.FirstOrDefault(p => p.Id != aiPlayer.Id && p.HandScore >= 12 && state.Players.All(other => other.Id == p.Id || other.HandScore == 0));
             if (moonThreat != null) {
-                tactics.Add("StopMoon"); tacticDefs.Add("StopMoon: Sacrifice to take points from moon-shooter");
+                tactics.Add("StopMoon"); tacticDefs.Add($"StopMoon: {moonThreat.Name} is shooting the moon! Intentionally take points to stop them");
+                if (effectiveSkill >= 3.0) 
+                {
+                    tactics.Remove("PlaySafe");
+                    tacticDefs.RemoveAll(d => d.StartsWith("PlaySafe:"));
+                }
             }
             
             // --- Skill Gradation Engine ---
@@ -345,16 +424,6 @@ JSON:{{""Intent"":""TACTIC_NAME"",""SuggestedCard"":""CARD_ID""}}<end_of_turn>
             {
                 tactics.Remove("PlaySafe");
                 tacticDefs.RemoveAll(d => d.StartsWith("PlaySafe:"));
-            }
-            else if (effectiveSkill < 2.5) 
-            {
-                tactics.Remove("Cancellation");
-                tactics.Remove("CancelQueen");
-                tactics.Remove("ClearSpades");
-                tactics.Remove("DuckingTrick");
-                tactics.Remove("TakeControl");
-                tactics.Remove("StopMoon");
-                tacticDefs.RemoveAll(d => d.StartsWith("Cancellation:") || d.StartsWith("CancelQueen:") || d.StartsWith("ClearSpades:") || d.StartsWith("DuckingTrick:") || d.StartsWith("TakeControl:") || d.StartsWith("StopMoon:"));
             }
 
             return (tactics, tacticDefs);
@@ -454,14 +523,36 @@ JSON:{{""Intent"":""TACTIC_NAME"",""SuggestedCard"":""CARD_ID""}}<end_of_turn>
                     // Fallback if no matching card can be found
                     return validCards.OrderByDescending(c => c.PointValue).ThenByDescending(c => c.Rank).First();
 
+                case "EndgameSafety":
                 case "TakeControl":
                     if (ledSuit.HasValue)
                     {
                         var suitCards = validCards.Where(c => c.Suit == ledSuit.Value && c.PointValue == 0).OrderByDescending(c => c.Rank).ToList();
                         if (suitCards.Any()) return suitCards.First(); // Play highest safe card to win
                     }
+                    if (intent == "EndgameSafety") return validCards.OrderByDescending(c => c.Rank).First();
                     // If void, we can't win. Just play lowest card.
                     return validCards.OrderBy(c => c.Rank).First();
+
+                case "BleedSpades":
+                    var lowSpade = validCards.Where(c => c.Suit == Suit.Spades).OrderBy(c => c.Rank).FirstOrDefault();
+                    if (lowSpade != null) return lowSpade;
+                    return validCards.First();
+
+                case "EstablishVoid":
+                    var targetCards = validCards.Where(c => c.Suit == Suit.Clubs || c.Suit == Suit.Diamonds).OrderByDescending(c => c.Rank).ToList();
+                    if (targetCards.Any()) return targetCards.First();
+                    return validCards.OrderByDescending(c => c.Rank).First();
+
+                case "AvoidKitty":
+                case "GuardQueen":
+                    // Play the absolute lowest card to avoid taking the kitty, or to protect the Queen of Spades
+                    return validCards.OrderBy(c => c.Rank).First();
+
+                case "AvoidVoidLead":
+                    var oppVoids = state.MemoryTracker.PlayerVoids.Where(kvp => kvp.Key != aiPlayer.Id && kvp.Value.Any()).SelectMany(kvp => kvp.Value).Distinct().ToList();
+                    var safeLeads = validCards.Where(c => !oppVoids.Contains(c.Suit)).ToList();
+                    return safeLeads.Any() ? safeLeads.OrderBy(c => c.Rank).First() : validCards.OrderBy(c => c.Rank).First();
 
                 case "StopMoon":
                     // To stop a moon, we want to play the HIGHEST card possible to try and steal the trick and the points
@@ -503,8 +594,18 @@ JSON:{{""Intent"":""TACTIC_NAME"",""SuggestedCard"":""CARD_ID""}}<end_of_turn>
                         // If forced to play points on a duck, play the lowest point card possible (e.g. 2H over QS)
                         return validCards.OrderBy(c => c.PointValue).ThenBy(c => c.Rank).First();
                     }
-                    // Leading the trick: play lowest
-                    return validCards.OrderBy(c => c.Rank).First();
+                    // Leading the trick: Find the suit with the fewest known opponent voids to minimize being dumped on.
+                    var safeLead = validCards
+                        .GroupBy(c => c.Suit)
+                        .Select(g => new { 
+                            Suit = g.Key, 
+                            VoidCount = state.MemoryTracker.PlayerVoids.Values.Count(v => v.Contains(g.Key)),
+                            LowestCard = g.OrderBy(c => c.Rank).First()
+                        })
+                        .OrderBy(x => x.VoidCount)
+                        .ThenBy(x => x.LowestCard.Rank)
+                        .First();
+                    return safeLead.LowestCard;
 
                 case "DumpPenalty":
                 case "DiscardPoints":
@@ -513,9 +614,20 @@ JSON:{{""Intent"":""TACTIC_NAME"",""SuggestedCard"":""CARD_ID""}}<end_of_turn>
                     {
                         // We are leading the trick. NEVER blindly lead the highest point validCard just to Discard!
                         // Instead, secretly short a non-penalty suit so we can safely discard LATER.
-                        var safeLeads = validCards.Where(c => c.PointValue == 0).GroupBy(c => c.Suit).OrderBy(g => g.Count()).ToList();
-                        if (safeLeads.Any()) {
-                            return safeLeads.First().OrderBy(c => c.Rank).First(); // Play lowest of shortest suit
+                        // Priority: Avoid suits where others are void, then pick shortest suit to void ourselves.
+                        var strategicLeads = validCards.Where(c => c.PointValue == 0)
+                            .GroupBy(c => c.Suit)
+                            .Select(g => new {
+                                Suit = g.Key,
+                                VoidCount = state.MemoryTracker.PlayerVoids.Values.Count(v => v.Contains(g.Key)),
+                                Cards = g.OrderBy(c => c.Rank).ToList()
+                            })
+                            .OrderBy(x => x.VoidCount)
+                            .ThenBy(x => x.Cards.Count)
+                            .ToList();
+
+                        if (strategicLeads.Any()) {
+                            return strategicLeads.First().Cards.First(); // Play lowest of best strategic suit
                         }
                     }
                     // Dump the highest point cards or highest ranks
@@ -564,13 +676,54 @@ JSON:{{""Intent"":""TACTIC_NAME"",""SuggestedCard"":""CARD_ID""}}<end_of_turn>
             return hand.Where(c => _logic.IsValidPlay(hand, state.CurrentTrick, c, state.HeartsBroken, state.IsFirstTrickOfHand, state.Rules).IsValid).ToList();
         }
 
+        public void ClearAllCaches()
+        {
+            _llmInference.ClearAllBotCaches();
+        }
+
+        public void CheckAndProcessAiPasses(GameSessionManager gameManager)
+        {
+            var state = gameManager.GetState();
+            
+            // Clear KV caches if we are starting a new hand (RoundNumber changed)
+            if (_lastSeenRoundNumber != state.RoundNumber)
+            {
+                _llmInference.ClearAllBotCaches();
+                _lastSeenRoundNumber = state.RoundNumber;
+            }
+            
+            if (state.Phase == GameState.GamePhase.Passing) {
+                var ai = state.Players.FirstOrDefault(p => p.IsAi && !state.PendingPasses.ContainsKey(p.Id));
+                if (ai != null) {
+                    lock (_aiTurnLock) {
+                        if (_isProcessingAiTurn) return;
+                        _isProcessingAiTurn = true;
+                    }
+                    _ = Task.Run(async () => {
+                        try {
+                            await PerformAiPassAsync(ai, state, gameManager);
+                        }
+                        finally {
+                            lock (_aiTurnLock) { _isProcessingAiTurn = false; }
+                        }
+                    });
+                }
+            }
+        }
+
         public void CheckAndPlayAiTurns(GameSessionManager gameManager)
         {
             var state = gameManager.GetState();
+            
+            // Clear KV caches if we are starting a new hand (RoundNumber changed)
+            if (_lastSeenRoundNumber != state.RoundNumber)
+            {
+                _llmInference.ClearAllBotCaches();
+                _lastSeenRoundNumber = state.RoundNumber;
+            }
+            
             if (state.Phase == GameState.GamePhase.Passing) {
-                foreach (var ai in state.Players.Where(p => p.IsAi && !state.PendingPasses.ContainsKey(p.Id))) {
-                    PerformAiPass(ai, state, gameManager);
-                }
+                CheckAndProcessAiPasses(gameManager);
                 return;
             }
             if (state.Phase != GameState.GamePhase.Playing) return;
@@ -594,7 +747,7 @@ JSON:{{""Intent"":""TACTIC_NAME"",""SuggestedCard"":""CARD_ID""}}<end_of_turn>
             });
         }
 
-        private void PerformAiPass(Player ai, GameState state, GameSessionManager gameManager)
+        private async Task PerformAiPassAsync(Player ai, GameState state, GameSessionManager gameManager)
         {
             var cardsToPass = new List<Card>();
             if (state.RoundNumber % 4 == 0) {
@@ -602,6 +755,75 @@ JSON:{{""Intent"":""TACTIC_NAME"",""SuggestedCard"":""CARD_ID""}}<end_of_turn>
                 gameManager.PassCards(ai.Id, cardsToPass);
                 return;
             }
+
+            double effectiveSkill = Math.Max(1.0, ai.DifficultyLevel + ai.SkillOffset);
+            
+            if (effectiveSkill >= 2.5) 
+            {
+                bool passingLeft = (state.RoundNumber % 4) == 1;
+                bool passingRight = (state.RoundNumber % 4) == 2;
+                string dir = passingLeft ? "Left" : passingRight ? "Right" : "Across";
+                
+                string prompt = $@"You are {ai.Name} (Grandmaster).
+Respond purely with valid JSON.
+**PASSING PHASE**{dir}.
+Hand: {string.Join(", ", ai.Hand.OrderBy(c => c.Suit).ThenBy(c => c.Rank).Select(c => c.ToShortString()))}
+
+Strategies:
+- Void a suit: Pass all cards of a suit to become void.
+- Break pairs: Pass one card from a pair to setup cancellations.
+- Dump: Pass Ace/King of Spades or high Hearts if unprotected.
+- Pass Queens: Pass Queen of Spades if you have < 3 lower spades.
+
+Provide exactly 3 valid card IDs from your hand in a JSON array.
+JSON:{{
+  ""Reasoning"": ""..."",
+  ""Pass"": [""Card1"", ""Card2"", ""Card3""]
+}}";
+                
+                var grammar = state.ShowAiReasoning ? null : "JSON";
+                string responseRaw = await _llmInference.GenerateMoveIntentAsync(ai.Id, prompt, 0.4f, 60, grammar);
+                string responseJson = responseRaw.Trim();
+                if (!responseJson.StartsWith("{")) responseJson = "{ \"Pass\": [\"" + responseRaw;
+                
+                var matchJson = System.Text.RegularExpressions.Regex.Match(responseJson, @"\{[\s\S]*\}");
+                if (matchJson.Success) responseJson = matchJson.Value;
+
+                string reasoning = "Used LLM passing logic.";
+                try 
+                {
+                    using var doc = JsonDocument.Parse(responseJson);
+                    var root = doc.RootElement;
+                    if (root.TryGetProperty("Pass", out var passProp) && passProp.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (var elem in passProp.EnumerateArray())
+                        {
+                            string cid = elem.GetString()?.Trim() ?? "";
+                            var match = ai.Hand.FirstOrDefault(c => c.ToShortString().Equals(cid, StringComparison.OrdinalIgnoreCase) && !cardsToPass.Contains(c));
+                            if (match != null) cardsToPass.Add(match);
+                        }
+                    }
+                    if (root.TryGetProperty("Reasoning", out var rProp)) reasoning = rProp.GetString() ?? reasoning;
+                }
+                catch { }
+
+                if (cardsToPass.Count == 3)
+                {
+                    state.LastMoveReasoning[ai.Id] = reasoning;
+                    gameManager.PassCards(ai.Id, cardsToPass);
+                    return;
+                }
+                cardsToPass.Clear(); // Fallback if hallucinated
+            }
+
+            var (finalCards, finalReason) = GetAiPassFallbackCards(ai, state);
+            state.LastMoveReasoning[ai.Id] = finalReason;
+            gameManager.PassCards(ai.Id, finalCards);
+        }
+
+        private (List<Card> Cards, string Reasoning) GetAiPassFallbackCards(Player ai, GameState state)
+        {
+            var cardsToPass = new List<Card>();
 
             int passCount = 3;
             string reasoning = "Passing highest cards.";
@@ -695,8 +917,7 @@ JSON:{{""Intent"":""TACTIC_NAME"",""SuggestedCard"":""CARD_ID""}}<end_of_turn>
             }
 
             cardsToPass = cardsToPass.Take(passCount).ToList();
-            state.LastMoveReasoning[ai.Id] = reasoning.Trim();
-            gameManager.PassCards(ai.Id, cardsToPass);
+            return (cardsToPass, reasoning.Trim());
         }
     }
 }

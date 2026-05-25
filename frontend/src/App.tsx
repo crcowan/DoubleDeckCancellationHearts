@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { PlayingCard } from './components/PlayingCard';
 import type { Card, GameState, Player } from './models';
-import { GamePhase, AiModelSize } from './models';
+import { GamePhase } from './models';
 import './index.css';
 
 // Using a generic URL that would point to the local ASP.NET Core server
@@ -22,7 +22,6 @@ function App() {
   const [trickPauseMs, setTrickPauseMs] = useState(2500); // Configurable trick review timer
   const [autoAdvanceTrick, setAutoAdvanceTrick] = useState(true); // Toggle for manual trick review
   const [showAiReasoning, setShowAiReasoning] = useState(true); // Performance Toggle
-  const [aiModelSize, setAiModelSize] = useState<number>(AiModelSize.Fast2B); // Default to Fast2B
 
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
   const [selectedPassIndices, setSelectedPassIndices] = useState<number[]>([]);
@@ -63,12 +62,9 @@ function App() {
     const savedDiff = localStorage.getItem('dc-hearts-diff-v2');
     const savedBotNames = localStorage.getItem('dc-hearts-bot-names-v2');
     const savedRules = localStorage.getItem('dc-hearts-rules-v2');
-    const savedAiModelSize = localStorage.getItem('dc-hearts-ai-model-size');
-
+    if (savedBotNames) setBotNames(JSON.parse(savedBotNames));
     if (savedPlayers) setNumPlayers(parseInt(savedPlayers));
     if (savedDiff) setAiDifficulty(parseInt(savedDiff));
-    if (savedBotNames) setBotNames(JSON.parse(savedBotNames));
-    if (savedAiModelSize) setAiModelSize(parseInt(savedAiModelSize));
 
     if (savedRules) {
       const parsed = JSON.parse(savedRules);
@@ -90,7 +86,6 @@ function App() {
     localStorage.setItem('dc-hearts-players-v2', numPlayers.toString());
     localStorage.setItem('dc-hearts-diff-v2', aiDifficulty.toString());
     localStorage.setItem('dc-hearts-bot-names-v2', JSON.stringify(botNames));
-    localStorage.setItem('dc-hearts-ai-model-size', aiModelSize.toString());
     localStorage.setItem('dc-hearts-rules-v2', JSON.stringify({
       passingStyle, firstLead, breakingHearts, cancellationWinner, trickPauseMs, targetScore, autoAdvanceTrick, showAiReasoning
     }));
@@ -104,8 +99,7 @@ function App() {
           aiDifficulty,
           botNames: botNames.slice(0, numPlayers - 1),
           rules: { passingStyle, firstLead, breakingHearts, cancellationWinner, targetScore },
-          showAiReasoning,
-          selectedAiModel: aiModelSize
+          showAiReasoning
         })
       });
       if (resp.ok) setGameState(await resp.json());
@@ -648,13 +642,7 @@ function App() {
                   </select>
                 </div>
 
-                <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
-                  <label className="text-xs font-bold text-indigo-300">AI Model Quality</label>
-                  <select className="bg-black/50 border border-white/10 rounded text-xs p-1" value={aiModelSize} onChange={e => setAiModelSize(parseInt(e.target.value))}>
-                    <option value={AiModelSize.Fast2B}>Fast (Gemma 4 2B)</option>
-                    <option value={AiModelSize.Balanced4B}>Balanced (Gemma 4 4B)</option>
-                  </select>
-                </div>
+
 
                 <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
                   <label className="text-xs font-bold text-blue-300">Display AI Monologues</label>

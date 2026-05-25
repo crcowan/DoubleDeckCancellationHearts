@@ -1,23 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "/pWEkHe1jtM=",
+  "dgSpecHash": "EhPHC7l9aPk=",
   "success": true,
   "projectFilePath": "C:\\Users\\crcow\\.gemini\\antigravity\\scratch\\DoubleDeckCancellationHearts\\GameEngine.Api\\GameEngine.Api.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\crcow\\.nuget\\packages\\communitytoolkit.highperformance\\8.4.0\\communitytoolkit.highperformance.8.4.0.nupkg.sha512",
-    "C:\\Users\\crcow\\.nuget\\packages\\llamasharp\\0.26.0\\llamasharp.0.26.0.nupkg.sha512",
-    "C:\\Users\\crcow\\.nuget\\packages\\llamasharp.backend.cpu\\0.26.0\\llamasharp.backend.cpu.0.26.0.nupkg.sha512",
     "C:\\Users\\crcow\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.3\\microsoft.aspnetcore.openapi.10.0.3.nupkg.sha512",
-    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\10.0.2\\microsoft.bcl.asyncinterfaces.10.0.2.nupkg.sha512",
-    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.extensions.ai.abstractions\\9.10.1\\microsoft.extensions.ai.abstractions.9.10.1.nupkg.sha512",
-    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.2\\microsoft.net.illink.tasks.10.0.2.nupkg.sha512",
     "C:\\Users\\crcow\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512",
     "C:\\Users\\crcow\\.nuget\\packages\\photino.native\\4.0.22\\photino.native.4.0.22.nupkg.sha512",
     "C:\\Users\\crcow\\.nuget\\packages\\photino.net\\4.0.16\\photino.net.4.0.16.nupkg.sha512",
-    "C:\\Users\\crcow\\.nuget\\packages\\system.numerics.tensors\\9.0.9\\system.numerics.tensors.9.0.9.nupkg.sha512",
-    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\10.0.2\\microsoft.netcore.app.runtime.win-x64.10.0.2.nupkg.sha512",
-    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\10.0.2\\microsoft.windowsdesktop.app.runtime.win-x64.10.0.2.nupkg.sha512",
-    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\10.0.2\\microsoft.aspnetcore.app.runtime.win-x64.10.0.2.nupkg.sha512"
+    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\10.0.8\\microsoft.netcore.app.runtime.win-x64.10.0.8.nupkg.sha512",
+    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\10.0.8\\microsoft.windowsdesktop.app.runtime.win-x64.10.0.8.nupkg.sha512",
+    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\10.0.8\\microsoft.aspnetcore.app.runtime.win-x64.10.0.8.nupkg.sha512"
   ],
   "logs": []
 }

@@ -10,28 +10,22 @@ namespace GameEngine.Api.Models
             "DoubleDeckCancellationHearts");
 
         public static readonly string ModelsDirectory = Path.Combine(AppDataDirectory, "models");
+        public static readonly string BinDirectory = Path.Combine(AppDataDirectory, "bin");
 
-        // Models take a while to download, so we store them in LocalApplicationData
-        public static string GetFullModelPath(AiModelSize size) => Path.Combine(ModelsDirectory, GetModelFileName(size));
-
-        public static string GetModelFileName(AiModelSize size)
+        public static string GetFullModelPath()
         {
-            return size switch
-            {
-                AiModelSize.Fast2B => "gemma-4-E2B-it-Q4_K_M.gguf",
-                AiModelSize.Balanced4B => "gemma-4-E4B-it-Q4_K_M.gguf",
-                _ => "gemma-4-E4B-it-Q4_K_M.gguf"
-            };
+            var fileName = "hearts-bot-v1.gguf";
+            var localPath = Path.Combine(AppContext.BaseDirectory, "models", fileName);
+            if (File.Exists(localPath)) return localPath;
+            return Path.Combine(ModelsDirectory, fileName);
         }
 
-        public static string GetModelDownloadUrl(AiModelSize size)
+        public static string GetLlamaServerPath()
         {
-            return size switch
-            {
-                AiModelSize.Fast2B => "https://huggingface.co/unsloth/gemma-4-E2B-it-GGUF/resolve/main/gemma-4-E2B-it-Q4_K_M.gguf",
-                AiModelSize.Balanced4B => "https://huggingface.co/unsloth/gemma-4-E4B-it-GGUF/resolve/main/gemma-4-E4B-it-Q4_K_M.gguf",
-                _ => "https://huggingface.co/unsloth/gemma-4-E4B-it-GGUF/resolve/main/gemma-4-E4B-it-Q4_K_M.gguf"
-            };
+            return Path.Combine(BinDirectory, "llama-server.exe");
         }
+
+        // We use a specific pre-compiled Vulkan build from the official llama.cpp repo
+        public static readonly string LlamaServerDownloadUrl = "https://github.com/ggerganov/llama.cpp/releases/download/b4382/llama-b4382-bin-win-vulkan-x64.zip";
     }
 }

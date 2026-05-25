@@ -12,7 +12,8 @@ Write-Host "[1/5] Cleaning environment..." -ForegroundColor Yellow
 $oldPreference = $ErrorActionPreference
 $ErrorActionPreference = "SilentlyContinue"
 taskkill /F /IM GameEngine.Api.exe /T 2>$null
-taskkill /F /IM DoubleDeckHearts.exe /T 2>$null
+taskkill /F /IM DoubleDeckCancellationHearts.exe /T 2>$null
+taskkill /F /IM llama-server.exe /T 2>$null
 $ErrorActionPreference = $oldPreference
 
 if (Test-Path $ReleaseFolder) {
@@ -52,14 +53,22 @@ if (Test-Path "$ProjectRoot\GameEngine.Api\wwwroot") {
     Copy-Item -Recurse -Force "$ProjectRoot\GameEngine.Api\wwwroot" "$ReleaseFolder\Api\"
 }
 
+# Copy the trained AI model if it exists
+$ModelPath = "$ProjectRoot\GameEngine.AiTester\outputs\final_lora\hearts-bot-v1.gguf"
+if (Test-Path $ModelPath) {
+    Write-Host " Bundling fine-tuned AI Model..." -ForegroundColor Yellow
+    New-Item -ItemType Directory -Force -Path "$ReleaseFolder\Api\models" | Out-Null
+    Copy-Item -Force $ModelPath "$ReleaseFolder\Api\models\hearts-bot-v1.gguf"
+}
+
 # 6. Zip everything up
 Write-Host "[6/6] Zipping the final packaged game..." -ForegroundColor Yellow
 $ZipPath = "$ProjectRoot\DoubleDeckCancellationHearts_Release.zip"
 if (Test-Path $ZipPath) {
     Remove-Item -Force $ZipPath
 }
-Compress-Archive -Path "$ReleaseFolder\*" -DestinationPath $ZipPath
-Write-Host "[6/6] Zip completed at $ZipPath." -ForegroundColor Green
+    tar -acf $ZipPath -C $ReleaseFolder .
+    Write-Host "[6/6] Zip completed at $ZipPath." -ForegroundColor Green
 
 Write-Host "=============================================" -ForegroundColor Cyan
 Write-Host " BUILD COMPLETE!" -ForegroundColor Green

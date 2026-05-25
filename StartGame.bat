@@ -9,6 +9,7 @@ echo [1/4] Cleaning up previous sessions...
 taskkill /F /IM GameEngine.Api.exe /T >nul 2>&1
 taskkill /F /IM dotnet.exe /T >nul 2>&1
 taskkill /F /IM node.exe /T >nul 2>&1
+taskkill /F /IM llama-server.exe /T >nul 2>&1
 
 echo.
 echo [2/4] Starting Game Engine (C# Backend)...

@@ -31,8 +31,8 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<GameEngine.Api.Services.GameSessionManager>();
 builder.Services.AddSingleton<GameEngine.Api.Services.LlmModelManager>();
 builder.Services.AddSingleton<GameEngine.Api.Services.LlmInferenceService>();
-builder.Services.AddTransient<GameEngine.Api.Services.GameLogicService>();
-builder.Services.AddTransient<GameEngine.Api.Services.AiService>();
+builder.Services.AddSingleton<GameEngine.Api.Services.GameLogicService>();
+builder.Services.AddSingleton<GameEngine.Api.Services.AiService>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 

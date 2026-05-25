@@ -18,15 +18,61 @@ namespace GameEngine.AiTester
             Console.WriteLine("   AI GRANDMASTER VALIDATION MODULE");
             Console.WriteLine("=======================================\n");
 
-            Console.WriteLine("Select Gemma Model:");
-            Console.WriteLine("1. Fast2B");
-            Console.WriteLine("2. Balanced4B (Default)");
+            Console.WriteLine("Select Model:");
+            Console.WriteLine("1. Fast2B (Gemma)");
+            Console.WriteLine("2. Balanced4B (Gemma)");
+            Console.WriteLine("3. Llama3B (Llama 3.2)");
+            Console.WriteLine("4. Qwen1.5B (Qwen 2.5)");
+            Console.WriteLine("5. TrainedHeartsBot (Fine-tuned Qwen 1.5B)");
             Console.Write("Choice: ");
             var input = Console.ReadLine();
             
-            AiModelSize selectedModel = AiModelSize.Balanced4B;
+            AiModelSize selectedModel = AiModelSize.Llama3B;
             if (input == "1") selectedModel = AiModelSize.Fast2B;
+            if (input == "2") selectedModel = AiModelSize.Balanced4B;
+            if (input == "4") selectedModel = AiModelSize.Qwen1_5B;
+            if (input == "5") selectedModel = AiModelSize.TrainedHeartsBot;
 
+            Console.WriteLine("\nSelect Mode:");
+            Console.WriteLine("1. Scenario Tester (Run predefined scenarios)");
+            Console.WriteLine("2. Game Simulator (Run full games and collect metrics)");
+            Console.WriteLine("3. Local Inference Perf Test (Measure raw model timing)");
+            Console.WriteLine("4. Generate Training Dataset (Headless, No LLM)");
+            Console.Write("Choice: ");
+            var modeInput = Console.ReadLine();
+
+            if (modeInput == "2")
+            {
+                Console.Write("\nEnter number of games to simulate (Default: 20): ");
+                var gamesInput = Console.ReadLine();
+                if (!int.TryParse(gamesInput, out int numGames) || numGames <= 0)
+                {
+                    numGames = 20;
+                }
+
+                var simulator = new GameSimulator(selectedModel);
+                await simulator.RunSimulationsAsync(numGames);
+            }
+            else if (modeInput == "4")
+            {
+                Console.Write("\nEnter number of games to simulate for dataset (e.g. 5000): ");
+                var gamesInput = Console.ReadLine();
+                if (!int.TryParse(gamesInput, out int numGames) || numGames <= 0)
+                {
+                    numGames = 5000;
+                }
+
+                var simulator = new GameSimulator(AiModelSize.None); 
+                await simulator.RunSimulationsAsync(numGames);
+            }
+            else
+            {
+                await RunScenarioTesterAsync(selectedModel);
+            }
+        }
+
+        static async Task RunScenarioTesterAsync(AiModelSize selectedModel)
+        {
             Console.WriteLine($"\nLoading model {selectedModel}...");
 
             var llmInference = new LlmInferenceService();
@@ -34,7 +80,7 @@ namespace GameEngine.AiTester
             // Dummy preload to ensure weights are in memory
             try {
                 // This triggers lazy loading inside LlmInferenceService
-                await llmInference.GenerateMoveIntentAsync("<bos><start_of_turn>user\ntest\n<end_of_turn><start_of_turn>model\n", selectedModel, 0.1f, 10, "JSON");
+                await llmInference.GenerateMoveIntentAsync("test_bot", "<bos><start_of_turn>user\ntest\n<end_of_turn><start_of_turn>model\n", selectedModel, 0.1f, 10, "JSON");
                 Console.WriteLine("Model successfully loaded.");
             } catch (Exception ex) {
                 Console.WriteLine("Failed to load model: " + ex.Message);
@@ -200,6 +246,13 @@ namespace GameEngine.AiTester
                     else p.MatchTricksWon = 3; // Will be Bal
                 }
                 state.Players.Add(p);
+            }
+
+            // Build Opponent Voids
+            foreach (var voidKvp in scenario.GameState.OpponentVoids)
+            {
+                var suits = voidKvp.Value.Select(s => (Suit)Enum.Parse(typeof(Suit), s)).ToHashSet();
+                state.MemoryTracker.PlayerVoids[voidKvp.Key] = suits;
             }
 
             // Mock MatchTricksPlayed to ensure GetPlayStyleProfile works

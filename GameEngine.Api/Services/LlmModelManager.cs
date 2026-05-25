@@ -12,29 +12,29 @@ namespace GameEngine.Api.Services
         public delegate void DownloadProgressChangedEventHandler(double percentage, string statusMessage);
         public event DownloadProgressChangedEventHandler? OnDownloadProgressChanged;
 
-        public bool IsModelDownloaded(AiModelSize size)
+        public bool IsServerDownloaded()
         {
-            return File.Exists(AppConstants.GetFullModelPath(size));
+            return File.Exists(AppConstants.GetLlamaServerPath());
         }
 
-        public async Task DownloadModelAsync(AiModelSize size, CancellationToken cancellationToken = default)
+        public async Task DownloadServerAsync(CancellationToken cancellationToken = default)
         {
-            if (IsModelDownloaded(size))
+            if (IsServerDownloaded())
                 return;
 
-            if (!Directory.Exists(AppConstants.ModelsDirectory))
+            if (!Directory.Exists(AppConstants.BinDirectory))
             {
-                Directory.CreateDirectory(AppConstants.ModelsDirectory);
+                Directory.CreateDirectory(AppConstants.BinDirectory);
             }
 
-            string tempFilePath = AppConstants.GetFullModelPath(size) + ".download";
+            string tempFilePath = Path.Combine(AppConstants.BinDirectory, "llama-server.zip");
 
             try
             {
                 using var client = new HttpClient();
-                client.Timeout = TimeSpan.FromHours(2); // Models take a while to download
+                client.Timeout = TimeSpan.FromHours(1);
 
-                using var response = await client.GetAsync(AppConstants.GetModelDownloadUrl(size), HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+                using var response = await client.GetAsync(AppConstants.LlamaServerDownloadUrl, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
                 response.EnsureSuccessStatusCode();
 
                 var totalBytes = response.Content.Headers.ContentLength ?? -1L;
@@ -48,7 +48,7 @@ namespace GameEngine.Api.Services
                 int bytesRead;
                 DateTime lastReportTime = DateTime.MinValue;
 
-                OnDownloadProgressChanged?.Invoke(0, "Starting download...");
+                OnDownloadProgressChanged?.Invoke(0, "Starting backend download...");
 
                 while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length, cancellationToken)) > 0)
                 {
@@ -61,27 +61,32 @@ namespace GameEngine.Api.Services
                         var downloadedMb = Math.Round((double)totalRead / (1024 * 1024), 2);
                         var totalMb = Math.Round((double)totalBytes / (1024 * 1024), 2);
 
-                        OnDownloadProgressChanged?.Invoke(percentage, $"Downloading AI Model... {downloadedMb}MB / {totalMb}MB ({percentage}%)");
+                        OnDownloadProgressChanged?.Invoke(percentage, $"Downloading Backend... {downloadedMb}MB / {totalMb}MB ({percentage}%)");
                         lastReportTime = DateTime.UtcNow;
                     }
                 }
 
-                OnDownloadProgressChanged?.Invoke(100, "Download complete. Verifying...");
+                OnDownloadProgressChanged?.Invoke(100, "Download complete. Extracting...");
             }
             catch (Exception ex)
             {
-                // Clean up partial download on failure
                 if (File.Exists(tempFilePath))
                 {
                     File.Delete(tempFilePath);
                 }
-                throw new Exception($"Failed to download the AI model: {ex.Message}", ex);
+                throw new Exception($"Failed to download backend: {ex.Message}", ex);
             }
 
-            // Move temp file to final destination once successfully downloaded
-            if (File.Exists(tempFilePath))
+            // Unzip the file
+            try
             {
-                File.Move(tempFilePath, AppConstants.GetFullModelPath(size), overwrite: true);
+                // We need to use System.IO.Compression.ZipFile
+                System.IO.Compression.ZipFile.ExtractToDirectory(tempFilePath, AppConstants.BinDirectory, overwriteFiles: true);
+                File.Delete(tempFilePath);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to extract backend zip: {ex.Message}", ex);
             }
         }
     }
