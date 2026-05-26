@@ -22,6 +22,14 @@ function App() {
   const [trickPauseMs, setTrickPauseMs] = useState(2500); // Configurable trick review timer
   const [autoAdvanceTrick, setAutoAdvanceTrick] = useState(true); // Toggle for manual trick review
   const [showAiReasoning, setShowAiReasoning] = useState(true); // Performance Toggle
+  const [heuristicBypassEnabled, setHeuristicBypassEnabled] = useState(true); // Heuristic Bypass Toggle
+
+  // Ollama Server Config State
+  const [useOllama, setUseOllama] = useState(false);
+  const [ollamaEndpoint, setOllamaEndpoint] = useState("http://localhost:11434");
+  const [ollamaModel, setOllamaModel] = useState("hearts-bot-v1");
+  const [testConnectionStatus, setTestConnectionStatus] = useState<{ success?: boolean; message: string } | null>(null);
+  const [isTestingConnection, setIsTestingConnection] = useState(false);
 
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
   const [selectedPassIndices, setSelectedPassIndices] = useState<number[]>([]);
@@ -55,6 +63,46 @@ function App() {
     }
   };
 
+  const fetchConfig = async () => {
+    try {
+      const resp = await fetch("http://localhost:5243/api/game/config");
+      if (resp.ok) {
+        const config = await resp.json();
+        setUseOllama(config.useOllama);
+        setOllamaEndpoint(config.ollamaEndpoint);
+        setOllamaModel(config.ollamaModel);
+      }
+    } catch (e) {
+      console.error("Failed to load AI config", e);
+    }
+  };
+
+  const testOllamaConnection = async () => {
+    setIsTestingConnection(true);
+    setTestConnectionStatus({ message: "Testing connection..." });
+    try {
+      const resp = await fetch("http://localhost:5243/api/game/config/test", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          useOllama,
+          ollamaEndpoint,
+          ollamaModel
+        })
+      });
+      if (resp.ok) {
+        const result = await resp.json();
+        setTestConnectionStatus(result);
+      } else {
+        setTestConnectionStatus({ success: false, message: `Server error: ${resp.statusText}` });
+      }
+    } catch (e) {
+      setTestConnectionStatus({ success: false, message: "Could not reach the game backend." });
+    } finally {
+      setIsTestingConnection(false);
+    }
+  };
+
   useEffect(() => {
     // Attempt to load settings from LocalStorage
     // Appended -v2 to force the new default player count (8) for existing users who previously played with 5
@@ -76,9 +124,11 @@ function App() {
       if (parsed.trickPauseMs) setTrickPauseMs(parsed.trickPauseMs);
       if (parsed.autoAdvanceTrick !== undefined) setAutoAdvanceTrick(parsed.autoAdvanceTrick);
       if (parsed.showAiReasoning !== undefined) setShowAiReasoning(parsed.showAiReasoning);
+      if (parsed.heuristicBypassEnabled !== undefined) setHeuristicBypassEnabled(parsed.heuristicBypassEnabled);
     }
 
     fetchState();
+    fetchConfig();
   }, []);
 
   const startGame = async () => {
@@ -87,8 +137,23 @@ function App() {
     localStorage.setItem('dc-hearts-diff-v2', aiDifficulty.toString());
     localStorage.setItem('dc-hearts-bot-names-v2', JSON.stringify(botNames));
     localStorage.setItem('dc-hearts-rules-v2', JSON.stringify({
-      passingStyle, firstLead, breakingHearts, cancellationWinner, trickPauseMs, targetScore, autoAdvanceTrick, showAiReasoning
+      passingStyle, firstLead, breakingHearts, cancellationWinner, trickPauseMs, targetScore, autoAdvanceTrick, showAiReasoning, heuristicBypassEnabled
     }));
+
+    try {
+      // Save AI server configurations first
+      await fetch("http://localhost:5243/api/game/config", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          useOllama,
+          ollamaEndpoint,
+          ollamaModel
+        })
+      });
+    } catch (e) {
+      console.error("Failed to save AI config on start", e);
+    }
 
     try {
       const resp = await fetch(`${API_URL}/start`, {
@@ -99,7 +164,8 @@ function App() {
           aiDifficulty,
           botNames: botNames.slice(0, numPlayers - 1),
           rules: { passingStyle, firstLead, breakingHearts, cancellationWinner, targetScore },
-          showAiReasoning
+          showAiReasoning,
+          heuristicBypassEnabled
         })
       });
       if (resp.ok) setGameState(await resp.json());
@@ -652,6 +718,93 @@ function App() {
                   </label>
                 </div>
                 <p className="text-[10px] text-gray-500 mt-1 italic">Disabling this makes AI turns up to 5x faster.</p>
+
+                <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
+                  <label className="text-xs font-bold text-blue-300">Pure LLM Inference</label>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" checked={!heuristicBypassEnabled} onChange={e => setHeuristicBypassEnabled(!e.target.checked)} className="sr-only peer" />
+                    <div className="w-9 h-5 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-500"></div>
+                  </label>
+                </div>
+                <p className="text-[10px] text-gray-500 mt-1 italic">Bypasses C# heuristic rules to run full LLM inference for every card decision.</p>
+
+                {/* AI Inference Server Configuration */}
+                <div className="mt-4 pt-4 border-t border-white/10 space-y-3">
+                  <div className="flex justify-between items-center">
+                    <label className="text-xs font-bold text-green-300">AI Inference Server</label>
+                    <select 
+                      className="bg-black/50 border border-white/10 rounded text-xs p-1 text-white" 
+                      value={useOllama ? "Ollama" : "Local"} 
+                      onChange={e => setUseOllama(e.target.value === "Ollama")}
+                    >
+                      <option value="Local">Local (llama.cpp)</option>
+                      <option value="Ollama">Remote (Ollama)</option>
+                    </select>
+                  </div>
+                  
+                  {useOllama && (
+                    <div className="space-y-3 bg-black/30 p-3 rounded-lg border border-white/5 animate-fade-in text-left">
+                      <div className="space-y-1">
+                        <label className="block text-[10px] uppercase font-bold text-gray-400">Ollama Endpoint</label>
+                        <input 
+                          type="text" 
+                          className="w-full bg-black/40 border border-white/10 rounded px-2 py-1 text-xs text-white font-mono"
+                          value={ollamaEndpoint}
+                          onChange={e => {
+                            setOllamaEndpoint(e.target.value);
+                            setTestConnectionStatus(null);
+                          }}
+                          placeholder="e.g. http://192.168.1.50:11434"
+                        />
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <label className="block text-[10px] uppercase font-bold text-gray-400">Model Name</label>
+                        <input 
+                          type="text" 
+                          className="w-full bg-black/40 border border-white/10 rounded px-2 py-1 text-xs text-white font-mono"
+                          value={ollamaModel}
+                          onChange={e => {
+                            setOllamaModel(e.target.value);
+                            setTestConnectionStatus(null);
+                          }}
+                          placeholder="e.g. hearts-bot-v1"
+                        />
+                      </div>
+
+                      <div className="pt-1 flex flex-col gap-2">
+                        <button
+                          type="button"
+                          onClick={testOllamaConnection}
+                          disabled={isTestingConnection}
+                          className="w-full bg-indigo-600/80 hover:bg-indigo-500 text-white text-[11px] font-bold py-1.5 px-3 rounded transition-colors flex justify-center items-center gap-1 shadow-md shadow-indigo-950/50"
+                        >
+                          {isTestingConnection ? (
+                            <>
+                              <svg className="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                              </svg>
+                              Testing...
+                            </>
+                          ) : "Test Connection"}
+                        </button>
+
+                        {testConnectionStatus && (
+                          <div className={`p-2 rounded text-[11px] font-medium leading-normal border ${
+                            testConnectionStatus.success === true 
+                              ? 'bg-emerald-950/40 text-emerald-300 border-emerald-500/20' 
+                              : testConnectionStatus.success === false
+                                ? 'bg-red-950/40 text-red-300 border-red-500/20'
+                                : 'bg-slate-900/80 text-indigo-300 border-indigo-500/20'
+                          }`}>
+                            {testConnectionStatus.message}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

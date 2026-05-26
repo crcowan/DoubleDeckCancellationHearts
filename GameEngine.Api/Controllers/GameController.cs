@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Text.Json;
 
 namespace GameEngine.Api.Controllers
 {
@@ -14,14 +16,16 @@ namespace GameEngine.Api.Controllers
     {
         private readonly GameSessionManager _gameManager;
         private readonly AiService _aiService;
+        private readonly LlmInferenceService _llmInferenceService;
         
         // Simulates retrieving human history from 'stats.db'
         private const string DummyHumanHistory = "Player passes high hearts frequently but holds the Queen of Spades until the end.";
 
-        public GameController(GameSessionManager gameManager, AiService aiService)
+        public GameController(GameSessionManager gameManager, AiService aiService, LlmInferenceService llmInferenceService)
         {
             _gameManager = gameManager;
             _aiService = aiService;
+            _llmInferenceService = llmInferenceService;
         }
 
         [HttpGet("state")]
@@ -51,7 +55,7 @@ namespace GameEngine.Api.Controllers
             public List<string> BotNames { get; set; } = new();
             public GameRules Rules { get; set; } = new();
             public bool ShowAiReasoning { get; set; } = true;
-
+            public bool HeuristicBypassEnabled { get; set; } = true;
         }
 
         [HttpPost("start")]
@@ -70,7 +74,7 @@ namespace GameEngine.Api.Controllers
                 players.Add(new Player { Id = $"AI_{i}", Name = botName, IsAi = true, DifficultyLevel = req.AiDifficulty });
             }
 
-            _gameManager.InitializeGame(players, req.Rules, req.ShowAiReasoning);
+            _gameManager.InitializeGame(players, req.Rules, req.ShowAiReasoning, req.HeuristicBypassEnabled);
             return Ok(_gameManager.GetState());
         }
 
@@ -148,6 +152,74 @@ namespace GameEngine.Api.Controllers
         {
             _aiService.CheckAndPlayAiTurns(_gameManager);
             return Ok(_gameManager.GetState());
+        }
+
+        [HttpGet("config")]
+        public IActionResult GetConfig()
+        {
+            return Ok(_llmInferenceService.GetConfig());
+        }
+
+        [HttpPost("config")]
+        public IActionResult UpdateConfig([FromBody] UserConfig config)
+        {
+            _llmInferenceService.UpdateConfig(config);
+            return Ok(_llmInferenceService.GetConfig());
+        }
+
+        [HttpPost("config/test")]
+        public async Task<IActionResult> TestConfig([FromBody] UserConfig config)
+        {
+            try
+            {
+                using var client = new HttpClient();
+                client.Timeout = TimeSpan.FromSeconds(5);
+
+                string endpoint = config.OllamaEndpoint;
+                if (!endpoint.EndsWith("/")) endpoint += "/";
+                
+                var tagsUri = new Uri(new Uri(endpoint), "api/tags");
+                var response = await client.GetAsync(tagsUri);
+                
+                if (!response.IsSuccessStatusCode)
+                {
+                    return Ok(new { success = false, message = $"Ollama server returned error code: {response.StatusCode}" });
+                }
+
+                var body = await response.Content.ReadAsStringAsync();
+                using var doc = JsonDocument.Parse(body);
+                
+                bool modelFound = false;
+                if (doc.RootElement.TryGetProperty("models", out var modelsElement) && modelsElement.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (var model in modelsElement.EnumerateArray())
+                    {
+                        if (model.TryGetProperty("name", out var nameElement))
+                        {
+                            string? name = nameElement.GetString();
+                            if (name != null && (name.Equals(config.OllamaModel, StringComparison.OrdinalIgnoreCase) || 
+                                                name.StartsWith(config.OllamaModel + ":", StringComparison.OrdinalIgnoreCase)))
+                            {
+                                modelFound = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (modelFound)
+                {
+                    return Ok(new { success = true, message = "Connection successful! Model found on server." });
+                }
+                else
+                {
+                    return Ok(new { success = true, message = $"Connection successful, but model '{config.OllamaModel}' was not found. Please pull it or check the name." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { success = false, message = $"Could not reach Ollama server: {ex.Message}" });
+            }
         }
     }
 }

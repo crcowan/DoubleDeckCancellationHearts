@@ -119,6 +119,7 @@ namespace GameEngine.Api.Models
         public AiMemoryTracker MemoryTracker { get; set; } = new();
         public Dictionary<string, string> LastMoveReasoning { get; set; } = new();
         public bool ShowAiReasoning { get; set; } = true;
+        public bool HeuristicBypassEnabled { get; set; } = true;
 
 
 

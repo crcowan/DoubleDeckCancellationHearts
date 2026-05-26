@@ -10,12 +10,14 @@ namespace GameEngine.Api.Services
         private GameState _state = new();
         private readonly GameLogicService _logic;
         private readonly LlmModelManager _llmModelManager;
+        private readonly LlmInferenceService _llmInferenceService;
         private readonly object _stateLock = new object();
 
-        public GameSessionManager(GameLogicService logic, LlmModelManager llmModelManager)
+        public GameSessionManager(GameLogicService logic, LlmModelManager llmModelManager, LlmInferenceService llmInferenceService)
         {
             _logic = logic;
             _llmModelManager = llmModelManager;
+            _llmInferenceService = llmInferenceService;
         }
 
         public GameState GetState() 
@@ -28,7 +30,7 @@ namespace GameEngine.Api.Services
             lock (_stateLock) { _state = new GameState(); }
         }
 
-        public void InitializeGame(List<Player> players, GameRules rules, bool showAiReasoning = true)
+        public void InitializeGame(List<Player> players, GameRules rules, bool showAiReasoning = true, bool heuristicBypassEnabled = true)
         {
             lock (_stateLock)
             {
@@ -40,11 +42,12 @@ namespace GameEngine.Api.Services
                 Players = players,
                 Rules = rules,
                 Phase = initialPhase,
-                ShowAiReasoning = showAiReasoning
+                ShowAiReasoning = showAiReasoning,
+                HeuristicBypassEnabled = heuristicBypassEnabled
             };
 
-            // Hook into LLM downloading on the very first start if it's missing
-            if (players.Any(p => p.IsAi) && !_llmModelManager.IsServerDownloaded())
+            // Hook into LLM downloading on the very first start if it's missing (and not using Ollama)
+            if (players.Any(p => p.IsAi) && !_llmInferenceService.UseOllama && !_llmModelManager.IsServerDownloaded())
             {
                 _state.Phase = GameState.GamePhase.DownloadingModel;
                 _state.LlmDownloadStatus = "Initializing AI Download...";

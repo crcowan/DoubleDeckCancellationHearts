@@ -19,12 +19,93 @@ namespace GameEngine.Api.Services
         private readonly SemaphoreSlim _slotSemaphore = new SemaphoreSlim(1, 1);
         private bool _usingDiscreteGpu = false;
         private string _logPath = string.Empty;
+        private UserConfig _config;
+
+        public bool UseOllama => _config.UseOllama;
+        public string OllamaEndpoint => _config.OllamaEndpoint;
+        public string OllamaModel => _config.OllamaModel;
 
         public LlmInferenceService()
         {
+            _config = LoadConfig();
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri("http://127.0.0.1:8080/");
             _httpClient.Timeout = TimeSpan.FromSeconds(120);
+        }
+
+        private string GetConfigFilePath()
+        {
+            return Path.Combine(AppConstants.AppDataDirectory, "user_config.json");
+        }
+
+        private UserConfig LoadConfig()
+        {
+            try
+            {
+                string path = GetConfigFilePath();
+                if (File.Exists(path))
+                {
+                    string json = File.ReadAllText(path);
+                    return JsonSerializer.Deserialize<UserConfig>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new UserConfig();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[Config] Failed to load config, using defaults: {ex.Message}");
+            }
+            return new UserConfig();
+        }
+
+        private void SaveConfig(UserConfig config)
+        {
+            try
+            {
+                string path = GetConfigFilePath();
+                string? dir = Path.GetDirectoryName(path);
+                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+                string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(path, json);
+                Console.WriteLine($"[Config] Saved config to {path}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[Config] Failed to save config: {ex.Message}");
+            }
+        }
+
+        public UserConfig GetConfig()
+        {
+            lock (_initLock)
+            {
+                return _config;
+            }
+        }
+
+        public void UpdateConfig(UserConfig config)
+        {
+            lock (_initLock)
+            {
+                _config = config;
+                SaveConfig(config);
+
+                // Shut down local server if it is running
+                if (_serverProcess != null && !_serverProcess.HasExited)
+                {
+                    try 
+                    { 
+                        _serverProcess.Kill(); 
+                        _serverProcess.WaitForExit(2000);
+                    } 
+                    catch { }
+                    _serverProcess.Dispose();
+                    _serverProcess = null;
+                }
+
+                _isInitialized = false; // Reset so next AI call re-initializes
+            }
         }
 
         /// <summary>
@@ -75,6 +156,13 @@ namespace GameEngine.Api.Services
             lock (_initLock)
             {
                 if (_isInitialized) return;
+
+                if (_config.UseOllama)
+                {
+                    _isInitialized = true;
+                    Console.WriteLine($"[LLM] Configured to use Ollama server at {_config.OllamaEndpoint} with model {_config.OllamaModel}");
+                    return;
+                }
                 
                 string serverPath = AppConstants.GetLlamaServerPath();
                 string modelPath = AppConstants.GetFullModelPath();
@@ -185,41 +273,87 @@ namespace GameEngine.Api.Services
 
             try
             {
-                var requestBody = new
+                if (_config.UseOllama)
                 {
-                    messages = new[]
+                    var requestBody = new
                     {
-                        new { role = "user", content = formattedPrompt }
-                    },
-                    temperature = temperature,
-                    max_tokens = maxTokens,
-                    stream = false
-                };
+                        model = _config.OllamaModel,
+                        messages = new[]
+                        {
+                            new { role = "user", content = formattedPrompt }
+                        },
+                        stream = false,
+                        options = new
+                        {
+                            temperature = temperature,
+                            num_predict = maxTokens
+                        }
+                    };
 
-                var jsonContent = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+                    var jsonContent = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
-                await _slotSemaphore.WaitAsync();
-                HttpResponseMessage response;
-                try
-                {
-                    response = await _httpClient.PostAsync("v1/chat/completions", jsonContent);
-                    response.EnsureSuccessStatusCode();
+                    HttpResponseMessage response;
+                    await _slotSemaphore.WaitAsync();
+                    try
+                    {
+                        string endpoint = _config.OllamaEndpoint;
+                        if (!endpoint.EndsWith("/")) endpoint += "/";
+                        var targetUri = new Uri(new Uri(endpoint), "api/chat");
+                        response = await _httpClient.PostAsync(targetUri, jsonContent);
+                        response.EnsureSuccessStatusCode();
+                    }
+                    finally
+                    {
+                        _slotSemaphore.Release();
+                    }
+
+                    var responseString = await response.Content.ReadAsStringAsync();
+                    using var doc = JsonDocument.Parse(responseString);
+                    var content = doc.RootElement
+                        .GetProperty("message")
+                        .GetProperty("content")
+                        .GetString();
+
+                    return content ?? "{\"Intent\":\"PlaySafe\",\"Reasoning\":\"Empty Ollama response.\"}";
                 }
-                finally
+                else
                 {
-                    _slotSemaphore.Release();
+                    var requestBody = new
+                    {
+                        messages = new[]
+                        {
+                            new { role = "user", content = formattedPrompt }
+                        },
+                        temperature = temperature,
+                        max_tokens = maxTokens,
+                        stream = false
+                    };
+
+                    var jsonContent = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+
+                    await _slotSemaphore.WaitAsync();
+                    HttpResponseMessage response;
+                    try
+                    {
+                        response = await _httpClient.PostAsync("v1/chat/completions", jsonContent);
+                        response.EnsureSuccessStatusCode();
+                    }
+                    finally
+                    {
+                        _slotSemaphore.Release();
+                    }
+
+                    var responseString = await response.Content.ReadAsStringAsync();
+                    
+                    using var doc = JsonDocument.Parse(responseString);
+                    var content = doc.RootElement
+                        .GetProperty("choices")[0]
+                        .GetProperty("message")
+                        .GetProperty("content")
+                        .GetString();
+
+                    return content ?? "{\"Intent\":\"PlaySafe\",\"Reasoning\":\"Empty API response\"}";
                 }
-
-                var responseString = await response.Content.ReadAsStringAsync();
-                
-                using var doc = JsonDocument.Parse(responseString);
-                var content = doc.RootElement
-                    .GetProperty("choices")[0]
-                    .GetProperty("message")
-                    .GetProperty("content")
-                    .GetString();
-
-                return content ?? "{\"Intent\":\"PlaySafe\",\"Reasoning\":\"Empty API response\"}";
             }
             catch (Exception ex)
             {

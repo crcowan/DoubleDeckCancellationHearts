@@ -127,7 +127,7 @@ namespace GameEngine.Api.Services
             // --- Fast-Track Bypass: Skip LLM entirely for deterministic moves ---
             // If the Grandmaster Engine already computed the optimal card, return it instantly.
             // This saves 2-5 seconds per move on integrated GPUs.
-            if (engineSuggestedCard != null && engineSuggestedIntent != null)
+            if (state.HeuristicBypassEnabled && engineSuggestedCard != null && engineSuggestedIntent != null)
             {
                 // Persist the strategy decision even when bypassing the LLM
                 if (effectiveSkill >= 2.5)

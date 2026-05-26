@@ -88,6 +88,7 @@ export interface GameState {
     shooterOfMoonId?: string | null;
     lastMoveReasoning?: Record<string, string>;
     showAiReasoning: boolean;
+    heuristicBypassEnabled?: boolean;
     llmDownloadProgress?: number;
     llmDownloadStatus?: string;
 }
