@@ -68,9 +68,9 @@ namespace GameEngine.Api.Services
                     engineReasoning = $"[Strategic] Grandmaster cancellation: Matching the {engineSuggestedCard} in the trick.";
                 }
                 // 3. Stop Moonshot
-                else if (state.Players.FirstOrDefault(p => p.Id != aiPlayer.Id && p.HandScore >= 6 && state.Players.All(other => other.Id == p.Id || other.HandScore == 0)) != null && validCards.Any(c => c.Rank == Rank.Ace))
+                else if (state.Players.FirstOrDefault(p => p.Id != aiPlayer.Id && p.HandScore >= 20 && state.Players.All(other => other.Id == p.Id || other.HandScore == 0)) != null && validCards.Any(c => c.Rank == Rank.Ace))
                 {
-                    var moonThreat = state.Players.FirstOrDefault(p => p.Id != aiPlayer.Id && p.HandScore >= 6 && state.Players.All(other => other.Id == p.Id || other.HandScore == 0));
+                    var moonThreat = state.Players.FirstOrDefault(p => p.Id != aiPlayer.Id && p.HandScore >= 20 && state.Players.All(other => other.Id == p.Id || other.HandScore == 0));
                     engineSuggestedCard = validCards.First(c => c.Rank == Rank.Ace);
                     engineSuggestedIntent = "StopMoon";
                     engineReasoning = $"[Strategic] Grandmaster defense: Forcing the {engineSuggestedCard} to prevent {moonThreat.Name} from shooting the moon.";
@@ -409,7 +409,8 @@ HND:{fullHandStr}";
             if (moonshotPossible) { tactics.Add("ShootTheMoon"); tacticDefs.Add("ShootTheMoon: Take all penalty points"); }
             
             // If an opponent has a significant number of points and no one else has any, they are a moon threat!
-            var moonThreat = state.Players.FirstOrDefault(p => p.Id != aiPlayer.Id && p.HandScore >= 12 && state.Players.All(other => other.Id == p.Id || other.HandScore == 0));
+            // In double deck (52 total points), a threshold of 26 (half the points) is a realistic trigger for a moonshot threat.
+            var moonThreat = state.Players.FirstOrDefault(p => p.Id != aiPlayer.Id && p.HandScore >= 26 && state.Players.All(other => other.Id == p.Id || other.HandScore == 0));
             if (moonThreat != null) {
                 tactics.Add("StopMoon"); tacticDefs.Add($"StopMoon: {moonThreat.Name} is shooting the moon! Intentionally take points to stop them");
                 if (effectiveSkill >= 3.0) 
