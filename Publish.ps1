@@ -13,6 +13,7 @@ $oldPreference = $ErrorActionPreference
 $ErrorActionPreference = "SilentlyContinue"
 taskkill /F /IM GameEngine.Api.exe /T 2>$null
 taskkill /F /IM DoubleDeckCancellationHearts.exe /T 2>$null
+taskkill /F /IM DoubleDeckHearts.exe /T 2>$null
 taskkill /F /IM llama-server.exe /T 2>$null
 $ErrorActionPreference = $oldPreference
 
