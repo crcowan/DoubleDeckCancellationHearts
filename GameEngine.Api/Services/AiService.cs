@@ -31,7 +31,7 @@ namespace GameEngine.Api.Services
             // --- Field Intel: What are others doing? ---
             var intelEntries = state.Players
                 .Where(p => p.Id != aiPlayer.Id && state.MemoryTracker.PlayerStrategies.ContainsKey(p.Id))
-                .Select(p => $"{p.Name}({state.MemoryTracker.PlayerStrategies[p.Id].ActiveStrategy})")
+                .Select(p => $"{p.Name}({GetStrategyDescription(state.MemoryTracker.PlayerStrategies[p.Id].ActiveStrategy)})")
                 .ToList();
             string fieldIntel = intelEntries.Any() ? string.Join(", ", intelEntries) : "Initializing...";
 
@@ -297,7 +297,7 @@ DEDUCTIONS: {voids}
 
 **GAME STATE**
 Pos: {state.CurrentTrick.Count + 1}/{state.Players.Count}
-Scores: {scoreboard}
+Scores (Lowest is best): {scoreboard}
 Cancelled Pile: {state.CancelledKitty.Sum(c => c.PointValue)}pts | You: {aiPlayer.HandScore}pts
 {counts}
 
@@ -433,7 +433,7 @@ HND:{fullHandStr}";
         private (string Scoreboard, string Voids, string KnownInfo, string StrategySection, string HistorySection, string MistakeNote, string TrickStr, string FullHandStr, string Counts, string PrevTrickStr) GetCommonPromptData(GameState state, Player aiPlayer, List<Card> validCards, double effectiveSkill, Card? forcedMistake)
         {
             // Inline calculation - extremely fast naturally, prevents stale data bugs
-            string scoreboard = string.Join(", ", state.Players.OrderByDescending(p => p.Score).Select(p => $"{p.Name}:{p.Score} (Hand:{p.HandScore})"));
+            string scoreboard = string.Join(", ", state.Players.OrderBy(p => p.Score).Select(p => $"{p.Name}: total {p.Score} (this hand: {p.HandScore})"));
             
             var opponentVoids = state.MemoryTracker.PlayerVoids
                 .Where(kvp => kvp.Key != aiPlayer.Id && kvp.Value.Any())
@@ -466,7 +466,7 @@ HND:{fullHandStr}";
             string strategySection = "";
             if (effectiveSkill >= 2.5 && state.MemoryTracker.PlayerStrategies.TryGetValue(aiPlayer.Id, out var strat)) {
                 if (!string.IsNullOrEmpty(strat.ActiveStrategy) && strat.StrategyAge > 0)
-                    strategySection = $"STRAT:{strat.ActiveStrategy}({strat.StrategyAge})\n";
+                    strategySection = $"STRAT:{GetStrategyDescription(strat.ActiveStrategy)}({strat.StrategyAge})\n";
             }
 
             string historySection = "";
@@ -919,6 +919,31 @@ JSON:{{
 
             cardsToPass = cardsToPass.Take(passCount).ToList();
             return (cardsToPass, reasoning.Trim());
+        }
+
+        private string GetStrategyDescription(string strategyCode)
+        {
+            return strategyCode switch
+            {
+                "PlaySafe" => "playing safe",
+                "EndgameSafety" => "avoiding points in endgame",
+                "ClearSpades" => "leading spades to clear them",
+                "LeadQueen" => "leading the Queen of Spades",
+                "BleedSpades" => "bleeding spades to force the Queen",
+                "AvoidVoidLead" => "avoiding leading a suit others are void in",
+                "DuckingTrick" => "playing low to duck the trick",
+                "Cancellation" => "playing matching card to cancel points",
+                "AggressiveFeeding" => "discarding penalty cards onto the winner",
+                "CancelQueen" => "playing the Queen of Spades to cancel it",
+                "DumpPenalty" => "discarding penalty card while void",
+                "TakeControl" => "winning a safe trick to get the lead",
+                "AvoidKitty" => "playing lowest card to avoid the kitty",
+                "GuardQueen" => "holding high spades to guard the Queen",
+                "EstablishVoid" => "shorting a suit to become void",
+                "StopMoon" => "trying to stop an opponent's moonshot",
+                "ShootTheMoon" => "attempting to shoot the moon",
+                _ => strategyCode.ToLower()
+            };
         }
     }
 }
