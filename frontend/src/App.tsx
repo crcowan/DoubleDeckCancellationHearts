@@ -30,6 +30,7 @@ function App() {
   const [ollamaModel, setOllamaModel] = useState("hearts-bot-v1");
   const [testConnectionStatus, setTestConnectionStatus] = useState<{ success?: boolean; message: string } | null>(null);
   const [isTestingConnection, setIsTestingConnection] = useState(false);
+  const [showOllamaConfig, setShowOllamaConfig] = useState(false); // Collapsible settings toggle
 
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
   const [selectedPassIndices, setSelectedPassIndices] = useState<number[]>([]);
@@ -743,66 +744,81 @@ function App() {
                   </div>
                   
                   {useOllama && (
-                    <div className="space-y-3 bg-black/30 p-3 rounded-lg border border-white/5 animate-fade-in text-left">
-                      <div className="space-y-1">
-                        <label className="block text-[10px] uppercase font-bold text-gray-400">Ollama Endpoint</label>
-                        <input 
-                          type="text" 
-                          className="w-full bg-black/40 border border-white/10 rounded px-2 py-1 text-xs text-white font-mono"
-                          value={ollamaEndpoint}
-                          onChange={e => {
-                            setOllamaEndpoint(e.target.value);
-                            setTestConnectionStatus(null);
-                          }}
-                          placeholder="e.g. http://192.168.1.50:11434"
-                        />
-                      </div>
-                      
-                      <div className="space-y-1">
-                        <label className="block text-[10px] uppercase font-bold text-gray-400">Model Name</label>
-                        <input 
-                          type="text" 
-                          className="w-full bg-black/40 border border-white/10 rounded px-2 py-1 text-xs text-white font-mono"
-                          value={ollamaModel}
-                          onChange={e => {
-                            setOllamaModel(e.target.value);
-                            setTestConnectionStatus(null);
-                          }}
-                          placeholder="e.g. hearts-bot-v1"
-                        />
-                      </div>
-
-                      <div className="pt-1 flex flex-col gap-2">
-                        <button
+                    <>
+                      <div className="flex justify-between items-center text-xs mt-1">
+                        <span className="opacity-80 text-gray-300">Server Settings</span>
+                        <button 
                           type="button"
-                          onClick={testOllamaConnection}
-                          disabled={isTestingConnection}
-                          className="w-full bg-indigo-600/80 hover:bg-indigo-500 text-white text-[11px] font-bold py-1.5 px-3 rounded transition-colors flex justify-center items-center gap-1 shadow-md shadow-indigo-950/50"
+                          onClick={() => setShowOllamaConfig(!showOllamaConfig)}
+                          className="text-[10px] bg-white/5 hover:bg-white/10 px-2 py-0.5 rounded border border-white/10 font-bold transition-all text-indigo-300 hover:text-indigo-200"
                         >
-                          {isTestingConnection ? (
-                            <>
-                              <svg className="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                              </svg>
-                              Testing...
-                            </>
-                          ) : "Test Connection"}
+                          {showOllamaConfig ? "Hide Config ▴" : "Show Config ▾"}
                         </button>
-
-                        {testConnectionStatus && (
-                          <div className={`p-2 rounded text-[11px] font-medium leading-normal border ${
-                            testConnectionStatus.success === true 
-                              ? 'bg-emerald-950/40 text-emerald-300 border-emerald-500/20' 
-                              : testConnectionStatus.success === false
-                                ? 'bg-red-950/40 text-red-300 border-red-500/20'
-                                : 'bg-slate-900/80 text-indigo-300 border-indigo-500/20'
-                          }`}>
-                            {testConnectionStatus.message}
-                          </div>
-                        )}
                       </div>
-                    </div>
+
+                      {showOllamaConfig && (
+                        <div className="space-y-3 bg-black/30 p-3 rounded-lg border border-white/5 animate-fade-in text-left">
+                          <div className="space-y-1">
+                            <label className="block text-[10px] uppercase font-bold text-gray-400">Ollama Endpoint</label>
+                            <input 
+                              type="text" 
+                              className="w-full bg-black/40 border border-white/10 rounded px-2 py-1 text-xs text-white font-mono"
+                              value={ollamaEndpoint}
+                              onChange={e => {
+                                setOllamaEndpoint(e.target.value);
+                                setTestConnectionStatus(null);
+                              }}
+                              placeholder="e.g. http://192.168.1.50:11434"
+                            />
+                          </div>
+                          
+                          <div className="space-y-1">
+                            <label className="block text-[10px] uppercase font-bold text-gray-400">Model Name</label>
+                            <input 
+                              type="text" 
+                              className="w-full bg-black/40 border border-white/10 rounded px-2 py-1 text-xs text-white font-mono"
+                              value={ollamaModel}
+                              onChange={e => {
+                                setOllamaModel(e.target.value);
+                                setTestConnectionStatus(null);
+                              }}
+                              placeholder="e.g. hearts-bot-v1"
+                            />
+                          </div>
+
+                          <div className="pt-1 flex flex-col gap-2">
+                            <button
+                              type="button"
+                              onClick={testOllamaConnection}
+                              disabled={isTestingConnection}
+                              className="w-full bg-indigo-600/80 hover:bg-indigo-500 text-white text-[11px] font-bold py-1.5 px-3 rounded transition-colors flex justify-center items-center gap-1 shadow-md shadow-indigo-950/50"
+                            >
+                              {isTestingConnection ? (
+                                <>
+                                  <svg className="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                  </svg>
+                                  Testing...
+                                </>
+                              ) : "Test Connection"}
+                            </button>
+
+                            {testConnectionStatus && (
+                              <div className={`p-2 rounded text-[11px] font-medium leading-normal border ${
+                                testConnectionStatus.success === true 
+                                  ? 'bg-emerald-950/40 text-emerald-300 border-emerald-500/20' 
+                                  : testConnectionStatus.success === false
+                                    ? 'bg-red-950/40 text-red-300 border-red-500/20'
+                                    : 'bg-slate-900/80 text-indigo-300 border-indigo-500/20'
+                              }`}>
+                                {testConnectionStatus.message}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
