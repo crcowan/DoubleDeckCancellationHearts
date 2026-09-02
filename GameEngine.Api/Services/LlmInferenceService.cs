@@ -114,6 +114,7 @@ namespace GameEngine.Api.Services
         /// </summary>
         private bool DetectDiscreteGpu()
         {
+            string output = "";
             try
             {
                 var psi = new ProcessStartInfo
@@ -126,29 +127,50 @@ namespace GameEngine.Api.Services
                 };
 
                 using var proc = Process.Start(psi);
-                if (proc == null) return false;
-
-                string output = proc.StandardOutput.ReadToEnd();
-                proc.WaitForExit(5000);
-
-                string upper = output.ToUpperInvariant();
-
-                // Discrete GPU indicators
-                if (upper.Contains("GEFORCE") || upper.Contains("NVIDIA") ||
-                    upper.Contains("RADEON RX") || upper.Contains("ARC A"))
+                if (proc != null)
                 {
-                    Console.WriteLine($"[GPU] Discrete GPU detected. Using full GPU offload (-ngl 33).");
-                    return true;
+                    output = proc.StandardOutput.ReadToEnd();
+                    proc.WaitForExit(3000);
                 }
-
-                Console.WriteLine($"[GPU] No discrete GPU found. Using CPU-only inference (-ngl 0).");
-                return false;
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine($"[GPU] Detection failed ({ex.Message}). Defaulting to CPU-only.");
-                return false;
+                // Fallback to powershell CIM query if wmic is missing
+                try
+                {
+                    var psi = new ProcessStartInfo
+                    {
+                        FileName = "powershell",
+                        Arguments = "-NoProfile -Command \"Get-CimInstance Win32_VideoController | Select-Object -ExpandProperty Name\"",
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        CreateNoWindow = true
+                    };
+                    using var proc = Process.Start(psi);
+                    if (proc != null)
+                    {
+                        output = proc.StandardOutput.ReadToEnd();
+                        proc.WaitForExit(3000);
+                    }
+                }
+                catch (Exception ex2)
+                {
+                    Console.WriteLine($"[GPU] PowerShell fallback detection failed ({ex2.Message}).");
+                }
             }
+
+            string upper = output.ToUpperInvariant();
+
+            // Discrete GPU indicators
+            if (upper.Contains("GEFORCE") || upper.Contains("NVIDIA") ||
+                upper.Contains("RADEON RX") || upper.Contains("ARC A"))
+            {
+                Console.WriteLine($"[GPU] Discrete GPU detected. Using full GPU offload (-ngl 33).");
+                return true;
+            }
+
+            Console.WriteLine($"[GPU] No discrete GPU found. Using CPU-only inference (-ngl 0).");
+            return false;
         }
 
         public void Initialize()
@@ -271,6 +293,8 @@ namespace GameEngine.Api.Services
                 return "{\"Intent\":\"PlaySafe\",\"Reasoning\":\"Engine fallback: Backend not loaded.\"}";
             }
 
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(_config.LlmTimeoutSeconds > 0 ? _config.LlmTimeoutSeconds : 45));
+
             try
             {
                 if (_config.UseOllama)
@@ -299,7 +323,7 @@ namespace GameEngine.Api.Services
                         string endpoint = _config.OllamaEndpoint;
                         if (!endpoint.EndsWith("/")) endpoint += "/";
                         var targetUri = new Uri(new Uri(endpoint), "api/chat");
-                        response = await _httpClient.PostAsync(targetUri, jsonContent);
+                        response = await _httpClient.PostAsync(targetUri, jsonContent, cts.Token);
                         response.EnsureSuccessStatusCode();
                     }
                     finally
@@ -335,7 +359,7 @@ namespace GameEngine.Api.Services
                     HttpResponseMessage response;
                     try
                     {
-                        response = await _httpClient.PostAsync("v1/chat/completions", jsonContent);
+                        response = await _httpClient.PostAsync("v1/chat/completions", jsonContent, cts.Token);
                         response.EnsureSuccessStatusCode();
                     }
                     finally
@@ -357,7 +381,20 @@ namespace GameEngine.Api.Services
             }
             catch (Exception ex)
             {
-                return $"{{\"Intent\":\"PlaySafe\",\"Reasoning\":\"Inference failure: {ex.Message}\"}}";
+                if (!_config.UseOllama)
+                {
+                    lock (_initLock)
+                    {
+                        if (_serverProcess != null && !_serverProcess.HasExited)
+                        {
+                            try { _serverProcess.Kill(); } catch { }
+                            _serverProcess.Dispose();
+                            _serverProcess = null;
+                        }
+                        _isInitialized = false;
+                    }
+                }
+                return $"{{\"Intent\":\"PlaySafe\",\"Reasoning\":\"Inference failure (auto-restarting LLM): {ex.Message}\"}}";
             }
         }
 

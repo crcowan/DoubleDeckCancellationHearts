@@ -192,16 +192,16 @@ namespace GameEngine.Api.Services
             {
                 using var doc = JsonDocument.Parse(responseJson);
                 var root = doc.RootElement;
-                if (root.TryGetProperty("Intent", out var iProp)) intentStr = iProp.GetString() ?? intentStr;
-                if (root.TryGetProperty("SuggestedCard", out var sProp)) suggestedCardId = sProp.GetString() ?? suggestedCardId;
-                if (root.TryGetProperty("Reasoning", out var rProp)) reasoning = rProp.GetString() ?? reasoning;
+                if (root.TryGetProperty("Intent", out var iProp)) intentStr = (iProp.GetString() ?? intentStr).Trim();
+                if (root.TryGetProperty("SuggestedCard", out var sProp)) suggestedCardId = (sProp.GetString() ?? suggestedCardId).Trim();
+                if (root.TryGetProperty("Reasoning", out var rProp)) reasoning = (rProp.GetString() ?? reasoning).Trim();
             }
             catch
             {
                 if (responseRaw.Contains("Intent")) 
                 {
                     var match = System.Text.RegularExpressions.Regex.Match(responseRaw, "\"Intent\":\\s*\"([^\"]+)\"");
-                    if (match.Success) intentStr = match.Groups[1].Value;
+                    if (match.Success) intentStr = match.Groups[1].Value.Trim();
                 }
             }
 
@@ -238,10 +238,9 @@ namespace GameEngine.Api.Services
             {
                 reasoning = $"Playing {chosenCard} because it fits the {intentStr} strategy.";
             }
-            else if (state.ShowAiReasoning && !reasoning.StartsWith("["))
-            {
-                reasoning = $"[{intentStr}] {reasoning}";
-            }
+
+            // Prepend the strategy intent in brackets so callers can parse it
+            reasoning = $"[{intentStr}] {reasoning}";
 
             // --- Persist Strategy Decision ---
             if (effectiveSkill >= 2.5)
@@ -266,6 +265,7 @@ namespace GameEngine.Api.Services
             string persona = effectiveSkill >= 4.0 ? "Grandmaster" : (effectiveSkill >= 2.5 ? "Experienced" : "Beginner");
             string personaLine = $"You are {aiPlayer.Name} ({persona}). Speak in the 1st person ('I'). Use specific names only.";
             if (effectiveSkill >= 4.0) personaLine += " CRITICAL: As a Grandmaster, NEVER default to PlaySafe if an aggressive or advanced tactic is available!";
+            personaLine += "\nGOLDEN RULE FOR LEADING: Never lead a suit that opponents are known to be void in. It allows them to safely dump penalty cards on you. Switch to a fresh suit.";
             bool moonshotPossible = state.Players.All(p => p.Id == aiPlayer.Id || p.HandScore == 0);
             Suit? ledSuit = state.CurrentTrick.FirstOrDefault()?.Suit;
 
@@ -319,6 +319,7 @@ HAND: {fullHandStr}";
             string defsStr = string.Join(" | ", tacticDefs);
             if (effectiveSkill >= 4.0) defsStr += " | GM_RULE: Never default to PlaySafe if an advanced tactic is available";
             string prefix = effectiveSkill >= 4.0 ? "GM" : (effectiveSkill >= 2.5 ? "PRO" : "NOOB");
+            prefix += " | RULE: Never lead a suit opponents are void in. Switch suits!";
             string hintNote = (engineSuggestedIntent != null) ? $"HINT:[{engineSuggestedIntent}:{engineSuggestedCard?.ToShortString()}]\n" : "";
 
             return $@"Double Deck Hearts
@@ -367,7 +368,7 @@ HND:{fullHandStr}";
                 var opponentVoids = state.MemoryTracker.PlayerVoids.Where(kvp => kvp.Key != aiPlayer.Id && kvp.Value.Any()).SelectMany(kvp => kvp.Value).Distinct().ToList();
                 if (opponentVoids.Any() && validCards.Any(c => !opponentVoids.Contains(c.Suit)))
                 {
-                    tactics.Add("AvoidVoidLead"); tacticDefs.Add($"AvoidVoidLead: Do not lead {string.Join(",", opponentVoids)} to avoid being dumped on");
+                    tactics.Add("AvoidVoidLead"); tacticDefs.Add($"AvoidVoidLead: CRITICAL WARNING! Opponents are void in {string.Join(",", opponentVoids)}. Leading these allows them to dump penalty points on you. You MUST switch to a different suit!");
                 }
             }
             else // Following

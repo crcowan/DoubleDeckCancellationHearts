@@ -28,6 +28,7 @@ function App() {
   const [useOllama, setUseOllama] = useState(false);
   const [ollamaEndpoint, setOllamaEndpoint] = useState("http://localhost:11434");
   const [ollamaModel, setOllamaModel] = useState("hearts-bot-v1");
+  const [llmTimeoutSeconds, setLlmTimeoutSeconds] = useState(45);
   const [testConnectionStatus, setTestConnectionStatus] = useState<{ success?: boolean; message: string } | null>(null);
   const [isTestingConnection, setIsTestingConnection] = useState(false);
   const [showOllamaConfig, setShowOllamaConfig] = useState(false); // Collapsible settings toggle
@@ -72,6 +73,7 @@ function App() {
         setUseOllama(config.useOllama);
         setOllamaEndpoint(config.ollamaEndpoint);
         setOllamaModel(config.ollamaModel);
+        if (config.llmTimeoutSeconds) setLlmTimeoutSeconds(config.llmTimeoutSeconds);
       }
     } catch (e) {
       console.error("Failed to load AI config", e);
@@ -88,7 +90,8 @@ function App() {
         body: JSON.stringify({
           useOllama,
           ollamaEndpoint,
-          ollamaModel
+          ollamaModel,
+          llmTimeoutSeconds
         })
       });
       if (resp.ok) {
@@ -149,7 +152,8 @@ function App() {
         body: JSON.stringify({
           useOllama,
           ollamaEndpoint,
-          ollamaModel
+          ollamaModel,
+          llmTimeoutSeconds
         })
       });
     } catch (e) {
@@ -741,6 +745,18 @@ function App() {
                       <option value="Local">Local (llama.cpp)</option>
                       <option value="Ollama">Remote (Ollama)</option>
                     </select>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <label className="text-xs font-bold text-green-300">LLM Timeout (seconds)</label>
+                    <input 
+                      type="number" 
+                      className="bg-black/50 border border-white/10 rounded text-xs p-1 text-white w-20 text-center" 
+                      value={llmTimeoutSeconds} 
+                      onChange={e => setLlmTimeoutSeconds(parseInt(e.target.value) || 45)}
+                      min="10"
+                      max="300"
+                    />
                   </div>
                   
                   {useOllama && (

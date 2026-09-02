@@ -10,6 +10,16 @@ using GameEngine.Api.Services;
 
 namespace GameEngine.AiTester
 {
+    public enum AiModelSize
+    {
+        None,
+        Fast2B,
+        Balanced4B,
+        Llama3B,
+        Qwen1_5B,
+        TrainedHeartsBot
+    }
+
     class Program
     {
         static async Task Main(string[] args)
@@ -80,7 +90,7 @@ namespace GameEngine.AiTester
             // Dummy preload to ensure weights are in memory
             try {
                 // This triggers lazy loading inside LlmInferenceService
-                await llmInference.GenerateMoveIntentAsync("test_bot", "<bos><start_of_turn>user\ntest\n<end_of_turn><start_of_turn>model\n", selectedModel, 0.1f, 10, "JSON");
+                await llmInference.GenerateMoveIntentAsync("test_bot", "<bos><start_of_turn>user\ntest\n<end_of_turn><start_of_turn>model\n", 0.1f, 10);
                 Console.WriteLine("Model successfully loaded.");
             } catch (Exception ex) {
                 Console.WriteLine("Failed to load model: " + ex.Message);
