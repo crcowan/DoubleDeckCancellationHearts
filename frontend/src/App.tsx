@@ -299,9 +299,20 @@ function App() {
         const delay = gameState.showAiReasoning ? 350 : 50;
         const timer = setTimeout(() => {
           fetch(`${API_URL}/play-ai`, { method: 'POST' })
-            .then(r => r.json())
+            .then(async r => {
+              if (!r.ok) {
+                const text = await r.text();
+                throw new Error(`Server error ${r.status}: ${text}`);
+              }
+              return r.json();
+            })
             .then(setGameState)
-            .catch(console.error);
+            .catch(e => {
+              console.error(e);
+              setErrorMsg(`AI failed to play: ${e.message}`);
+              // Retry by forcing a re-render
+              setTimeout(() => setGameState(s => s ? { ...s } : s), 5000);
+            });
         }, delay);
         return () => clearTimeout(timer);
       }
@@ -309,19 +320,37 @@ function App() {
       // Trigger AI to make their pass selections if any AI hasn't passed yet
       const anyAiNeedsToPass = gameState.players.some(p => p.isAi && !gameState.pendingPasses?.hasOwnProperty(p.id));
       if (anyAiNeedsToPass) {
-        fetch(`${API_URL}/play-ai-pass`, { method: 'POST' })
-          .then(r => r.json())
-          .then(setGameState)
-          .catch(console.error);
+        const timer = setTimeout(() => {
+          fetch(`${API_URL}/play-ai-pass`, { method: 'POST' })
+            .then(async r => {
+              if (!r.ok) throw new Error(`Server error: ${r.status}`);
+              return r.json();
+            })
+            .then(setGameState)
+            .catch(e => {
+              console.error(e);
+              setErrorMsg(`AI pass failed: ${e.message}`);
+              // Retry after a longer delay if error
+              setTimeout(() => setGameState(s => s ? { ...s } : s), 5000);
+            });
+        }, 1000);
+        return () => clearTimeout(timer);
       }
     } else if (gameState.phase === GamePhase.TrickPending) {
       if (autoAdvanceTrick) {
         // Automatically start the next trick after the selected pause duration
         const timer = setTimeout(() => {
           fetch(`${API_URL}/resolve-trick`, { method: 'POST' })
-            .then(r => r.json())
+            .then(async r => {
+              if (!r.ok) throw new Error(`Server error: ${r.status}`);
+              return r.json();
+            })
             .then(setGameState)
-            .catch(console.error);
+            .catch(e => {
+              console.error(e);
+              setErrorMsg(`Failed to resolve trick: ${e.message}`);
+              setTimeout(() => setGameState(s => s ? { ...s } : s), 5000);
+            });
         }, trickPauseMs);
         return () => clearTimeout(timer);
       }
