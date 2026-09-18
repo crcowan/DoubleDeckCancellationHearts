@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TT/84Zrdl8E=",
+  "dgSpecHash": "Tl1qP5uTqz8=",
   "success": true,
   "projectFilePath": "C:\\Users\\crcow\\.gemini\\antigravity\\scratch\\DoubleDeckCancellationHearts\\GameEngine.Api\\GameEngine.Api.csproj",
   "expectedPackageFiles": [
@@ -8,9 +8,9 @@
     "C:\\Users\\crcow\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512",
     "C:\\Users\\crcow\\.nuget\\packages\\photino.native\\4.0.22\\photino.native.4.0.22.nupkg.sha512",
     "C:\\Users\\crcow\\.nuget\\packages\\photino.net\\4.0.16\\photino.net.4.0.16.nupkg.sha512",
-    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\10.0.9\\microsoft.netcore.app.runtime.win-x64.10.0.9.nupkg.sha512",
-    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\10.0.9\\microsoft.windowsdesktop.app.runtime.win-x64.10.0.9.nupkg.sha512",
-    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\10.0.9\\microsoft.aspnetcore.app.runtime.win-x64.10.0.9.nupkg.sha512"
+    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\10.0.11\\microsoft.netcore.app.runtime.win-x64.10.0.11.nupkg.sha512",
+    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\10.0.11\\microsoft.windowsdesktop.app.runtime.win-x64.10.0.11.nupkg.sha512",
+    "C:\\Users\\crcow\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\10.0.11\\microsoft.aspnetcore.app.runtime.win-x64.10.0.11.nupkg.sha512"
   ],
   "logs": [
     {
